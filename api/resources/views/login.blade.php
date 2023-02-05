@@ -7,6 +7,6 @@
 <body>
     <h1> {{ $message }} </h1>
         <div id="root_login"></div>
-        <script src="{{ mix('js/Login.js') }}" ></script>
+        
     </body>
 </html>
