@@ -6,5 +6,7 @@
     <title>App title</title>
 <body>
     <h1> {{ $message }} </h1>
-</body>
+        <div id="root_login"></div>
+        <script src="{{ mix('js/Login.js') }}" ></script>
+    </body>
 </html>

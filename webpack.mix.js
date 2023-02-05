@@ -11,7 +11,16 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .react()
-    .version();
-    //.sass('resources/sass/app.scss', 'public/css');
+
+mix.js(
+        'resources/js/app.js', 'public/js/app.js')
+        .react()
+        .version();
+
+mix.js(
+        'resources/js/Login.js','public/js/Login.js')
+        .react()
+        .postCss('resources/css/app.css', 'public/css', [])
+        .version();
+
+    
