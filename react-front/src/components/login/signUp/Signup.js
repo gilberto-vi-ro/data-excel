@@ -4,17 +4,19 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 export default class Signup extends Component {
-  userData;
+  // userData;
   constructor(props) {
     super(props);
+    this._parent = this.props._parent.props._parent;
     this.state = {
       signupData: {
-        name: "",
+        nombre_completo: "",
         email: "",
-        phone: "",
-        password: "",
+        clave: "",
         isLoading: "",
       },
+      status: "",
+      err:{name_c:"",email:"",clave:""},
       msg: "",
     };
   }
@@ -25,84 +27,125 @@ export default class Signup extends Component {
     this.setState({ signupData });
   };
   onSubmitHandler = (e) => {
+    this.setState({ 
+      msg: "",
+      err:{
+        name_c: "",
+        email: "",
+        clave: "",
+      }
+  
+    });
     e.preventDefault();
     this.setState({ isLoading: true });
+    this._parent.showLoading();
+
     axios
       .post("http://localhost:8000/api/user-signup", this.state.signupData)
       .then((response) => {
+        console.log(response);
+
+        this._parent.hideLoading();
         this.setState({ isLoading: false });
+
         if (response.data.status === 200) {
           this.setState({
             msg: response.data.message,
             signupData: {
-              name: "",
+              nombre_completo: "",
               email: "",
-              phone: "",
-              password: "",
+              clave: "",
             },
           });
-          setTimeout(() => {
-            this.setState({ msg: "" });
-          }, 2000);
+          // setTimeout(() => {
+          //   this.setState({ msg: "" });
+          // }, 4000);
         }
 
         if (response.data.status === "failed") {
-          this.setState({ msg: response.data.message });
-          setTimeout(() => {
-            this.setState({ msg: "" });
-          }, 2000);
+          this.setState({ 
+            status: "failed",
+          });
+          if (response.data.message === "validation_error")
+          {
+              this.setState({ 
+              msg: "Ha ocurrido un Error hhh.",
+              err:{
+                name_c: response.data.errors.nombre_completo,
+                email: response.data.errors.email,
+                clave: response.data.errors.clave,
+              }
+            });
+          }else{
+            this.setState({ 
+              msg: response.data.message,
+            });
+          }
+            
+
+          
+          // setTimeout(() => {
+          //   this.setState({ msg: "" });
+          // }, 4000);
         }
+      }).catch((error) => {
+        console.log(error);
+        this._parent.hideLoading();
+        this.setState({ isLoading: false, status: "failed", });
+
+        this.setState({ 
+          msg: "Ha ocurrido un Error.",
+        });
       });
   };
   render() {
     const isLoading = this.state.isLoading;
     return (
       <div>
-        <Form className="containers shadow rounded-bottom">
+        <Form className="containers">
           <FormGroup>
             <Label for="name">Name</Label>
             <Input
               type="name"
-              name="name"
+              name="nombre_completo"
               placeholder="Enter name"
-              value={this.state.signupData.name}
+              className="input-login"
+              value={this.state.signupData.nombre_completo}
               onChange={this.onChangehandler}
             />
           </FormGroup>
+          <p className="text-danger">{this.state.err.name_c}</p>
           <FormGroup>
             <Label for="email">Email id</Label>
             <Input
               type="email"
               name="email"
               placeholder="Enter email"
+              className="input-login"
               value={this.state.signupData.email}
               onChange={this.onChangehandler}
             />
           </FormGroup>
+          <p className="text-danger">{this.state.err.email}</p>
           <FormGroup>
-            <Label for="phone">Phone Number</Label>
-            <Input
-              type="phone"
-              name="phone"
-              placeholder="Enter phone number"
-              value={this.state.signupData.phone}
-              onChange={this.onChangehandler}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label for="password">Password</Label>
+            <Label for="clave">Password</Label>
             <Input
               type="password"
-              name="password"
+              name="clave"
               placeholder="Enter password"
-              value={this.state.signupData.password}
+              className="input-login"
+              value={this.state.signupData.clave}
               onChange={this.onChangehandler}
             />
           </FormGroup>
-          <p className="text-white">{this.state.msg}</p>
+          <p className="text-danger">{this.state.err.clave}</p>
+          {this.state.status==="failed"?
+            (<p className="text-danger">{this.state.msg}</p>) : 
+            (<p className="text-success">{this.state.msg}</p>)
+          }
+          
           <Button
-            className="text-center mb-4"
-            color="success"
+            className="text-center mb-4 btn-login"
             onClick={this.onSubmitHandler}
           >
             Sign Up
@@ -116,7 +159,7 @@ export default class Signup extends Component {
               <span></span>
             )}
           </Button>
-          <Link to="/sign-in" className="text-white ml-5">I'm already member</Link>
+          <Link to="/login/in/" className="text-white ml-5">I'm already member</Link>
         </Form>
       </div>
     );

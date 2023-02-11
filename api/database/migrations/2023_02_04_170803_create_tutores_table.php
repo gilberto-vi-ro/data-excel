@@ -19,6 +19,7 @@ class CreateTutoresTable extends Migration
             $table->string('curp', 22);
             $table->string('sexo', 20);
             $table->string('n_telefono', 14)->nullable();
+            $table->timestamp('updated_at');
             $table->unsignedBigInteger('id_usuario');
             $table->foreign('id_usuario')
                     ->references('id_usuario')

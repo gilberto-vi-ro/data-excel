@@ -20,7 +20,7 @@ class LoginController extends Controller
         $validator = Validator::make($request->all(), [
             "nombre_completo"=>"required",
             "email"=>"required|email",
-            "pwd"=>"required",
+            "clave"=>"required",
         ]);
 
         if ($validator->fails()) {
@@ -34,9 +34,10 @@ class LoginController extends Controller
         // }
 
         $userDataArray = array(
-            "nombre_completo" => $request->name,
+            "nombre_completo" => $request->nombre_completo,
             "email" => $request->email,
-            "pwd" => md5($request->password),
+            "pwd" => md5($request->clave),
+            "img" => null,
             "tipo" => "0",
             "ultima_vez" => now()
         );
@@ -65,7 +66,7 @@ class LoginController extends Controller
             $request->all(),
             [
                 "email" => "required|email",
-                "pwd" => "required"
+                "clave" => "required"
             ]
         );
 
@@ -78,7 +79,7 @@ class LoginController extends Controller
         $email_status = LoginModel::where("email", $request->email)->first();
         // if email exists then we will check password for the same email
         if (!is_null($email_status)) {
-            $password_status = LoginModel::where("email", $request->email)->where("password", md5($request->password))->first();
+            $password_status = LoginModel::where("email", $request->email)->where("pwd", md5($request->clave))->first();
 
             // if password is correct
             if (!is_null($password_status)) {

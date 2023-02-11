@@ -19,6 +19,7 @@ class CreateInfoEscolarTable extends Migration
             $table->double('ultima_calificacion')->length(2);
             $table->string('tipo_ciclo', 50);
             $table->tinyInteger('grado')->length(2);
+            $table->timestamp('updated_at');
             $table->unsignedBigInteger('id_usuario');
             $table->foreign('id_usuario')
                     ->references('id_usuario')

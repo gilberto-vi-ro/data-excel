@@ -21,6 +21,7 @@ class CreateUsuariosTable extends Migration
             $table->text('img')->nullable()->length(500);
             $table->tinyInteger('tipo')->length(2);
             $table->dateTime('ultima_vez');
+            $table->timestamp('updated_at');
             $table->timestamp('created_at')->default(now());
             //$table->timestamp('created_at')->useCurrent();
         });

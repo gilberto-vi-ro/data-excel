@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import axios from "axios";
-import { NavLink } from "react-router-dom";
+import { NavLink, Navigate } from "react-router-dom";
 
 export default class Signin extends Component {
   constructor(props) {
     super(props);
+    this._parent = this.props._parent.props._parent;
     this.state = {
       email: "",
       password: "",
@@ -26,14 +27,22 @@ export default class Signin extends Component {
   };
 
   onSignInHandler = () => {
+    this.setState({ errMsgEmail: "", errMsgPwd: "" });
+    this.setState({ errMsgEmail: "", errMsgPwd: "" });
+
     this.setState({ isLoading: true });
-    axios
-      .post("http://localhost:8000/api/user-login", {
+    this._parent.showLoading();
+
+
+    axios.post("http://localhost:8000/api/user-login", {
         email: this.state.email,
-        password: this.state.password,
-      })
-      .then((response) => {
+        clave: this.state.password,
+    }).then((response) => {
+        
+        console.log(response);
+        this._parent.hideLoading();
         this.setState({ isLoading: false });
+
         if (response.data.status === 200) {
             localStorage.setItem("isLoggedIn", true);
             localStorage.setItem("userData", JSON.stringify(response.data.data));
@@ -48,11 +57,11 @@ export default class Signin extends Component {
         ) {
           this.setState({
             errMsgEmail: response.data.validation_error.email,
-            errMsgPwd: response.data.validation_error.password,
+            errMsgPwd: response.data.validation_error.clave,
           });
-          setTimeout(() => {
-            this.setState({ errMsgEmail: "", errMsgPwd: "" });
-          }, 2000);
+          // setTimeout(() => {
+          //   this.setState({ errMsgEmail: "", errMsgPwd: "" });
+          // }, 4000);
         } else if (
           response.data.status === "failed" &&
           response.data.success === false
@@ -60,35 +69,41 @@ export default class Signin extends Component {
           this.setState({
             errMsg: response.data.message,
           });
-          setTimeout(() => {
-            this.setState({ errMsg: "" });
-          }, 2000);
+          // setTimeout(() => {
+          //   this.setState({ errMsg: "" });
+          // }, 4000);
         }
       })
       .catch((error) => {
         console.log(error);
+        this._parent.hideLoading();
+        this.setState({ isLoading: false });
       });
   };
 
   render() {
     if (this.state.redirect) {
-      return <NavLink to="/home" />;
+      return <Navigate to="/home" />;
     }
     const login = localStorage.getItem("isLoggedIn");
     if (login) {
-      return <NavLink to="/home" />;
+      return <Navigate to="/home" />
     }
     const isLoading = this.state.isLoading;
-    return (
 
+    return (
+      
         <div>
-          <Form className="containers shadow rounded-bottom">
+         
+          {/* <button onClick={this._parent.showLoading}>show</button> */}
+          <Form className="containers">
             <FormGroup>
               <Label for="email">Email id</Label>
               <Input
                 type="email"
                 name="email"
                 placeholder="Enter email"
+                className="input-login"
                 value={this.state.email}
                 onChange={this.onChangehandler}
               />
@@ -101,6 +116,7 @@ export default class Signin extends Component {
                 type="password"
                 name="password"
                 placeholder="Enter password"
+                className="input-login"
                 value={this.state.password}
                 onChange={this.onChangehandler}
               />
@@ -108,8 +124,7 @@ export default class Signin extends Component {
             </FormGroup>
             <p className="text-danger">{this.state.errMsg}</p>
             <Button
-              className="text-center mb-4"
-              color="success"
+              className="text-center mb-4 btn-login"
               onClick={this.onSignInHandler}
             >
               Sign In
@@ -119,6 +134,7 @@ export default class Signin extends Component {
                   role="status"
                   aria-hidden="true"
                 ></span>
+                
               ) : (
                 <span></span>
               )}

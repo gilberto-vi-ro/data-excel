@@ -1,32 +1,103 @@
+
+*{
+    color: var(--text-color) !important;
+}
+
+
 .m-auto {
     margin: auto;
 }
 
+.img-background {
+    position: absolute;
+    width: 100%;
+    font: 600 16px/18px 'Open Sans', sans-serif;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.login-container{
+    padding: 10px;
+    background-color: var(--primary-color);
+    border-radius: 20px;
+    box-shadow: 2px 2px 2px 2px var(--secondary-color);
+
+}
+
 .containers {
-    background-color: #A2A2A1FF;
     padding: 20px 40px;
-    color: #fff;
     font-weight: 600;
-    box-shadow: 7px -8px 11px -5px rgba(#195190FF);
+    
 }
 .Tab{
     display: flex;
     justify-content: space-between;
 }
 .signUp, .signIn{
-    background-color: #195190FF;
     width:50%;
     font-size: 22px;
-    color: #fff;
-    padding: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     text-align: center;
     text-decoration: none;
+    color : var(--primary-color-light) !important;
 }
 .signIn:hover, .signUp:hover {
     text-decoration: none;
-    color: #fff;
+    background-color: var(--secondary-color);
 }
 .active{
-    color: #fff;
-    background-color: #A2A2A1FF;
+    
+    border-bottom: 2px solid  var(--dark-color);
+    color: var(--text-color) !important;
+    border-bottom: 3px solid  var(--color1);
+}
+
+.form-control{
+    background-color: var(--secondary-color);
+}
+
+
+/* input::placeholder { color: white;} */
+.input-login{
+    background-color: var(--secondary-color);
+    border: 0px;
+	margin: 5px;
+	border-bottom: 3px solid var(--primary-color-light) ;
+	font-size: 12pt;
+	padding: 10px;
+	cursor: pointer;
+    border-radius: 25px;
+    color : var(--primary-color-light) !important;
+}
+
+.input-login:focus{
+    background-color: var(--secondary-color);
+    /* outline: 7px; */
+	box-shadow:1px 1px 10px   var(--secondary-color);
+}
+
+
+ input:-webkit-autofill,   input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,  input:-webkit-autofill:active {
+	/* -webkit-box-shadow: 0 0 0 30px red inset !important; */
+	/* background-color: blue !important; */
+	-webkit-text-fill-color: var(--primary-color-light);
+	transition: background-color 5000s ease-in-out 0s;
+}
+
+
+.btn-login {
+    
+    --bs-btn-bg: var(--color1);
+    --bs-btn-border-color: var(--color1);
+    --bs-btn-hover-bg: var(--color2);
+    --bs-btn-hover-border-color: var(--color2);
+    --bs-btn-focus-shadow-rgb: var(--secondary-color);
+    --bs-btn-active-bg: var(--color2);
+    --bs-btn-active-border-color: var(--color2);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-bg: var(--color1);
+    --bs-btn-disabled-border-color: var(--color1);
 }
