@@ -24,7 +24,7 @@ class LoginModel extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nombre_completo', 'email', 'pwd', 'tipo','ultima_vez'
+        'apellido', 'nombre', 'email', 'pwd', 'tipo','ultima_vez'
     ];
 
     /**

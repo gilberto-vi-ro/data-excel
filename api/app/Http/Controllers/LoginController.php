@@ -19,7 +19,8 @@ class LoginController extends Controller
     {
         try{
             $validator = Validator::make($request->all(), [
-                "nombre_completo"=>"required",
+                "nombre"=>"required",
+                "apellido"=>"required",
                 "email"=>"required|email",
                 "clave"=>"required",
             ]);
@@ -35,7 +36,8 @@ class LoginController extends Controller
             // }
 
             $userDataArray = array(
-                "nombre_completo" => $request->nombre_completo,
+                "nombre" => $request->nombre,
+                "apellido" => $request->apellido,
                 "email" => $request->email,
                 "pwd" => md5($request->clave),
                 "img" => null,
