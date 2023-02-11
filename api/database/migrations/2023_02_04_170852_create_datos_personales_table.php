@@ -23,7 +23,8 @@ class CreateDatosPersonalesTable extends Migration
             $table->double('estatura')->length(2);
             $table->double('peso')->length(2);
             $table->string('n_telefono', 14);
-            $table->timestamp('updated_at');
+            $table->timestamp('created_at')->nullable()->default(now());
+            $table->timestamp('updated_at')->nullable();
             $table->unsignedBigInteger('id_usuario');
             $table->foreign('id_usuario')
                     ->references('id_usuario')
