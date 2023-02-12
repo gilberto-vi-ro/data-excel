@@ -1,6 +1,6 @@
 :root {
   /* ===== Colors ===== */
-  --body-color: ##E8F5FB;
+  
   --color1: rgb(134,43,254);
   --color2: rgb(176, 106, 252);
   --dark-color: rgb(33,32,66);
@@ -9,13 +9,19 @@
   --primary-color-light: rgba(152, 152, 165, 0.9);
   --text-color: rgba(240, 240, 240,0.8);
 
-  
+  /* --body-color: ##E8F5FB; */
   /* --sidebar-color: #DBDCDE; */
   /* --toggle-color: rgb(250, 245, 245); */
   /* --selected-color: rgba(105, 92, 254, 0.3);
   --active-color: rgba(42,40,77, 0.9);
   --nav-var-color: rgba(73, 208, 208,0.98);
   --height-nav-bar: 60px; */
+}
+
+
+*{
+  color: var(--text-color) !important;
+  /* font: 600 16px/18px 'Open Sans', sans-serif; */
 }
 
 .App {

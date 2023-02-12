@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import axios from "axios";
-import { NavLink, Navigate } from "react-router-dom";
+import { Link, NavLink, Navigate } from "react-router-dom";
 
 export default class Signin extends Component {
   constructor(props) {
@@ -27,19 +27,22 @@ export default class Signin extends Component {
   };
 
   onSignInHandler = () => {
-    this.setState({ errMsgEmail: "", errMsgPwd: "" });
-    this.setState({ errMsgEmail: "", errMsgPwd: "" });
+    this.setState({ 
+      errMsgEmail: "",
+      errMsgPwd: "",
+      msg: "",
+      errMsg: "",
+    });
+    
 
     this.setState({ isLoading: true });
     this._parent.showLoading();
 
-
-    axios.post("http://localhost:8000/api/user-login", {
+    axios.post(this._parent.baseUrlApi("user-login"), {
         email: this.state.email,
         clave: this.state.password,
     }).then((response) => {
-        
-        console.log(response);
+      
         this._parent.hideLoading();
         this.setState({ isLoading: false });
 
@@ -49,29 +52,21 @@ export default class Signin extends Component {
           this.setState({
             msg: response.data.message,
             redirect: true,
-          });      
+          });     
         }
-        if (
-          response.data.status === "failed" &&
-          response.data.success === undefined
-        ) {
-          this.setState({
-            errMsgEmail: response.data.validation_error.email,
-            errMsgPwd: response.data.validation_error.clave,
-          });
-          // setTimeout(() => {
-          //   this.setState({ errMsgEmail: "", errMsgPwd: "" });
-          // }, 4000);
-        } else if (
-          response.data.status === "failed" &&
-          response.data.success === false
-        ) {
-          this.setState({
-            errMsg: response.data.message,
-          });
-          // setTimeout(() => {
-          //   this.setState({ errMsg: "" });
-          // }, 4000);
+        if (response.data.status === "failed") {
+          
+          if (response.data.message === "validation_error")
+          {
+            this.setState({
+              errMsgEmail: response.data.errors.email,
+              errMsgPwd: response.data.errors.clave,
+            });
+          }else{
+            this.setState({
+              errMsg: response.data.message,
+            });
+          }
         }
       })
       .catch((error) => {
@@ -82,66 +77,73 @@ export default class Signin extends Component {
   };
 
   render() {
-    if (this.state.redirect) {
-      return <Navigate to="/home" />;
-    }
-    const login = localStorage.getItem("isLoggedIn");
-    if (login) {
-      return <Navigate to="/home" />
-    }
-    const isLoading = this.state.isLoading;
+    const redirect  = this.state.redirect;
+   
+    if (redirect) {
+      return (<div><Navigate to="/home/" push={true} /></div>);
+     
+    }else {
+      const isLoading = this.state.isLoading;
+      return (
+        
+          <div>
+          
+            {/* <button onClick={this._parent.showLoading}>show</button> */}
+            <Form className="containers">
+              <FormGroup>
+                <Label for="email">Email</Label>
+                <Input
+                  type="email"
+                  name="email"
+                  placeholder="Enter email"
+                  className="input-login"
+                  value={this.state.email}
+                  onChange={this.onChangehandler}
+                />
+              </FormGroup>
+              <p className="text-danger txt-msg">{this.state.msg}</p>
+              <p className="text-danger txt-msg">{this.state.errMsgEmail}</p>
+              <FormGroup>
+                <Label for="password">Password</Label>
+                <Input
+                  type="password"
+                  name="password"
+                  placeholder="Enter password"
+                  className="input-login"
+                  value={this.state.password}
+                  onChange={this.onChangehandler}
+                />
+              </FormGroup>
+              <p className="text-danger txt-msg">{this.state.errMsgPwd}</p>
+              <p className="text-danger">{this.state.errMsg}</p>
 
-    return (
-      
-        <div>
-         
-          {/* <button onClick={this._parent.showLoading}>show</button> */}
-          <Form className="containers">
-            <FormGroup>
-              <Label for="email">Email id</Label>
-              <Input
-                type="email"
-                name="email"
-                placeholder="Enter email"
-                className="input-login"
-                value={this.state.email}
-                onChange={this.onChangehandler}
-              />
-              <span className="text-danger">{this.state.msg}</span>
-              <span className="text-danger">{this.state.errMsgEmail}</span>
-            </FormGroup>
-            <FormGroup>
-              <Label for="password">Password</Label>
-              <Input
-                type="password"
-                name="password"
-                placeholder="Enter password"
-                className="input-login"
-                value={this.state.password}
-                onChange={this.onChangehandler}
-              />
-              <span className="text-danger">{this.state.errMsgPwd}</span>
-            </FormGroup>
-            <p className="text-danger">{this.state.errMsg}</p>
-            <Button
-              className="text-center mb-4 btn-login"
-              onClick={this.onSignInHandler}
-            >
-              Sign In
-              {isLoading ? (
-                <span
-                  className="spinner-border spinner-border-sm ml-5"
-                  role="status"
-                  aria-hidden="true"
-                ></span>
-                
-              ) : (
-                <span></span>
-              )}
-            </Button>
-          </Form>
-        </div>
+              <div className="row">
+              <FormGroup className="col-md-6">
+                <Button
+                  className="text-center btn btn-login w-100"
+                  onClick={this.onSignInHandler}
+                >
+                  Sign In
+                  {isLoading ? (
+                    <span
+                      className="spinner-border spinner-border-sm ml-5"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  ) : (
+                    <span></span>
+                  )}
+                </Button>
+              </FormGroup>
+              <FormGroup className="col-md-6 text-center pt-2">
+                <Link to="/modal" className="text-link">Recover password!</Link>
+              </FormGroup>
+            </div>
 
-    );
+            </Form>
+          </div>
+
+      );
+    }
   }
 }

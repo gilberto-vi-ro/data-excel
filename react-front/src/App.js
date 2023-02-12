@@ -13,6 +13,10 @@ export default class App extends Component {
     super()
     this.loadingRef = React.createRef("loading")
   }
+
+  baseUrlApi = (route="") => {
+    return "http://localhost:8000/api/"+route;
+  }
   
   showLoading = () => {
     //  console.log(this.loadingRef)
@@ -42,12 +46,12 @@ export default class App extends Component {
         </div>
         <BrowserRouter>
             <Routes>
-              <Route exact path="/" element={<Navigate to="/login/in/" />} ></Route>
+              <Route exact path="/" element={!login?(<Navigate to="/login/in/" />):(<Navigate to="/home/" />) } ></Route>
               <Route path="/login/" element={<Navigate to="/login/in/" />} ></Route>
               <Route path="/login//*" element={<Login  _parent={this} />}></Route>
               {/* <Route path="/login/" element={<Login isLogged={Home} onLogout={Login} /> } />  */}
               {/* <Route path="/home/" element={<Login isLogged={Home} onLogout={Login} /> } /> */}
-              <Route path="/home/" element={<Home /> } />
+              <Route path="/home/" element={login?(<Home />):(<Navigate to="/login/in/" />) } />
             </Routes>
         </BrowserRouter>
       </>

@@ -10,15 +10,41 @@ export default class Signup extends Component {
     this._parent = this.props._parent.props._parent;
     this.state = {
       signupData: {
-        nombre_completo: "",
+        apellido: "",
+        nombre: "",
         email: "",
         clave: "",
+        confirmar_clave: "",
         isLoading: "",
       },
+      errApellido:"",
+      errNombre:"",
+      errEmail:"",
+      errClave:"",
       status: "",
-      err:{name_c:"",email:"",clave:""},
       msg: "",
     };
+  }
+
+  clearMsgs = ()=>{
+    this.setState({ 
+      errApellido:"",
+      errNombre:"",
+      errEmail:"",
+      errClave:"",
+      status: "",
+      msg: "",
+    });
+  }
+
+  verifyPassword = ()=>{
+    if (this.state.signupData.clave !== this.state.signupData.confirmar_clave){
+      this.setState({ 
+        errClave: "Passwords do not match",
+      });
+      return false;
+    }
+    return true;
   }
 
   onChangehandler = (e, key) => {
@@ -27,35 +53,23 @@ export default class Signup extends Component {
     this.setState({ signupData });
   };
   onSubmitHandler = (e) => {
-    this.setState({ 
-      msg: "",
-      err:{
-        name_c: "",
-        email: "",
-        clave: "",
-      }
-  
-    });
+    this.clearMsgs();
+    if(!this.verifyPassword())
+        return;
+
     e.preventDefault();
     this.setState({ isLoading: true });
     this._parent.showLoading();
 
-    axios
-      .post("http://localhost:8000/api/user-signup", this.state.signupData)
+    axios.post(this._parent.baseUrlApi("user-signup"), this.state.signupData)
       .then((response) => {
-        console.log(response);
-
+        // console.log(response);
         this._parent.hideLoading();
         this.setState({ isLoading: false });
-
         if (response.data.status === 200) {
+          this.clearMsgs();
           this.setState({
             msg: response.data.message,
-            signupData: {
-              nombre_completo: "",
-              email: "",
-              clave: "",
-            },
           });
           // setTimeout(() => {
           //   this.setState({ msg: "" });
@@ -69,33 +83,22 @@ export default class Signup extends Component {
           if (response.data.message === "validation_error")
           {
               this.setState({ 
-              msg: "Ha ocurrido un Error hhh.",
-              err:{
-                name_c: response.data.errors.nombre_completo,
-                email: response.data.errors.email,
-                clave: response.data.errors.clave,
-              }
+                errApellido: response.data.errors.apellido,
+                errNombre: response.data.errors.nombre,
+                errEmail: response.data.errors.email,
+                errClave: response.data.errors.clave,
+                msg: "Ha ocurrido un Error.",
             });
           }else{
             this.setState({ 
               msg: response.data.message,
             });
           }
-            
-
-          
-          // setTimeout(() => {
-          //   this.setState({ msg: "" });
-          // }, 4000);
         }
       }).catch((error) => {
-        console.log(error);
+        //  console.log(error);
         this._parent.hideLoading();
-        this.setState({ isLoading: false, status: "failed", });
-
-        this.setState({ 
-          msg: "Ha ocurrido un Error.",
-        });
+        this.setState({ isLoading: false, status: "failed", msg: "Ha ocurrido un Error."});
       });
   };
   render() {
@@ -107,16 +110,28 @@ export default class Signup extends Component {
             <Label for="name">Name</Label>
             <Input
               type="name"
-              name="nombre_completo"
+              name="nombre"
               placeholder="Enter name"
               className="input-login"
-              value={this.state.signupData.nombre_completo}
+              value={this.state.signupData.nombre}
               onChange={this.onChangehandler}
             />
           </FormGroup>
-          <p className="text-danger">{this.state.err.name_c}</p>
+          <p className="text-danger txt-msg">{this.state.errNombre}</p>
           <FormGroup>
-            <Label for="email">Email id</Label>
+            <Label for="name">Last name</Label>
+            <Input
+              type="name"
+              name="apellido"
+              placeholder="Enter Last name"
+              className="input-login"
+              value={this.state.signupData.apellidodo}
+              onChange={this.onChangehandler}
+            />
+          </FormGroup>
+          <p className="text-danger txt-msg">{this.state.errApellido}</p>
+          <FormGroup>
+            <Label for="email">Email</Label>
             <Input
               type="email"
               name="email"
@@ -126,40 +141,74 @@ export default class Signup extends Component {
               onChange={this.onChangehandler}
             />
           </FormGroup>
-          <p className="text-danger">{this.state.err.email}</p>
-          <FormGroup>
-            <Label for="clave">Password</Label>
-            <Input
-              type="password"
-              name="clave"
-              placeholder="Enter password"
-              className="input-login"
-              value={this.state.signupData.clave}
-              onChange={this.onChangehandler}
-            />
-          </FormGroup>
-          <p className="text-danger">{this.state.err.clave}</p>
+          <p className="text-danger txt-msg">{this.state.errEmail}</p>
+          <div className="row mt-3">
+            <FormGroup className="col-md-6">
+              <Label for="clave">Password</Label>
+              <Input
+                type="password"
+                name="clave"
+                maxLength="10"
+                placeholder="Enter password"
+                className="input-login"
+                value={this.state.signupData.clave}
+                onChange={this.onChangehandler}
+              />
+            </FormGroup>
+            <FormGroup className="col-md-6">
+              <Label for="confirmar_clave">Confirm password</Label>
+              <Input
+                type="password"
+                name="confirmar_clave"
+                maxLength="10"
+                placeholder="Confirm password"
+                className="input-login"
+                value={this.state.signupData.confirmar_clave}
+                onChange={this.onChangehandler}
+              />
+            </FormGroup>
+          </div>
+          {/* <div className="row mt-3">
+            <div className="col-md-6">
+                <label className="text-color">Concept</label>
+                <input className="input-login" type="text" name="item_description" maxLength="100" defaultValue="item 1" placeholder="paying 1 USD" required=""/>
+            </div>
+            <div className="col-md-6">
+                <label className="text-color">Amount</label>
+                <input type="number" step="0.1" className="input-login" name="item_total" defaultValue="1" placeholder="1" required=""/>
+            </div>
+        </div> */}
+
+
+
+          <p className="text-danger txt-msg">{this.state.errClave}</p>
           {this.state.status==="failed"?
             (<p className="text-danger">{this.state.msg}</p>) : 
             (<p className="text-success">{this.state.msg}</p>)
           }
           
-          <Button
-            className="text-center mb-4 btn-login"
-            onClick={this.onSubmitHandler}
-          >
-            Sign Up
-            {isLoading ? (
-              <span
-                className="spinner-border spinner-border-sm ml-5"
-                role="status"
-                aria-hidden="true"
-              ></span>
-            ) : (
-              <span></span>
-            )}
-          </Button>
-          <Link to="/login/in/" className="text-white ml-5">I'm already member</Link>
+          <div className="row">
+            <FormGroup className="col-md-6">
+              <Button
+                className="text-center btn btn-login w-100"
+                onClick={this.onSubmitHandler}
+              >
+                Sign Up
+                {isLoading ? (
+                  <span
+                    className="spinner-border spinner-border-sm ml-5"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                ) : (
+                  <span></span>
+                )}
+              </Button>
+            </FormGroup>
+            <FormGroup className="col-md-6 text-center pt-2">
+              <Link to="/login/in/" className="text-link">I'm already member</Link>
+            </FormGroup>
+          </div>
         </Form>
       </div>
     );
