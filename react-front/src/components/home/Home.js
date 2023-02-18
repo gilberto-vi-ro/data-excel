@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { Button } from "reactstrap";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
+import Navbar from "./navbar/Navbar.js";
 
+//https://reactstrap.github.io/?path=/docs/components-navbar--props
 export default class Home extends Component {
   constructor(props) {
     super(props);
@@ -32,23 +34,29 @@ export default class Home extends Component {
       // window.location.href = "/login";
     }else {
       return (
-        <div className="container  border">
-          <h3> HomePage</h3>
-          <div className="row">
-            <div className="col-xl-9 col-sm-12 col-md-9 text-dark">
-              <h5> Welcome, {user.nombre} </h5> You have Logged in
-              successfully.
-            </div>
-            <div className="col-xl-3 col-sm-12 col-md-3">
-              <Button
-                className="btn btn-primary text-right"
-                onClick={this.onLogoutHandler}
-              >
-                Logout
-              </Button>
+
+        <>
+          <Navbar />
+          <div style={{"backgroundColor":"var(--text-color)","minHeight":"calc(100vh)","paddingTop":"80px",}}>
+            <div className="container  border">
+              <h3> HomePage</h3>
+              <div className="row">
+                <div className="col-xl-9 col-sm-12 col-md-9 text-dark">
+                  <h5> Welcome, {user.nombre} </h5> You have Logged in
+                  successfully.
+                </div>
+                <div className="col-xl-3 col-sm-12 col-md-3">
+                  <Button
+                    className="btn btn-primary text-right"
+                    onClick={this.onLogoutHandler}
+                  >
+                    Logout
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </>
       );
     }
     

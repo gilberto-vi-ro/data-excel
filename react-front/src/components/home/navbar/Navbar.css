@@ -1,0 +1,25 @@
+.container-fluid{
+    padding: 0px;
+} 
+
+.navbar{
+    background-color: var(--color2);
+    padding: 0px;
+
+}
+
+.navbar-collapse{
+    padding: 5px;
+    padding-right: 20px;
+}
+
+.navbar-toggler{
+    margin: 5px !important;
+}
+
+@media (max-width: 768px){
+    .navbar-collapse{
+        background-color: var(--secondary-color);
+        padding-right: 5px;
+    }
+}
