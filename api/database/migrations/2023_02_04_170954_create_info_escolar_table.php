@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateInfoEscolarTable extends Migration
 {
@@ -19,7 +20,7 @@ class CreateInfoEscolarTable extends Migration
             $table->double('ultima_calificacion')->length(2);
             $table->string('tipo_ciclo', 50);
             $table->tinyInteger('grado')->length(2);
-            $table->timestamp('created_at')->nullable()->default(now());
+            $table->timestamp('created_at')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
             $table->unsignedBigInteger('id_usuario');
             $table->foreign('id_usuario')

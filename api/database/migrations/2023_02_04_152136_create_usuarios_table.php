@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateUsuariosTable extends Migration
 {
@@ -22,7 +23,7 @@ class CreateUsuariosTable extends Migration
             $table->text('img')->nullable()->length(500);
             $table->tinyInteger('tipo')->length(2);
             $table->dateTime('ultima_vez');
-            $table->timestamp('created_at')->nullable()->default(now());
+            $table->timestamp('created_at')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
             //$table->timestamp('created_at')->useCurrent();
             

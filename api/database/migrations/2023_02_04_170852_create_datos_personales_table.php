@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateDatosPersonalesTable extends Migration
 {
@@ -23,7 +24,7 @@ class CreateDatosPersonalesTable extends Migration
             $table->double('estatura')->length(2);
             $table->double('peso')->length(2);
             $table->string('n_telefono', 14);
-            $table->timestamp('created_at')->nullable()->default(now());
+            $table->timestamp('created_at')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
             $table->unsignedBigInteger('id_usuario');
             $table->foreign('id_usuario')
