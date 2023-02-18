@@ -1,6 +1,7 @@
 import React, { Component, useRef } from "react";
 import "./App.css";
 import Login from "./components/login/Login.js";
+import Loader from "./components/loader/Loader.js";
 import Home from "./components/home/Home.js";
 import { BrowserRouter , Routes, Router, Route, Navigate} from "react-router-dom";
 
@@ -10,8 +11,11 @@ import { BrowserRouter , Routes, Router, Route, Navigate} from "react-router-dom
 export default class App extends Component {
   
   constructor() {
-    super()
-    this.loadingRef = React.createRef("loading")
+    super();
+    this.loadingRef = React.createRef("loading");
+    this.state  = {
+      activeLoader: false,
+    };
   }
 
   baseUrlApi = (route="") => {
@@ -20,12 +24,14 @@ export default class App extends Component {
   
   showLoading = () => {
     //  console.log(this.loadingRef)
-    this.loadingRef.current.style.display = 'block';
+    // this.loadingRef.current.style.display = 'block';
+    this.setState({activeLoader: true});
   }
 
   hideLoading = () => {
     // console.log(this.loadingRef)
-    this.loadingRef.current.style = {"display": 'none'};
+    // this.loadingRef.current.style = {"display": 'none'};
+    this.setState({activeLoader: false});
   }
 
   render() {
@@ -36,14 +42,9 @@ export default class App extends Component {
       <>
         {/* <button onClick={this.showLoading}>show</button>
         <button onClick={() => this.hideLoading() }>hide</button> */}
-        <div ref = { this.loadingRef } className="loading">
-          <div className="loadingio-spinner-spinner-i2tz3ns254l">
-            <div className="ldio-p150pq3wp2e">
-              <div></div><div></div><div></div><div></div><div></div><div></div>
-              <div></div><div></div><div></div><div></div><div></div><div></div>
-            </div>
-          </div>
-        </div>
+        {/* <div ref = { this.loadingRef } className="loading"></div> */}
+        <Loader show={this.state.activeLoader} />
+        
         <BrowserRouter>
             <Routes>
               <Route exact path="/" element={!login?(<Navigate to="/login/in/" />):(<Navigate to="/home/" />) } ></Route>
