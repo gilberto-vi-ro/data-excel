@@ -17,6 +17,27 @@
     margin: 5px !important;
 }
 
+.dropdown-menu{
+    margin-top: 5px;
+    background-color: var(--secondary-color);
+}
+.dropdown-item a{
+    text-decoration: none;
+}
+.dropdown-item:hover{
+    background-color: var(--color2);
+}
+
+.img-logo{
+    background-color: rgb(243, 243, 243);
+    height: 40px;
+    border-radius: 5px;
+}
+
+.btn-bg{
+    background-color:  var(--secondary-color);
+}
+
 @media (max-width: 768px){
     .navbar-collapse{
         background-color: var(--secondary-color);

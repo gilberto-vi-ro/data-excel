@@ -1,6 +1,6 @@
 
 import React, { Component } from "react";
-import BG from "../../img/bg3.jpg";
+import BG from "../../img/bg/bg3.jpg";
 import "./login.css";
 import Signup from "./signUp/Signup.js";
 import Signin from "./signIn/Signin.js";

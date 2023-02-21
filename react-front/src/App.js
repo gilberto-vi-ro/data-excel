@@ -52,7 +52,7 @@ export default class App extends Component {
               <Route path="/login//*" element={<Login  _parent={this} />}></Route>
               {/* <Route path="/login/" element={<Login isLogged={Home} onLogout={Login} /> } />  */}
               {/* <Route path="/home/" element={<Login isLogged={Home} onLogout={Login} /> } /> */}
-              <Route path="/home/" element={login?(<Home />):(<Navigate to="/login/in/" />) } />
+              <Route path="/home//*" element={login?(<Home />):(<Navigate to="/login/in/" />) } />
             </Routes>
         </BrowserRouter>
       </>

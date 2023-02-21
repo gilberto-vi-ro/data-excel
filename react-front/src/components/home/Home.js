@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "reactstrap";
-import { Navigate } from "react-router-dom";
+import { Navigate, Routes, Route } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./navbar/Navbar.js";
 
@@ -15,50 +15,25 @@ export default class Home extends Component {
     };
   }
 
-  onLogoutHandler = () => {
-    localStorage.clear();
-    this.setState({
-      redirect: true,
-    });
-
-  };
+  
   render() {
     const user = this.state.data;
-    const navigate = this.state.redirect;
-    if (navigate) {
-      return (
-        <div>
-          <Navigate to="/login/" push={true} />
-        </div>
-      )
-      // window.location.href = "/login";
-    }else {
-      return (
+    
+    return (
 
-        <>
-          <Navbar />
-          <div style={{"backgroundColor":"var(--text-color)","minHeight":"calc(100vh)","paddingTop":"80px",}}>
-            <div className="container  border">
-              <h3> HomePage</h3>
-              <div className="row">
-                <div className="col-xl-9 col-sm-12 col-md-9 text-dark">
-                  <h5> Welcome, {user.nombre} </h5> You have Logged in
-                  successfully.
-                </div>
-                <div className="col-xl-3 col-sm-12 col-md-3">
-                  <Button
-                    className="btn btn-primary text-right"
-                    onClick={this.onLogoutHandler}
-                  >
-                    Logout
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
-      );
-    }
+      <>
+        <Navbar />
+        <div style={{"backgroundColor":"var(--text-color)","minHeight":"calc(100vh)","paddingTop":"80px",}}>
+              <Routes>
+                <Route  path="/home/info-tutor/" element={<div><h1>bienvenido a info tutor</h1></div>}></Route>
+                <Route  path="/home/info-escolar/" element={<h1>benvenido a info escolar</h1>}></Route>
+                <Route  path="/home/info-personal/" element={<h1>bienvenido a info personal</h1>}></Route>
+                <Route  path="/home/perfil/" element={<h1>bienvenido a perfil</h1>}></Route>
+              </Routes>
+        </div>
+      </>
+    );
+    
     
   }
 }
