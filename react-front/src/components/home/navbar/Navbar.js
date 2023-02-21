@@ -1,5 +1,6 @@
 import "./Navbar.css";
-import React, { useState } from 'react';
+import React, { useState, ReactDOM, useRef, useEffect } from 'react';
+import { useLocation } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -19,18 +20,41 @@ function MyNavbar(args) {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
-  
+
+    const divNav = useRef(null);
+
+    const ActiveNavLink = () => {
+      const location = useLocation();
+      useEffect(() => {
+        //console.log(divNav);
+        if (divNav.current!== null) {
+          
+          const navLinks = divNav.current.querySelectorAll('.nav-item');
+          let href = null;
+          navLinks.forEach((link) => {
+            href = link.querySelector(".nav-link").getAttribute("href");
+          
+            if(location.pathname.indexOf(href) !== -1)
+              link.classList.add("active");
+            console.log(link);
+          });
+        }
+       });
+       
+    };
+
+    ActiveNavLink();
     return (
-      <div>
+      <div ref={divNav}>
         <Navbar {...args} expand={"md"} fixed={"top"} >
           <NavbarBrand href="/" className="ms-2">reactstrap</NavbarBrand>
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar >
             <Nav className="ms-auto" navbar>
               <NavItem>
-                <NavLink href="/components/">Components</NavLink>
+                <NavLink  href="/home">Home</NavLink>
               </NavItem>
-              <NavItem  className="active">
+              <NavItem>
                 <NavLink href="https://github.com/reactstrap/reactstrap">
                   GitHub
                 </NavLink>
@@ -46,8 +70,9 @@ function MyNavbar(args) {
                   <DropdownItem>Reset</DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
-              
-                <NavbarText><NavItem>Simple Text </NavItem></NavbarText>
+              <NavItem>
+                <NavLink  href="##">Simple Text</NavLink>
+              </NavItem>
              
             </Nav>
             
@@ -55,7 +80,6 @@ function MyNavbar(args) {
         </Navbar>
       </div>
     );
-  
 }
 
 export default MyNavbar;
