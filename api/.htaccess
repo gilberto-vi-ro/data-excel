@@ -1,5 +1,0 @@
-Options All -Indexes
-Options +FollowSymlinks
-RewriteEngine on
-RewriteBase /
-#RewriteRule ^$ 8080
