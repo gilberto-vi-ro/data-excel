@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import c from "../../../const.json";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import axios from "axios";
 import { Link, NavLink, Navigate } from "react-router-dom";
@@ -37,11 +38,19 @@ export default class Signin extends Component {
 
     this.setState({ isLoading: true });
     this._parent.showLoading();
+  
+    const config = {
+      url: c.baseUrlApi+"user-login",
+      method: 'POST',
+      headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+          'Content-Type': 'application/json',
+      },
+      data: JSON.stringify({email: this.state.email, clave: this.state.password,}),
+    };
 
-    axios.post(this._parent.baseUrlApi("user-login"), {
-        email: this.state.email,
-        clave: this.state.password,
-    }).then((response) => {
+    axios(config).then((response) => {
       
         this._parent.hideLoading();
         this.setState({ isLoading: false });
@@ -70,9 +79,8 @@ export default class Signin extends Component {
         }
       })
       .catch((error) => {
-        console.log(error);
         this._parent.hideLoading();
-        this.setState({ isLoading: false });
+        this.setState({errMsg: error.message, isLoading: false });
       });
   };
 

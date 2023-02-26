@@ -1,5 +1,6 @@
 import "./Navbar.css";
 import Logo from "../../../img/logo/INPI.png";
+import c from "../../../const.json";
 import React, { useState, ReactDOM, useRef, useEffect } from 'react';
 import { useLocation,Navigate,Link,useNavigate } from "react-router-dom";
 import {
@@ -46,7 +47,8 @@ function MyNavbar(args) {
           let href = null;
           navLinks.forEach((link) => {
             href = link.querySelector(".nav-link").getAttribute("href");
-            if(location.pathname === href){
+      
+            if((c.baseRoute + location.pathname) === href){
               link.classList.add("active"); return;
             }
               

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import c from "../../../const.json";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import axios from "axios";
 import { Link } from "react-router-dom";
+
 
 export default class Signup extends Component {
   // userData;
@@ -61,7 +63,7 @@ export default class Signup extends Component {
     this.setState({ isLoading: true });
     this._parent.showLoading();
 
-    axios.post(this._parent.baseUrlApi("user-signup"), this.state.signupData)
+    axios.post(c.baseUrlApi+"user-signup", this.state.signupData)
       .then((response) => {
         // console.log(response);
         this._parent.hideLoading();
@@ -98,7 +100,7 @@ export default class Signup extends Component {
       }).catch((error) => {
         //  console.log(error);
         this._parent.hideLoading();
-        this.setState({ isLoading: false, status: "failed", msg: "Ha ocurrido un Error."});
+        this.setState({ isLoading: false, status: "failed", msg: error.message});
       });
   };
   render() {

@@ -1,5 +1,6 @@
 import React, { Component, useRef } from "react";
 import "./App.css";
+import c from "./const.json";
 import Login from "./components/login/Login.js";
 import Loader from "./components/loader/Loader.js";
 import Home from "./components/home/Home.js";
@@ -19,7 +20,7 @@ export default class App extends Component {
   }
 
   baseUrlApi = (route="") => {
-    return "http://localhost:8000/api/"+route;
+    return c.baseUrlApi+route;
   }
   
   showLoading = () => {
@@ -45,9 +46,9 @@ export default class App extends Component {
         {/* <div ref = { this.loadingRef } className="loading"></div> */}
         <Loader show={this.state.activeLoader} />
         
-        <BrowserRouter>
+        <BrowserRouter basename={c.baseRoute}>
             <Routes>
-              <Route exact path="/" element={!login?(<Navigate to="/login/in/" />):(<Navigate to="/home/" />) } ></Route>
+              <Route exact path="/" element={!login?(<Navigate to={"/login/in/"} />):(<Navigate to="/home/" />) } ></Route>
               <Route path="/login/" element={<Navigate to="/login/in/" />} ></Route>
               <Route path="/login//*" element={<Login  _parent={this} />}></Route>
               {/* <Route path="/login/" element={<Login isLogged={Home} onLogout={Login} /> } />  */}
