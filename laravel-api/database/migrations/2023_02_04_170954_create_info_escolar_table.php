@@ -16,10 +16,12 @@ class CreateInfoEscolarTable extends Migration
     {
         Schema::create('info_escolar', function (Blueprint $table) {
             $table->id('id_info_escolar');
-            $table->string('nivel_estudio', 50);
-            $table->double('ultima_calificacion')->length(2);
-            $table->string('tipo_ciclo', 50);
-            $table->tinyInteger('grado')->length(2);
+            $table->string('escolaridad', 50)->nullable();
+            $table->string('nombre_escuela', 250)->nullable();
+            $table->string('clave_escolar', 100)->nullable();
+            $table->string('modalidad', 50)->nullable();
+            $table->tinyInteger('grado')->length(2)->nullable();
+            $table->double('ultima_calificacion')->length(2)->nullable();
             $table->timestamp('created_at')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
             $table->unsignedBigInteger('id_usuario');

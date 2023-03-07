@@ -21,9 +21,9 @@ class CreateDatosPersonalesTable extends Migration
             $table->dateTime('fecha_nac');
             $table->text('domicilio_origen')->length(500);
             $table->string('sexo', 20);
-            $table->double('estatura')->length(2);
-            $table->double('peso')->length(2);
-            $table->string('n_telefono', 14);
+            $table->double('estatura')->length(2)->nullable();
+            $table->double('peso')->length(2)->nullable();
+            $table->string('n_telefono', 14)->nullable();
             $table->timestamp('created_at')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
             $table->unsignedBigInteger('id_usuario');
