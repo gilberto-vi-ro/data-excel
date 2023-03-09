@@ -1,11 +1,15 @@
+import "./InfoResponsibles.css";
+import c from "../../const.json";
+import Navbar from "../home/navbar/Navbar.js";
+
 import React, { Component } from "react";
 import { Button } from "reactstrap";
 import { Navigate, Routes, Route } from "react-router-dom";
-import axios from "axios";
-import Navbar from "./navbar/Navbar.js";
+
+
 
 //https://reactstrap.github.io/?path=/docs/components-navbar--props
-export default class Home extends Component {
+export default class InfoResponsibles extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,7 +28,7 @@ export default class Home extends Component {
       <>
         <Navbar />
         <div className="body-container">
-              Hola home
+              hola mundo
         </div>
       </>
     );

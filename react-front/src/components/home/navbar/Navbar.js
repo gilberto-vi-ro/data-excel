@@ -37,7 +37,7 @@ function MyNavbar(args) {
           removeActive(navLinks);
           const idDropdownToggle= divNav.current.querySelector('#idDropdownToggle');
           
-          if( location.pathname.indexOf("/info-tutor") !== -1 
+          if( location.pathname.indexOf("/info-responsables") !== -1 
           || location.pathname.indexOf("/info-escolar") !== -1 
           || location.pathname.indexOf("/info-personal") !== -1 )
             idDropdownToggle.classList.add("active");
@@ -91,10 +91,10 @@ function MyNavbar(args) {
                   DATOS
                 </DropdownToggle>
                 <DropdownMenu end={true}>
-                  <DropdownItem><Link to="info-tutor">Tutor</Link></DropdownItem>
-                  <DropdownItem><Link to="info-escolar">Escolar</Link></DropdownItem>
+                  <DropdownItem><Link to="/info-responsables">Responsables</Link></DropdownItem>
+                  <DropdownItem><Link to="/info-escolar">Escolar</Link></DropdownItem>
                   {/* <DropdownItem divider /> */}
-                  <DropdownItem><Link to="info-personal">Personal</Link></DropdownItem>
+                  <DropdownItem><Link to="/info-personal">Personal</Link></DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
               <NavItem>

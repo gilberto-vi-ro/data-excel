@@ -33,6 +33,13 @@
   pointer-events: none;
 }
 
+.body-container{
+  background-color: var(--text-color);
+  min-height:calc(100vh);
+  padding-top:80px;
+  color: var(--dark-color) !important;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
