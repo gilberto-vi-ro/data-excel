@@ -1,5 +1,7 @@
 import React, { Component, useRef } from "react";
 import "./App.css";
+import "./components/font-awesome/FontAwesome.js";
+
 import c from "./const.json";
 import Login from "./components/login/Login.js";
 import Loader from "./components/loader/Loader.js";
@@ -7,7 +9,7 @@ import Home from "./components/home/Home.js";
 import InfoResponsibles from "./components/info-responsibles/InfoResponsibles.js";
 import InfoSchool from "./components/info-school/InfoSchool.js";
 import InfoPersonal from "./components/info-personal/InfoPersonal.js";
-import Perfil from "./components/perfil/Perfil.js";
+import Profile from "./components/profile/Profile.js";
 
 import { BrowserRouter , Routes, Router, Route, Navigate} from "react-router-dom";
 
@@ -62,7 +64,7 @@ export default class App extends Component {
               <Route  path="/info-responsables//*" element={login?(<InfoResponsibles />):(<Navigate to="/login/in/" />) }></Route>
               <Route  path="/info-escolar//*" element={login?(<InfoSchool />):(<Navigate to="/login/in/" />) }></Route>
               <Route  path="/info-personal//*" element={login?(<InfoPersonal />):(<Navigate to="/login/in/" />) }></Route>
-              <Route  path="/perfil//*" element={login?(<Perfil />):(<Navigate to="/login/in/" />) }></Route>
+              <Route  path="/perfil//*" element={login?(<Profile />):(<Navigate to="/login/in/" />) }></Route>
             </Routes>
         </BrowserRouter>
       </>
