@@ -1,0 +1,112 @@
+.row-info{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.rounded-l{
+    border-top-left-radius: 1rem; 
+    border-bottom-left-radius: 1rem;
+}
+.rounded-r{
+    border-top-right-radius: 1rem; 
+    border-bottom-right-radius: 1rem;
+}
+.gradient-custom {
+    /* fallback for old browsers */
+    background: var(--color2);
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right bottom, var(--color2), var(--secondary-color));
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right bottom, var(--color2), var(--secondary-color));
+}
+.bg-color{
+    background-color: var(--primary-color);
+}
+.vh-100-80px{
+    height: calc(100vh - 80px);
+}
+.img-fluid{
+    cursor: pointer;
+}
+.img-edit{
+    position: absolute;
+    color: var(--text-color);
+    margin-top: 80px;
+    margin-left: -10px;
+    cursor: pointer;
+}
+.mytext-dark{
+    color: var(--color2) !important;
+}
+
+.mytext-light{
+    color: var(--text-color) !important;
+}
+
+/* input::placeholder { color: white;} */
+.input-profile{
+    background-color: transparent;
+    border: 0px;
+	/* margin: 5px; */
+    
+	border: none ;
+	font-size: 12pt;
+	padding: 5px;
+    width: 100%;
+	cursor: pointer;
+    border-radius: 25px;
+    color : var(--primary-color-light) !important;
+}
+.input-profile.bordered{
+    border: 1px solid var(--primary-color-light) ;
+}
+
+.input-profile:focus,.input-profile:active{
+    background-color: transparent;
+    outline: none;
+	box-shadow:1px 1px 10px var(--primary-color);
+}
+
+
+ input:-webkit-autofill,   input:-webkit-autofill:hover,
+ input:-webkit-autofill:focus,  input:-webkit-autofill:active {
+	-webkit-text-fill-color: transparent;
+	transition: background-color 5000s ease-in-out 0s;
+}
+
+hr{
+    border-top: 2px solid;
+}
+
+.btn-profile {
+    
+    --bs-btn-bg: var(--color2);
+    --bs-btn-border-color: var(--color2);
+    --bs-btn-hover-color: var(--text-color);
+    --bs-btn-hover-bg: var(--color1);
+    --bs-btn-hover-border-color: var(--color1);
+    --bs-btn-focus-shadow-rgb: var(--secondary-color);
+    --bs-btn-active-bg: var(--color1);
+    --bs-btn-active-border-color: var(--color1);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-bg: var(--primary-color-light);
+    --bs-btn-disabled-border-color: var(--color2);
+    color: var(--text-color);
+    padding: 8px;
+    border-radius: 20px;
+}
+
+@media (max-width: 768px){
+    .rounded-l{
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;  
+        border-bottom-left-radius: 0rem;
+    }
+    .rounded-r{
+        border-top-right-radius: 0rem; 
+        border-bottom-right-radius: 1rem;
+        border-bottom-left-radius: 1rem;
+    }
+}

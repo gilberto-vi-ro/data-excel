@@ -30,6 +30,8 @@ Route::controller($nc.ProfileController::class)->group( function(){
     Route::post("profile-create/", "create");
     Route::get("profile-show/{id}", "show");
     Route::put("profile-update/", "update");
+    Route::post("profile-updateImg/", "updateImg");
+    Route::get("profile-users/{url}", "getImgUsers");
     Route::delete("profile-destroy/{id}", "destroy");
 
 });

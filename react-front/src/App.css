@@ -3,7 +3,7 @@
   
   --color1: rgb(134,43,254);
   --color2: rgb(176, 106, 252);
-  --dark-color: rgb(33,32,66);
+  --dark-color: rgba(42,40,77, 0.9);
   --primary-color: rgba(42,40,77, 0.9);
   --secondary-color: rgba(70,68,104, 0.9);
   --primary-color-light: rgba(152, 152, 165, 0.9);
@@ -20,7 +20,7 @@
 
 
 *{
-  color: var(--text-color) !important;
+  /* color: var(--text-color) !important; */
   /* font: 600 16px/18px 'Open Sans', sans-serif; */
 }
 

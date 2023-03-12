@@ -88,6 +88,22 @@ class ProfileController extends Controller
         
     }
 
+    public function getImgUsers($url=null){
+        return response()->json([
+            ["url"=>"http://localhost:8000/img/female.jpg","name"=>"female"], 
+            ["url"=>"http://localhost:8000/img/male.png","name"=>"male"]
+        ]);
+    }
+
+    public function updateImg(Request $request){
+        //header('Access-Control-Allow-Origin: *');
+        // header('Access-Control-Allow-Methods: POST'); 
+        // header('Access-Control-Allow-Headers: Origin, X-Requested-With,Authorization,  Content-Type, Accept');
+        if($request->hasFile("profile-img"));
+        return true;
+    }
+
+
     /**
      * Remove the specified resource from storage.
      *

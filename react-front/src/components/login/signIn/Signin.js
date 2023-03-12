@@ -88,8 +88,8 @@ export default class Signin extends Component {
     const redirect  = this.state.redirect;
    
     if (redirect) {
-      return (<div><Navigate to="/home/" /></div>);
-      // return (<div><Navigate to="/home/" push={true} /></div>);//push recarga la pagina
+      return (<div><Navigate to="/home" /></div>);
+      // return (<div><Navigate to="/home" push={true} /></div>);//push recarga la pagina
      
     }else {
       const isLoading = this.state.isLoading;

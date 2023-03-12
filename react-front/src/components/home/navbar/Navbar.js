@@ -98,7 +98,7 @@ function MyNavbar(args) {
                 </DropdownMenu>
               </UncontrolledDropdown>
               <NavItem>
-                <Link to="/home/perfil" className="nav-link">PERFIL</Link>
+                <Link to="/perfil" className="nav-link">PERFIL</Link>
               </NavItem>
               <button className="btn btn-secondary btn-bg text-right" onClick={()=>onLogoutHandler()}>
                     SALIR

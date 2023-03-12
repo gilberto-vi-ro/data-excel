@@ -23,7 +23,7 @@
 .containers {
     padding: 20px 40px;
     font-weight: 600;
-    
+    color: var(--text-color) !important;
 }
 .containers .txt-msg{
     min-height: 15px;
