@@ -84,8 +84,8 @@
 }
 
 
- input:-webkit-autofill,   input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,  input:-webkit-autofill:active {
+.input-login:-webkit-autofill,  .input-login:-webkit-autofill:hover,
+ .input-login:-webkit-autofill:focus, .input-login:-webkit-autofill:active {
 	/* -webkit-box-shadow: 0 0 0 30px red inset !important; */
 	/* background-color: blue !important; */
 	-webkit-text-fill-color: var(--primary-color-light);

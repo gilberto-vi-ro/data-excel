@@ -17,22 +17,26 @@ export default class Perfil extends Component {
     super(props);
     this.pwdRef = React.createRef("pwdRef");
     this.confirmPwdRef = React.createRef("confirmPwdRef");
+    this.userData = JSON.parse(localStorage.getItem("userData"));
     this.state = {
       edit: false,
       show_confirm_pwd: false,
       redirect: false,
-      data: JSON.parse(localStorage.getItem("userData")),
-      name: "loading...",
-      last_name: "loading...",
-      email: "loading...",
-      pwd: "default",
-      confirm_pwd: "default",
-      last_time:"loading...",
       isLoading: false,
       msg: "loading...",
+
+      name: this.userData.nombre,
+      last_name: this.userData.apellido,
+      email: this.userData.email,
+      pwd: "default",
+      confirm_pwd: "default",
+      last_time:this.userData.ultima_vez,
+      
     };
     
   }
+  
+
   handlerEdit = ()=>{
     this.setState({
       edit : !this.state.edit,
@@ -77,7 +81,7 @@ export default class Perfil extends Component {
   };
 
   onSubmitHandler = ()=>{
-    console.log(this.state.data);
+    // console.log(this.state.data);
   }
 
   
@@ -94,7 +98,7 @@ export default class Perfil extends Component {
         <Navbar />
         <div className="body-container">
           <section className="vh-100-80px">
-            {/* <UploadImages /> */}
+            <UploadImages />
             <div className="container h-100">
               <div className="row d-flex justify-content-center align-items-center h-100">
                 <div className="col col-lg-8 mb-4 mb-lg-0">
