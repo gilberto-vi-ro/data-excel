@@ -99,8 +99,9 @@ class ProfileController extends Controller
         //header('Access-Control-Allow-Origin: *');
         // header('Access-Control-Allow-Methods: POST'); 
         // header('Access-Control-Allow-Headers: Origin, X-Requested-With,Authorization,  Content-Type, Accept');
-        if($request->hasFile("profile-img"));
-        return true;
+        // if($request->hasFile("profile-img"));
+        // return true;
+        return response()->json("200");
     }
 
 
