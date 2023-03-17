@@ -64,7 +64,7 @@ export default class App extends Component {
               <Route  path="/info-responsables//*" element={login?(<InfoResponsibles />):(<Navigate to="/login/in/" />) }></Route>
               <Route  path="/info-escolar//*" element={login?(<InfoSchool />):(<Navigate to="/login/in/" />) }></Route>
               <Route  path="/info-personal//*" element={login?(<InfoPersonal />):(<Navigate to="/login/in/" />) }></Route>
-              <Route  path="/perfil//*" element={login?(<Profile />):(<Navigate to="/login/in/" />) }></Route>
+              <Route  path="/perfil//*" element={login?(<Profile _parent={this} />):(<Navigate to="/login/in/" />) }></Route>
             </Routes>
         </BrowserRouter>
       </>

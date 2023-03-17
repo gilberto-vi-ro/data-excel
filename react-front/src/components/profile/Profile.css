@@ -72,7 +72,7 @@
 
  .input-profile:-webkit-autofill,   .input-profile:-webkit-autofill:hover,
  .input-profile:-webkit-autofill:focus,  .input-profile:-webkit-autofill:active {
-	-webkit-text-fill-color: transparent;
+	-webkit-text-fill-color: var(--primary-color-light);
 	transition: background-color 5000s ease-in-out 0s;
 }
 

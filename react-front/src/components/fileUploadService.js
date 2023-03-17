@@ -7,26 +7,31 @@ class FileUploadService {
    return axios.create({
         baseURL: c.baseUrlApi,
         headers: {
-          // 'Access-Control-Allow-Origin': 'http://localhost:3000/',
-          // 'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          "Access-Control-Allow-Origin": "*",
         },
         withCredentials: false
       })
  }   
-  upload(route, file, onUploadProgress) {
+  upload(route, data, onUploadProgress) {
     
     let formData = new FormData();
 
-    formData.append("profile-img", file);
+    formData.append("profile-img", data.file);
+    formData.append("idUser", data.idUser);
 
     return this.http().post(route, formData, {
       headers: {
       
         "Content-Type": "multipart/form-data",
-        "Access-Control-Allow-Origin": "Content-Type",
+        "Access-Control-Allow-Origin": "*",
+        // "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+        // "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
+        // "Access-Control-Allow-Credentials": "true",
       },
       onUploadProgress,
     });
+
   }
 
   getFiles(route) {

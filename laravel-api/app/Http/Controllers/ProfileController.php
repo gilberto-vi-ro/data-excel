@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use PDO;
 use PDOException;
 use Exception;
+use Illuminate\Validation\Rules\Exists;
 
 class ProfileController extends Controller
 {
@@ -73,9 +74,8 @@ class ProfileController extends Controller
             $profile->nombre = $request->name;
             if($request->email !="default")
                 $profile->email = $request->email;
-            $profile->pwd = $request->pwd;
-            if($request->img !="default")   
-                $profile->img = $request->img;
+            if($profile->pwd !="default")
+                $profile->pwd = md5($request->pwd);
             $profile->ultima_vez = now();
             
             if($profile->save())
@@ -99,9 +99,21 @@ class ProfileController extends Controller
         //header('Access-Control-Allow-Origin: *');
         // header('Access-Control-Allow-Methods: POST'); 
         // header('Access-Control-Allow-Headers: Origin, X-Requested-With,Authorization,  Content-Type, Accept');
-        // if($request->hasFile("profile-img"));
-        // return true;
-        return response()->json("200");
+        $profile = Profile::findOrFail($request->idUser);
+         if($request->hasFile("profile-img")){
+            $file=$request->file("profile-img");
+            $destinationPath="img/user/";
+            $filename=$request->idUser.".".$file->getClientOriginalExtension();
+            $existsfilename = public_path()."/".$destinationPath.$filename;
+            if(file_exists($existsfilename))
+                @unlink($existsfilename);
+            $uploadSuccess= $file->move($destinationPath,$filename);
+            $profile->img = $destinationPath.$filename;
+            if($profile->save() && $uploadSuccess)
+                return response()->json([ "status" => "success", "message" => "Imagen Actualizada","data"=>["path"=>$profile->img] ]);
+         }
+         return response()->json(["status" => "failed", "message" => "Ocurrio un error al actualizar", "data"=> [] ]);
+        
     }
 
 

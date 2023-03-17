@@ -1,5 +1,10 @@
 import React, { Component } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import UploadService from "../fileUploadService";
+import c from "../../const.json";
+import UserDefault from "../../img/user/userDefault.png";
+
 
 export default class UploadImages extends Component {
     constructor(props) {
@@ -7,20 +12,28 @@ export default class UploadImages extends Component {
     
         this.state = {
           currentFile: undefined,
-          previewImage: undefined,
+          previewImage: props.data.img==null?UserDefault:c.baseUrlApi+"../"+props.data.img,
           progress: 0,
+          classNameAlert:"",
           message: "",
           imageInfos: [],
         };
     }
 
     selectFile(event) {
-        this.setState({
-            currentFile: event.target.files[0],
-            previewImage: URL.createObjectURL(event.target.files[0]),
-            progress: 0,
-            message: ""
-        });
+        try{
+            this.setState({
+                currentFile: event.target.files[0],
+                previewImage: URL.createObjectURL(event.target.files[0]),
+                progress: 0,
+                message: ""
+            });
+        }catch(e){
+        }
+        setTimeout(() => {
+            this.upload();
+        }, 500);
+        
     }
 
     upload() {
@@ -28,39 +41,34 @@ export default class UploadImages extends Component {
             progress: 0,
         });
     
-        UploadService.upload("profile-updateImg/",this.state.currentFile, (event) => { 
+        var data =  {file:this.state.currentFile,idUser:this.props.data.id}
+        UploadService.upload("profile-updateImg/",data, (event) => { 
             this.setState({
             progress: Math.round((100 * event.loaded) / event.total),
             });
         }).then((response) => {
-            this.setState({
-                message: response.data.message,
-            });
-            return UploadService.getFiles();
-            })
-            .then((files) => {
-            this.setState({
-                imageInfos: files.data,
-            });
+                this.setState({
+                    classNameAlert: 
+                        response.data.status==="success"? "alert alert-success mt-1":"alert alert-danger mt-1",
+                    message: response.data.message,
+                });
+                console.log(response);
             })
             .catch((err) => {
+                console.log(err);
             this.setState({
                 progress: 0,
-                message: "Could not upload the image!",
+                classNameAlert: "alert alert-danger mt-1",
+                message: "No se pudo Cargar la Imagen!",
                 currentFile: undefined,
             });
         });
+
+        setTimeout(() => {
+            this.setState({ message: "",currentFile:undefined});
+        }, 5000);
     }
     
-
-    componentDidMount() {
-        UploadService.getFiles("profile-users/1").then((response) => {
-            this.setState({
-            imageInfos: response.data,
-            });
-            console.log(response.data);
-        });
-    }
 
     render() {
     const {
@@ -68,67 +76,50 @@ export default class UploadImages extends Component {
         previewImage,
         progress,
         message,
-        imageInfos,
+        classNameAlert,
     } = this.state;
 
     return (
-        <div>
-        <div className="row">
-            <div className="col-8">
-                <h1> selectFile</h1>
-            <label className="btn btn-default p-0">
-                <input type="file" accept="image/*" onChange={(event)=>this.selectFile(event)} />
-            </label>
-            </div>
 
-            <div className="col-4">
-            <button
-                className="btn btn-success btn-sm"
-               
-                onClick={()=>this.upload()}
-            > Upload</button>
-            </div>
-        </div>
-
-        {currentFile && (
-            <div className="progress my-3">
-            <div
-                className="progress-bar progress-bar-info progress-bar-striped"
-                role="progressbar"
-                aria-valuenow={progress}
-                aria-valuemin="0"
-                aria-valuemax="100"
-                style={{ width: progress + "%" }}
-            >
-                {progress}%
-            </div>
-            </div>
-        )}
-
-        {previewImage && (
+    <>
+         
             <div>
-            <img className="preview" src={previewImage} alt="" width="100px" height="100px"/>
+                <label htmlFor="select-file">
+                    <img src={previewImage} alt="Avatar" className="img-fluid rounded-circle my-4" style={{"width": "80px", "height": "80px", "objectFit": "cover"}} />
+                    <FontAwesomeIcon icon="fa-solid fa-camera" className="img-edit" />
+                </label>
             </div>
-        )}
+        
+        
 
-        {message && (
-            <div className="alert alert-secondary mt-3" role="alert">
-            {message}
-            </div> 
-        )}
+            <div className="row" hidden={true}>
+                <label className="btn btn-default p-0" >
+                    <input id="select-file" type="file" accept="image/*" onChange={(event)=>this.selectFile(event)} />
+                </label>
+            </div>
 
-        <div className="card mt-3">
-            <div className="card-header">List of Files</div>
-            <ul className="list-group list-group-flush">
-            {imageInfos &&
-                imageInfos.map((img, index) => (
-                <li className="list-group-item" key={index}>
-                    <a href={img.url}>{img.name}</a>
-                </li>
-                ))}
-            </ul>
-        </div>
-        </div>
+            {currentFile &&(
+                <div className="progress my-1">
+                <div
+                    className="progress-bar progress-bar-info progress-bar-striped"
+                    role="progressbar"
+                    aria-valuenow={progress}
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    style={{ width: progress + "%" }}
+                >
+                {progress}%
+                </div>
+                </div>
+            )}
+
+            {message && (
+                <div className={classNameAlert} role="alert">
+                {message}
+                </div> 
+            )}
+
+        </>
     );
     }
 }
