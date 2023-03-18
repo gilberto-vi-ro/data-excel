@@ -114,11 +114,7 @@ class ProfileController extends Controller
         $profile = Profile::findOrFail($request->idUser);
          if($request->hasFile("profile-img")){
             $file=$request->file("profile-img");
-<<<<<<< HEAD
             $destinationPath=public_path()."/img/user/";
-=======
-            $destinationPath="laravel-api/public/img/user/";
->>>>>>> 91c366d728619654f16760c6027ff620eeb32834
             $filename=$request->idUser.".".$file->getClientOriginalExtension();
             $existsfilename = $destinationPath.$filename;
             if(file_exists($existsfilename))
