@@ -114,9 +114,9 @@ class ProfileController extends Controller
         $profile = Profile::findOrFail($request->idUser);
          if($request->hasFile("profile-img")){
             $file=$request->file("profile-img");
-            $destinationPath="img/user/";
+            $destinationPath="laravel-api/public/img/user/";
             $filename=$request->idUser.".".$file->getClientOriginalExtension();
-            $existsfilename = public_path()."/".$destinationPath.$filename;
+            $existsfilename = $destinationPath.$filename;
             if(file_exists($existsfilename))
                 @unlink($existsfilename);
             $uploadSuccess= $file->move($destinationPath,$filename);

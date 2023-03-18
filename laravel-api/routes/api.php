@@ -26,11 +26,11 @@ Route::post("user-login", $nc."LoginController@login");
 Route::get("user-info/{email}", $nc."LoginController@userDetail");
 
 Route::controller($nc.ProfileController::class)->group( function(){
-    Route::get("profiles/", "index");
-    Route::post("profile-create/", "create");
+    Route::get("profiles", "index");
+    Route::post("profile-create", "create");
     Route::get("profile-show/{id}", "show");
-    Route::put("profile-update/", "update");
-    Route::post("profile-updateImg/", "updateImg");
+    Route::put("profile-update", "update");
+    Route::post("profile-updateImg", "updateImg");
     Route::get("profile-users/{url}", "getImgUsers");
     Route::delete("profile-destroy/{id}", "destroy");
 
