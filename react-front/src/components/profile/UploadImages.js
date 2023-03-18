@@ -12,7 +12,7 @@ export default class UploadImages extends Component {
     
         this.state = {
           currentFile: undefined,
-          previewImage: props.data.img==null?UserDefault:c.baseUrlApi+"../"+props.data.img,
+          previewImage: props.data.img==null?UserDefault:c.baseUrlApiPublic+props.data.img,
           progress: 0,
           classNameAlert:"",
           message: "",

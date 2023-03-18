@@ -1,5 +1,8 @@
 {
     "baseRoute": "/datacapt-cni",
     "baseUrl": "http://localhost/datacapt-cni/",
-    "baseUrlApi": "http://localhost:8000/api/"
+    "baseUrlApi": "http://localhost:8000/api/",
+    "baseUrlApi2": "http://localhost/datacapt/api/",
+    "baseUrlApiPublic": "http://localhost:8000/",
+    "baseUrlApiPublic2": "http://localhost/datacapt/laravel-api/public/"
 }
