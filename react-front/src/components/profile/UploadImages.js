@@ -12,7 +12,7 @@ export default class UploadImages extends Component {
     
         this.state = {
           currentFile: undefined,
-          previewImage: props.data.img==null?UserDefault:c.baseUrlApiPublic+props.data.img,
+          previewImage: props.data.img==null?UserDefault:c.baseUrlApiFile+props.data.img,
           progress: 0,
           classNameAlert:"",
           message: "",
@@ -42,7 +42,7 @@ export default class UploadImages extends Component {
         });
     
         var data =  {file:this.state.currentFile,idUser:this.props.data.id}
-        UploadService.upload("profile-updateImg/",data, (event) => { 
+        UploadService.upload("profile-updateImg",data, (event) => { 
             this.setState({
             progress: Math.round((100 * event.loaded) / event.total),
             });

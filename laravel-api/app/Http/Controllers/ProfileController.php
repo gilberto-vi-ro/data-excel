@@ -114,13 +114,13 @@ class ProfileController extends Controller
         $profile = Profile::findOrFail($request->idUser);
          if($request->hasFile("profile-img")){
             $file=$request->file("profile-img");
-            $destinationPath="img/user/";
+            $destinationPath=public_path()."/img/user/";
             $filename=$request->idUser.".".$file->getClientOriginalExtension();
-            $existsfilename = public_path()."/".$destinationPath.$filename;
+            $existsfilename = $destinationPath.$filename;
             if(file_exists($existsfilename))
                 @unlink($existsfilename);
             $uploadSuccess= $file->move($destinationPath,$filename);
-            $profile->img = $destinationPath.$filename;
+            $profile->img = "/img/user/".$filename;
             if($profile->save() && $uploadSuccess)
                 return response()->json([ "status" => "success", "message" => "Imagen Actualizada","data"=>["path"=>$profile->img] ]);
          }
