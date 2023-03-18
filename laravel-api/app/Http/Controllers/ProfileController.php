@@ -8,6 +8,7 @@ use PDO;
 use PDOException;
 use Exception;
 use Illuminate\Validation\Rules\Exists;
+use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
@@ -69,14 +70,25 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         try{
+            $validator = Validator::make($request->all(), [
+                "name"=>"required",
+                "lastName"=>"required",
+                "email"=>"required|email",
+                "pwd"=>"required",
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(["status" => "failed", "message" => $validator->errors()."" ]);
+            }
+
             $profile = Profile::findOrFail($request->id);
             $profile->apellido = $request->lastName;
             $profile->nombre = $request->name;
             if($request->email !="default")
                 $profile->email = $request->email;
-            if($profile->pwd !="default")
+            if($request->pwd !="default" && $request->pwd !="")
                 $profile->pwd = md5($request->pwd);
-            $profile->ultima_vez = now();
+            $profile->ultima_vez = date("Y-m-d H:i:s");
             
             if($profile->save())
                 return response()->json([ "status" => "success", "message" => "Datos Actualizados","data"=>$profile ]);

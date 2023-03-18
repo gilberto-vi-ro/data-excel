@@ -52,7 +52,7 @@ export default class UploadImages extends Component {
                         response.data.status==="success"? "alert alert-success mt-1":"alert alert-danger mt-1",
                     message: response.data.message,
                 });
-                console.log(response);
+                // console.log(response);
             })
             .catch((err) => {
                 console.log(err);
@@ -85,8 +85,8 @@ export default class UploadImages extends Component {
          
             <div>
                 <label htmlFor="select-file">
-                    <img src={previewImage} alt="Avatar" className="img-fluid rounded-circle my-4" style={{"width": "80px", "height": "80px", "objectFit": "cover"}} />
-                    <FontAwesomeIcon icon="fa-solid fa-camera" className="img-edit" />
+                    <img src={previewImage} alt="Avatar" className="img-fluid rounded-circle my-4 img-profile"  />
+                    <FontAwesomeIcon icon="fa-solid fa-camera" className="fa-camera" />
                 </label>
             </div>
         

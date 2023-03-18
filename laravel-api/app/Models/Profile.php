@@ -27,6 +27,6 @@ class Profile extends Model
      * @var array
      */
     protected $hidden = [
-        'pwd', 'tipo', 'remember_token',
+        'pwd', 'remember_token',
     ];
 }

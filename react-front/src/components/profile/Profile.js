@@ -17,7 +17,7 @@ export default class Perfil extends Component {
     this._parent = this.props._parent;
     this.pwdRef = React.createRef("pwdRef");
     this.confirmPwdRef = React.createRef("confirmPwdRef");
-    this.userData = JSON.parse(localStorage.getItem("userData"));
+    this.data = JSON.parse(localStorage.getItem("userData"));
     this.state = {
       edit: false,
       showConfirmPwd: false,
@@ -25,15 +25,16 @@ export default class Perfil extends Component {
       isLoading: false,
       classNameAlert:"",
       msg: "",
-
-      id: this.userData.id_usuario,
-      img: this.userData.img,
-      name: this.userData.nombre,
-      lastName: this.userData.apellido,
-      email: this.userData.email,
-      pwd: "default",
-      confirmPwd: "default",
-      lastTime:this.userData.ultima_vez,
+      userData: {
+        id: this.data.id_usuario,
+        img: this.data.img,
+        name: this.data.nombre,
+        lastName: this.data.apellido,
+        email: this.data.email,
+        pwd: "default",
+        confirmPwd: "default",
+        lastTime: this.data.ultima_vez,
+      },
       
     };
     
@@ -41,15 +42,19 @@ export default class Perfil extends Component {
   
 
   handlerBtnEdit = ()=>{
+    const { userData } = this.state;
+    userData["pwd"]="default";
+    userData["confirmPwd"]="default";
+
     this.setState({
       edit : !this.state.edit,
       showConfirmPwd : false,
-      pwd: "default",
-      confirmPwd: "default",
+      userData,
     })
     this.pwdRef.current.style = null;
     this.confirmPwdRef.current.style = null;
     this.setState({ msg: ""});
+
   }
 
   verifyPassword = ()=>{
@@ -70,20 +75,23 @@ export default class Perfil extends Component {
   }
 
   showConfirmPwd = () => {
+    const { userData } = this.state;
+    userData["pwd"]="";
+    userData["confirmPwd"]="";
+
     if(!this.state.showConfirmPwd){
       this.setState({
         showConfirmPwd : true,
-        pwd: "",
-        confirmPwd: "",
+        userData
       });
     }
   }
   onChangehandler = (e) => {
     let name = e.target.name;
     let value = e.target.value;
-    let data = {};
-    data[name] = value;
-    this.setState(data);
+    const { userData } = this.state;
+    userData[name] = value;
+    this.setState(userData);
   };
 
   onSubmitHandler = (e) => {
@@ -95,7 +103,7 @@ export default class Perfil extends Component {
     this.setState({ isLoading: true });
     this._parent.showLoading();
 
-    axios.put(c.baseUrlApi+"profile-update/", this.state)
+    axios.put(c.baseUrlApi+"profile-update/", this.state.userData)
       .then((response) => {
         //  console.log(response);
         this._parent.hideLoading();
@@ -107,7 +115,8 @@ export default class Perfil extends Component {
           isLoading: false
         });
 
-        localStorage.setItem("userData", JSON.stringify(response.data.data));
+        if(response.data.status==="success")
+          localStorage.setItem("userData", JSON.stringify(response.data.data));
 
       }).catch((error) => {
         //  console.log(error);
@@ -143,10 +152,10 @@ export default class Perfil extends Component {
                   <div className="card mb-3" style={{"borderRadius": "1rem","border": "none"}}>
                     <div className="row g-0">
                       <div className="col-md-4 gradient-custom text-center mytext-light rounded-l">
-                        <UploadImages data={this.state}/>
-                        <h5>{this.state.name}</h5>
-                        <p>{this.state.lastName}</p>
-                        <FontAwesomeIcon icon="fa-solid fa-pen-to-square" onClick={()=>this.handlerBtnEdit()} style={{"cursor": "hand","fontSize": "25px"}}/>
+                        <UploadImages data={this.state.userData}/>
+                        <h5>{this.state.userData.name}</h5>
+                        <p>{this.state.userData.lastName}</p>
+                        <FontAwesomeIcon icon="fa-solid fa-pen-to-square" onClick={()=>this.handlerBtnEdit()} style={{"cursor": "hand","fontSize": "25px","marginBottom":"30px"}}/>
                       </div>
                       <div className="col-md-8 bg-color rounded-r">
                         <div className="card-body p-4  mytext-dark">
@@ -158,34 +167,34 @@ export default class Perfil extends Component {
                           <div className="row pt-1" hidden={HideComponents}>
                             <div className="col-md-6 mb-3">
                               <h6>Name</h6>
-                              <input className={classNameInput} name="name" value={this.state.name} onChange={this.onChangehandler} disabled={DisabledInput}/>
+                              <input className={classNameInput} name="name" value={this.state.userData.name} onChange={this.onChangehandler} disabled={DisabledInput}/>
                             </div>
                             <div className="col-md-6 mb-3" >
                               <h6>Last Name</h6>
-                              <input className={classNameInput} name="lastName" value={this.state.lastName} onChange={this.onChangehandler} disabled={DisabledInput}/>
+                              <input className={classNameInput} name="lastName" value={this.state.userData.lastName} onChange={this.onChangehandler} disabled={DisabledInput}/>
                             </div>
                           </div>
                           <div className="row pt-1">
                             <div className="col-md-6 mb-3">
                               <h6>Email</h6>
-                              <input className={classNameInput} name="email" value={this.state.email} onChange={this.onChangehandler} disabled={DisabledInput}/>
+                              <input className={classNameInput} name="email" value={this.state.userData.email} onChange={this.onChangehandler} disabled={DisabledInput}/>
                             </div>
                             <div className="col-md-6 mb-3">
                               <h6>Ultima vez</h6>
-                              <input className={classNameInput} name="lastTime" value={this.state.lastTime} onChange={this.onChangehandler} disabled/>
+                              <input className={classNameInput} name="lastTime" value={this.state.userData.lastTime} onChange={this.onChangehandler} disabled/>
                             </div>
                           </div>
                           <div className="row pt-1">
                             <div className="col-md-6 mb-3">
                               <h6>Contraseña</h6>
-                              <input ref={this.pwdRef} type="password" className={classNameInput} name="pwd" value={this.state.pwd} onChange={this.onChangehandler} disabled={DisabledInput} 
+                              <input ref={this.pwdRef} type="password" className={classNameInput} name="pwd" value={this.state.userData.pwd} onChange={this.onChangehandler} disabled={DisabledInput} 
                               onKeyUp={()=>this.verifyPassword()} 
                               onClick={()=>this.showConfirmPwd()}
                               />
                             </div>
                             <div className="col-md-6 mb-3" hidden={HideConfirmPwd}>
                               <h6>Confirmar Contraseña</h6>
-                              <input ref={this.confirmPwdRef} type="password" className={classNameInput} name="confirmPwd" value={this.state.confirmPwd} onChange={this.onChangehandler} disabled={DisabledInput}
+                              <input ref={this.confirmPwdRef} type="password" className={classNameInput} name="confirmPwd" value={this.state.userData.confirmPwd} onChange={this.onChangehandler} disabled={DisabledInput}
                               onKeyUp={()=>this.verifyPassword()} 
                               />
                             </div>
