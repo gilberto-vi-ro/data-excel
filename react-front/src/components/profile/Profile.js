@@ -148,7 +148,7 @@ export default class Perfil extends Component {
           <section className="vh-100-80px">
             <div className="container h-100">
               <div className="row d-flex justify-content-center align-items-center h-100">
-                <div className="col col-lg-8 mb-4 mb-lg-0">
+                <div className="col  col-lg-6 mb-4 mb-lg-0">
                   <div className="card mb-3" style={{"borderRadius": "1rem","border": "none"}}>
                     <div className="row g-0">
                       <div className="col-md-4 gradient-custom text-center mytext-light rounded-l">
@@ -160,17 +160,17 @@ export default class Perfil extends Component {
                       <div className="col-md-8 bg-color rounded-r">
                         <div className="card-body p-4  mytext-dark">
                           <div className="row-info">
-                              <h5 className="">Informacion de sesion</h5>
+                              <h5 className="">Informacion de sesión</h5>
                               <FontAwesomeIcon icon="fa-solid fa-pen-to-square" onClick={()=>this.handlerBtnEdit()} style={{"cursor": "hand","fontSize": "25px"}}/>
                           </div>
                           <hr className="mt-0 mb-4"/>
                           <div className="row pt-1" hidden={HideComponents}>
                             <div className="col-md-6 mb-3">
-                              <h6>Name</h6>
+                              <h6>Nombre</h6>
                               <input className={classNameInput} name="name" value={this.state.userData.name} onChange={this.onChangehandler} disabled={DisabledInput}/>
                             </div>
                             <div className="col-md-6 mb-3" >
-                              <h6>Last Name</h6>
+                              <h6>Apellido</h6>
                               <input className={classNameInput} name="lastName" value={this.state.userData.lastName} onChange={this.onChangehandler} disabled={DisabledInput}/>
                             </div>
                           </div>
@@ -180,7 +180,7 @@ export default class Perfil extends Component {
                               <input className={classNameInput} name="email" value={this.state.userData.email} onChange={this.onChangehandler} disabled={DisabledInput}/>
                             </div>
                             <div className="col-md-6 mb-3">
-                              <h6>Ultima vez</h6>
+                              <h6>Última vez</h6>
                               <input className={classNameInput} name="lastTime" value={this.state.userData.lastTime} onChange={this.onChangehandler} disabled/>
                             </div>
                           </div>
