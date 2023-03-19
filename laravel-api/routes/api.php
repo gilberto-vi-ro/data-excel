@@ -35,3 +35,10 @@ Route::controller($nc.ProfileController::class)->group( function(){
     Route::delete("profile-destroy/{id}", "destroy");
 
 });
+
+Route::controller($nc.PersonalInfoController::class)->group( function(){
+    Route::get("PersonalInfo", "index");
+    Route::get("PersonalInfo-show/{id}", "show");
+    Route::post("PersonalInfo-create", "create");
+    Route::put("PersonalInfo-update", "update");
+});
