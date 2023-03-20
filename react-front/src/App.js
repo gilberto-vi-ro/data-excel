@@ -61,10 +61,18 @@ export default class App extends Component {
               {/* <Route path="/login/" element={<Login isLogged={Home} onLogout={Login} /> } />  */}
               {/* <Route path="/home/" element={<Login isLogged={Home} onLogout={Login} /> } /> */}
               <Route path="/home//*" element={login?(<Home />):(<Navigate to="/login/in/" />) } />
-              <Route  path="/info-responsables//*" element={login?(<InfoResponsibles />):(<Navigate to="/login/in/" />) }></Route>
-              <Route  path="/info-escolar//*" element={login?(<InfoSchool />):(<Navigate to="/login/in/" />) }></Route>
-              <Route  path="/info-personal//*" element={login?(<InfoPersonal />):(<Navigate to="/login/in/" />) }></Route>
-              <Route  path="/perfil//*" element={login?(<Profile _parent={this} />):(<Navigate to="/login/in/" />) }></Route>
+              <Route  path="/info-responsables//*" element={
+                login?(<InfoResponsibles _parent={this} />):(<Navigate to="/login/in/" />) 
+              }></Route>
+              <Route  path="/info-escolar//*" element={
+                login?(<InfoSchool _parent={this} />):(<Navigate to="/login/in/" />) 
+              }></Route>
+              <Route  path="/info-personal//*" element={
+                login?(<InfoPersonal _parent={this} />):(<Navigate to="/login/in/" />) 
+              }></Route>
+              <Route  path="/perfil//*" element={
+                login?(<Profile _parent={this} />):(<Navigate to="/login/in/" />) 
+              }></Route>
             </Routes>
         </BrowserRouter>
       </>
