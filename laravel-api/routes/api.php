@@ -37,8 +37,9 @@ Route::controller($nc.ProfileController::class)->group( function(){
 });
 
 Route::controller($nc.PersonalInfoController::class)->group( function(){
-    Route::get("PersonalInfo", "index");
-    Route::get("PersonalInfo-show/{id}", "show");
-    Route::post("PersonalInfo-create", "create");
-    Route::put("PersonalInfo-update", "update");
+    Route::get("personalInfo", "index");
+    Route::get("personalInfo-exists/{id}/{json}", "exists");
+    Route::get("personalInfo-show/{id}", "show");
+    Route::post("personalInfo-create", "create");
+    Route::put("personalInfo-update", "update");
 });

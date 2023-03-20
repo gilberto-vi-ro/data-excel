@@ -18,7 +18,7 @@ class CreateDatosPersonalesTable extends Migration
             $table->id('id_dato_personal');
             $table->string('curp', 22);
             $table->tinyInteger('edad')->length(2);
-            $table->dateTime('fecha_nac');
+            $table->date('fecha_nac');
             $table->text('domicilio_origen')->length(500);
             $table->string('sexo', 20);
             $table->double('estatura')->length(2)->nullable();

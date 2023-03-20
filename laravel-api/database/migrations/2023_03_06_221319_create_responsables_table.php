@@ -24,7 +24,7 @@ class CreateResponsablesTable extends Migration
             $table->string('sexo', 20);
             $table->string('n_telefono', 14)->nullable();
             $table->string('entidad_nac', 100)->nullable();
-            $table->dateTime('fecha_nac')->nullable();
+            $table->date('fecha_nac')->nullable();
             $table->timestamp('created_at')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
             $table->unsignedBigInteger('id_usuario');
