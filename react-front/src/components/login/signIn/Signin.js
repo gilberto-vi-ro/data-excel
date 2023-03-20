@@ -11,6 +11,7 @@ export default class Signin extends Component {
     this.state = {
       email: "",
       password: "",
+      type: 0,
       msg: "",
       isLoading: false,
       redirect: false,
@@ -60,6 +61,7 @@ export default class Signin extends Component {
             localStorage.setItem("userData", JSON.stringify(response.data.data));
           this.setState({
             msg: response.data.message,
+            type: response.data.data.tipo,
             redirect: true,
           });     
         }
@@ -88,9 +90,11 @@ export default class Signin extends Component {
     const redirect  = this.state.redirect;
    
     if (redirect) {
-      return (<div><Navigate to="/home" /></div>);
+      if(this.state.type)
+        return (<div><Navigate to="/admin" /></div>);
+      else
+        return (<div><Navigate to="/home" /></div>);
       // return (<div><Navigate to="/home" push={true} /></div>);//push recarga la pagina
-     
     }else {
       const isLoading = this.state.isLoading;
       return (

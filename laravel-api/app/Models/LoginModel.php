@@ -16,7 +16,7 @@ class LoginModel extends Authenticatable
     }
 
     protected $table = 'usuarios';
-    //protected $primaryKey = 'id';
+    protected $primaryKey = 'id_usuario';
 
     /**
      * The attributes that are mass assignable.
@@ -33,7 +33,7 @@ class LoginModel extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'pwd', 'tipo', 'remember_token',
+        'pwd', 'remember_token',
     ];
 
     /**

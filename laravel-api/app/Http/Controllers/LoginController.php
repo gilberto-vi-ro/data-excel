@@ -95,8 +95,8 @@ class LoginController extends Controller
 
                 // if password is correct
                 if (!is_null($password_status)) {
+                    $this->updateLastTime($email_status->id_usuario);
                     $user = $this->userDetail($request->email);
-
                     return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => $user]);
                 } else {
                     return response()->json(["status" => "failed", "success" => false, "message" => "Unable to login. Incorrect password."]);
@@ -127,5 +127,11 @@ class LoginController extends Controller
         catch (\PDOException $e){
             return response()->json(["status" => "failed", "success" => false, "message" => $e->getMessage()]);
         }
+    }
+
+    private function updateLastTime($id){
+            $LoginModel = LoginModel::findOrFail($id);
+            $LoginModel->ultima_vez = date("Y-m-d H:i:s");
+            $LoginModel->save();
     }
 }
