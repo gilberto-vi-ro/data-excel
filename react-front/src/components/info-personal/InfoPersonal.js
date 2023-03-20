@@ -240,7 +240,7 @@ export default class InfoPersonal extends Component {
                                   <input type="number" step="0.1" min={0} max={3} className={"input-profile"} name="height" value={this.state.formData.height} onChange={this.onChangehandler} 
                                   style={{"width":"calc(50%)", "padding": "0px"}}
                                   /> 
-                                  <span translate="no">M²</span>
+                                  <span translate="no">M</span>
                               </div>
                             </div>
                           </div>
