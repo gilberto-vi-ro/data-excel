@@ -43,3 +43,11 @@ Route::controller($nc.PersonalInfoController::class)->group( function(){
     Route::post("personalInfo-create", "create");
     Route::put("personalInfo-update", "update");
 });
+
+Route::controller($nc.SchoolInfoController::class)->group( function(){
+    Route::get("schoolInfo", "index");
+    Route::get("schoolInfo-exists/{id}/{json}", "exists");
+    Route::get("schoolInfo-show/{id}", "show");
+    Route::post("schoolInfo-create", "create");
+    Route::put("schoolInfo-update", "update");
+});
