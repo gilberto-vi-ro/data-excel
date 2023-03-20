@@ -9,7 +9,7 @@ import UserDefault from "../../img/user/userDefault.png";
 export default class UploadImages extends Component {
     constructor(props) {
         super(props);
-    
+        this.parent = props._parent;
         this.state = {
           currentFile: undefined,
           previewImage: props.data.img==null?UserDefault:c.baseUrlApiFile+props.data.img,
@@ -52,6 +52,7 @@ export default class UploadImages extends Component {
                         response.data.status==="success"? "alert alert-success mt-1":"alert alert-danger mt-1",
                     message: response.data.message,
                 });
+                this.parent.updateLocalStorage();
                 // console.log(response);
             })
             .catch((err) => {
