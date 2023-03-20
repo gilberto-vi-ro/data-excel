@@ -198,7 +198,7 @@ export default class Perfil extends Component {
                               <h6>Contraseña</h6>
                               <input ref={this.pwdRef} type="password" className={classNameInput} name="pwd" value={this.state.userData.pwd} onChange={this.onChangehandler} disabled={DisabledInput} 
                               onKeyUp={()=>this.verifyPassword()} 
-                              onClick={()=>this.showConfirmPwd()}
+                              onFocus={()=>this.showConfirmPwd()}
                               />
                             </div>
                             <div className="col-md-6 mb-3" hidden={HideConfirmPwd}>

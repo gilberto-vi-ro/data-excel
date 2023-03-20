@@ -215,7 +215,9 @@ export default class InfoPersonal extends Component {
                           <div className="row pt-1">
                             <div className="col-md-6 mb-3">
                               <h6>Domicilio</h6>
-                              <input type="text" className={classNameInput} name="domicile" value={this.state.formData.domicile} onChange={this.onChangehandler} disabled={DisabledInput}/>
+                              <textarea type="text" className={classNameInput} name="domicile" value={this.state.formData.domicile} onChange={this.onChangehandler} disabled={DisabledInput} 
+                              style={{minHeight:"37px", minWidth:"100%", height:"37px", maxHeight:"300px"}}
+                              />
                             </div>
                             <div className="col-md-6 mb-3">
                               <h6>Telefono</h6>

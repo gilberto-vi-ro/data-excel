@@ -81,7 +81,7 @@ class ProfileController extends Controller
                 return response()->json(["status" => "failed", "message" => $validator->errors()."" ]);
             }
 
-            $email_status = Profile::where("email", $request->email)->first();
+            $email_status = Profile::where("email", $request->email)->where("id_usuario", "!=", $request->id)->first();
             if (!is_null($email_status)) {
                 return response()->json(["status" => "failed", "message" => "ups! el email ya existe.", "data"=> [] ]);
             }
