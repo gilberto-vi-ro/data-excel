@@ -127,7 +127,7 @@ export default class Perfil extends Component {
   updateLocalStorage = () => {
     axios.get(c.baseUrlApi+"profile-show/"+this.data.id_usuario)
       .then((response) => {
-         console.log(response.data.data);
+        //  console.log(response.data.data);
         localStorage.setItem("userData", JSON.stringify(response.data.data));
       }).catch((error) => {
         this.setState({ msg: error.message});

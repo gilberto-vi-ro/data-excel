@@ -81,6 +81,11 @@ class ProfileController extends Controller
                 return response()->json(["status" => "failed", "message" => $validator->errors()."" ]);
             }
 
+            $email_status = Profile::where("email", $request->email)->first();
+            if (!is_null($email_status)) {
+                return response()->json(["status" => "failed", "message" => "ups! el email ya existe.", "data"=> [] ]);
+            }
+
             $profile = Profile::findOrFail($request->id);
             $profile->apellido = $request->lastName;
             $profile->nombre = $request->name;
