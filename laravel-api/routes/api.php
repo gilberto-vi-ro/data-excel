@@ -51,3 +51,11 @@ Route::controller($nc.SchoolInfoController::class)->group( function(){
     Route::post("schoolInfo-create", "create");
     Route::put("schoolInfo-update", "update");
 });
+
+Route::controller($nc.IndigenousInfoController::class)->group( function(){
+    Route::get("indigenousInfo", "index");
+    Route::get("indigenousInfo-exists/{id}/{json}", "exists");
+    Route::get("indigenousInfo-show/{id}", "show");
+    Route::post("indigenousInfo-create", "create");
+    Route::put("indigenousInfo-update", "update");
+});
