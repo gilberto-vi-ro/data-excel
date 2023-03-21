@@ -39,7 +39,8 @@ function MyNavbar(args) {
           
           if( location.pathname.indexOf("/info-responsables") !== -1 
           || location.pathname.indexOf("/info-escolar") !== -1 
-          || location.pathname.indexOf("/info-personal") !== -1 )
+          || location.pathname.indexOf("/info-personal") !== -1 
+          || location.pathname.indexOf("/info-indigena") !== -1 )
             idDropdownToggle.classList.add("active");
           else
             idDropdownToggle.classList.remove("active");
@@ -93,8 +94,9 @@ function MyNavbar(args) {
                 <DropdownMenu end={true}>
                   <DropdownItem><Link to="/info-responsables">Responsables</Link></DropdownItem>
                   <DropdownItem><Link to="/info-escolar">Escolar</Link></DropdownItem>
-                  {/* <DropdownItem divider /> */}
                   <DropdownItem><Link to="/info-personal">Personal</Link></DropdownItem>
+                  {/* <DropdownItem divider /> */}
+                  <DropdownItem><Link to="/info-indigena">Indigena</Link></DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
               <NavItem>

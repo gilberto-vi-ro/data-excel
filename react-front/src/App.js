@@ -9,9 +9,11 @@ import Home from "./components/home/Home.js";
 import InfoResponsibles from "./components/info-responsibles/InfoResponsibles.js";
 import InfoSchool from "./components/info-school/InfoSchool.js";
 import InfoPersonal from "./components/info-personal/InfoPersonal.js";
+import InfoIndigenous from "./components/info-indigenous/InfoIndigenous";
 import Profile from "./components/profile/Profile.js";
 
 import { BrowserRouter , Routes, Router, Route, Navigate} from "react-router-dom";
+
 
 
 // https://sweetalert2.github.io/
@@ -69,6 +71,9 @@ export default class App extends Component {
               }></Route>
               <Route  path="/info-personal//*" element={
                 login?(<InfoPersonal _parent={this} />):(<Navigate to="/login/in/" />) 
+              }></Route>
+               <Route  path="/info-indigena//*" element={
+                login?(<InfoIndigenous _parent={this} />):(<Navigate to="/login/in/" />) 
               }></Route>
               <Route  path="/perfil//*" element={
                 login?(<Profile _parent={this} />):(<Navigate to="/login/in/" />) 
