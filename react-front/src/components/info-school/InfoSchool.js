@@ -61,7 +61,8 @@ export default class InfoSchool extends Component {
           formData["schoolKey"] = response.data.data[0].clave_escolar;
           formData["modality"] = response.data.data[0].modalidad;
           formData["degree"] = response.data.data[0].grado;
-          formData["lastQualification"] = response.data.data[0].ultima_calificacion;
+          formData["lastQualification"] = 
+              response.data.data[0].ultima_calificacion==null?"0":response.data.data[0].ultima_calificacion;
 
           this.setState({ formData});
         }

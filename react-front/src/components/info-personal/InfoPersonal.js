@@ -63,9 +63,9 @@ export default class InfoPersonal extends Component {
           formData["birthDate"] = response.data.data[0].fecha_nac;
           formData["domicile"] = response.data.data[0].domicilio_origen;
           formData["sex"] = response.data.data[0].sexo;
-          formData["height"] = response.data.data[0].estatura;
-          formData["weight"] = response.data.data[0].peso;
-          formData["phone"] = response.data.data[0].n_telefono;
+          formData["height"] = response.data.data[0].estatura==null?"0":response.data.data[0].estatura;
+          formData["weight"] = response.data.data[0].peso==null?"0":response.data.data[0].peso;
+          formData["phone"] = response.data.data[0].n_telefono==null?"0":response.data.data[0].n_telefono;
 
           this.setState({ formData});
         }
