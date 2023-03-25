@@ -37,7 +37,12 @@
     margin-left: -15px;
     cursor: pointer;
 }
-
+.center-profile{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+}
 .img-profile{
     width: 100px; 
     height: 100px; 

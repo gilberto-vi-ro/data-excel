@@ -85,6 +85,6 @@
       position: absolute;
       top: calc(50% - 70px);
       left: calc(50% - 70px);
-      z-index: 999;
+      z-index: 1099;
   }
   /* END LOADER */

@@ -6,7 +6,7 @@ import c from "./const.json";
 import Login from "./components/login/Login.js";
 import Loader from "./components/loader/Loader.js";
 import Home from "./components/home/Home.js";
-import InfoResponsibles from "./components/info-responsibles/InfoResponsibles.js";
+import InfoResponsibles from "./components/info-responsibles/Responsibles.js";
 import InfoSchool from "./components/info-school/InfoSchool.js";
 import InfoPersonal from "./components/info-personal/InfoPersonal.js";
 import InfoIndigenous from "./components/info-indigenous/InfoIndigenous";
