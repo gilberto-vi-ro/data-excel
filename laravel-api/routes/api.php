@@ -59,3 +59,12 @@ Route::controller($nc.IndigenousInfoController::class)->group( function(){
     Route::post("indigenousInfo-create", "create");
     Route::put("indigenousInfo-update", "update");
 });
+
+Route::controller($nc.ResponsiblesController::class)->group( function(){
+    Route::get("responsibles", "index");
+    Route::get("responsibles-exists/{id}/{json}", "exists");
+    Route::get("responsibles-show/{id}", "show");
+    Route::post("responsibles-create", "create");
+    Route::put("responsibles-update", "update");
+    Route::delete("responsibles-delete/{id}", "delete");
+});
