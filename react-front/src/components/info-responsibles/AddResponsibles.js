@@ -1,5 +1,8 @@
 import "./Responsibles.css";
 import c from "../../const.json";
+import relationshipJson from "./relationship.json";
+import federativeEntitiesJson from "./federativeEntities.json";
+
 import Navbar from "../home/navbar/Navbar.js";
 import UserDefault from "../../img/user/userDefault.png";
 
@@ -11,7 +14,6 @@ export default class Responsibles extends Component {
   constructor(props) {
     super(props);
     this._parent = this.props._parent;
-    
     // this.formRef = React.createRef("formRef");
     this.state = {
       classNameAlert:"alert alert-danger mt-1",
@@ -19,7 +21,7 @@ export default class Responsibles extends Component {
       activeModal : false,
       formData: {
         idUser: this.props.idUser,
-        idResponsibles: null,
+        idResponsible: null,
 
         relationship: "",
         isTutor: "0",
@@ -38,7 +40,7 @@ export default class Responsibles extends Component {
   resetForm  = (e) => {
     const { formData } = this.state;
   
-    formData["idResponsibles"] = null;
+    formData["idResponsible"] = null;
 
     formData["relationship"] = "";
     formData["isTutor"] = "0";
@@ -115,12 +117,12 @@ export default class Responsibles extends Component {
     this.setState({ activeModal: !this.state.activeModal,msg: ""});
   }
 
+
   render() {
     const {
       msg,
       classNameAlert,
     } = this.state;
-
    
     return (
       <>
@@ -132,9 +134,9 @@ export default class Responsibles extends Component {
 
         <div className="modal" style={this.state.activeModal?{"display":"block"}:{"display":"none"}}>
           <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col  col-lg-6 mb-4 mb-lg-0">
+            <div className="col col-sm-12 col-md-8 mb-lg-0">
              
-                  <div className="col-md-12 bg-color rounded-r rounded-l">
+                  <div className="col-md-12 bg-color m-2" style={{"borderRadius":"1rem"}}>
                     <form  className="card-body p-4  mytext-dark" 
                       onSubmit={this.createResponsibles}
                       >
@@ -161,22 +163,29 @@ export default class Responsibles extends Component {
                       <div className="row pt-1">
                         <div className="col-md-6 mb-3">
                           <h6>Parentesco</h6>
-                          <input type="text" className="input-profile bordered" name="relationship" value={this.state.formData.relationship} onChange={this.onChangehandler} required={true}  />
+                          <select name="relationship"  className="input-profile bordered" value={this.state.formData.relationship} onChange={this.onChangehandler} required={true}>
+                              <option hidden={true} value="">Selecciona una opcion</option>
+                              {
+                                Object.values(relationshipJson).map((value, i,) => (
+                                  <option key={i} value={value}>{value}</option>
+                                ))
+                              }
+                          </select>
                         </div>
                         <div className="col-md-6 mb-3">
                           <h6>Sexo</h6>
-                          <select name="sex"  className="input-profile bordered" value={this.state.formData.sex} onChange={this.onChangehandler} required={true}>
+                          <select name="sex" className="input-profile bordered" value={this.state.formData.sex} onChange={this.onChangehandler} required={true}>
                               <option hidden={true} value="">Selecciona una opcion</option>
-                              <option value="m">Masculino </option>
-                              <option value="f">Femenino </option>
-                              <option value="i">Prefiero no decirlo</option>
+                              <option value="m">MASCULINO </option>
+                                <option value="f">FEMENINO </option>
+                                <option value="i">PREFIERO NO DECIRLO</option>
                           </select>
                         </div>
                       </div>
                       <div className="row pt-1">
                         <div className="col-md-6 mb-3">
                           <h6>Fecha de Nacimiento</h6>
-                          <input type="date" className="input-profile bordered" name="birthDate" value={this.state.formData.birthDate} min={"1900-01-01T08:30"} max={"2099-06-30T16:30"}  onChange={this.onChangehandler}/>
+                          <input type="date" className="input-profile bordered" name="birthDate" value={this.state.formData.birthDate} min={"1900-01-01T08:30"} max={"2099-06-30T16:30"}  onChange={this.onChangehandler} required={true}/>
                         </div>
                         <div className="col-md-6 mb-3" >
                           <h6>Es Tutor</h6>
@@ -206,11 +215,17 @@ export default class Responsibles extends Component {
                           <input type="text" className="input-profile bordered" name="NPhone" value={this.state.formData.NPhone} onChange={this.onChangehandler} minLength={10} maxLength={14}/>
                         </div>
                       </div>
-                      
                       <div className="row pt-1">
                         <div className="col-md-6 mb-3">
                           <h6>Entidad de Nacimiento</h6>
-                          <input type="text" className="input-profile bordered" name="birthEntity" value={this.state.formData.birthEntity} onChange={this.onChangehandler} required={true}  onKeyUp={this.toUpperCase} />
+                          <select name="birthEntity"  className="input-profile bordered" value={this.state.formData.birthEntity} onChange={this.onChangehandler} required={true}>
+                              <option hidden={true} value="">Selecciona una opcion</option>
+                              {
+                                Object.values(federativeEntitiesJson).map((value, i,) => (
+                                  <option key={i} value={value}>{value}</option>
+                                ))
+                              }
+                          </select>
                         </div>
                       </div>
                       <button type="submit" className="text-center btn btn-profile w-100" >Agregar</button>

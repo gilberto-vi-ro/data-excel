@@ -29,10 +29,10 @@ class ResponsiblesController extends Controller
     public function show($id)
     {
         if($this->exists($id)){
-            $Responsibles = ResponsiblesModel::where("id_usuario","=", $id)->get();
+            $Responsibles = ResponsiblesModel::where("id_usuario","=", $id)->orderBy('apellido')->get();
             return $this->responseJson("success", "Datos procesados", $Responsibles );
         }else
-            return $this->responseJson("failed", "No se encontraron Los datos");
+            return $this->responseJson("failed", "No se encontraron los datos");
     }
 
     public function create(Request $request)
@@ -67,7 +67,7 @@ class ResponsiblesController extends Controller
             if(!$this->validateData($request))
                 return $this->responseValidated;
 
-            $Responsibles = ResponsiblesModel::findOrFail($request->idResponsibles);
+            $Responsibles = ResponsiblesModel::findOrFail($request->idResponsible);
             $Responsibles->parentesco = $request->relationship;
             $Responsibles->es_tutor = $request->isTutor;
             $Responsibles->apellido =  $request->lastName;
@@ -99,7 +99,6 @@ class ResponsiblesController extends Controller
 
     public function validateData(Request $request,$id = null){
         if ($id !== null ){
-            
             $Responsibles = ResponsiblesModel::findIdUser($id);
             if (!$Responsibles) {
                 $this->responseValidated = $this->responseJson("failed", "No se encontro el id del usuario" );

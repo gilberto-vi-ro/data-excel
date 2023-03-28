@@ -1,5 +1,8 @@
 import "./Responsibles.css";
 import c from "../../const.json";
+import relationshipJson from "./relationship.json";
+import federativeEntitiesJson from "./federativeEntities.json";
+
 import Navbar from "../home/navbar/Navbar.js";
 import UserDefault from "../../img/user/userDefault.png";
 
@@ -21,64 +24,48 @@ export default class Responsibles extends Component {
       msg: "",
       formData: {
         idUser: this.userData.id_usuario,
-        idResponsibles: null,
+        idResponsible: null,
 
         relationship: "",
-        isTutor: "",
-        lastName: "null",
-        name: "null",
+        isTutor: "0",
+        lastName: "",
+        name: "",
         curp: "",
         sex: "",
-        NPhone: "0000000000",
+        NPhone: "0",
         birthEntity: "",
         birthDate: "",
       },
     };
-    // setTimeout(() => {
-    //   this.getResponsibles();
-    // }, 500);
-
+    
+  }
+  // https://codedamn.com/news/reactjs/useeffect-in-class-component
+  // componentDidMount(prevProps, prevState){}
+  componentDidUpdate(prevProps, prevState,snapshot){
+    setTimeout(() => {
+      if(this.props.show===true)
+        if (this.props.data.id_responsable !== this.state.formData.idResponsible)
+          this.getDataResponsibles();
+    }, 500);
   }
   
-  dataResponsibles = (e) => {
+  getDataResponsibles = (e) => {
     
-    const idUser = this.props.data.idUser;
+    const { formData } = this.state;
+    formData["idResponsible"] = this.props.data.id_responsable;
 
-    axios.get(c.baseUrlApi+"responsibles-show/"+idUser)
-      .then((response) => {
-        // console.log(response);
-        
-        this._parent.hideLoading();
-        if(response.data.status==="failed"){
-          this.setState({ 
-            hasResponsibles: false,
-          });
-        }else{
-          this.setState({ 
-            dataResponsibles : response.data.data,
-          });
-          
-          const { formData } = this.state;
-          formData["idUser"] = this.props.data.id_usuario;
-          formData["idResponsibles"] = this.props.data.id_responsable;
+    formData["relationship"] = this.props.data.parentesco;
+    formData["isTutor"] = this.props.data.es_tutor;
+    formData["lastName"] = this.props.data.apellido;
+    formData["name"] = this.props.data.nombre;
+    formData["curp"] = this.props.data.curp;
+    formData["sex"] = this.props.data.sexo;
+    formData["NPhone"] = this.props.data.n_telefono;
+    formData["birthEntity"] = this.props.data.entidad_nac;
+    formData["birthDate"] = this.props.data.fecha_nac;
 
-          formData["relationship"] = this.props.data.parentesco;
-          formData["isTutor"] = this.props.data.es_tutor;
-          formData["lastName"] = this.props.data.apellido;
-          formData["name"] = this.props.data.nombre;
-          formData["curp"] = this.props.data.curp;
-          formData["sex"] = this.props.data.sexo;
-          formData["NPhone"] = this.props.data.n_telefono;
-          formData["birthEntity"] = this.props.data.entidad_nac;
-          formData["birthDate"] = this.props.data.fecha_nac;
-
-          this.setState({ formData});
-        }
-      }).catch((error) => {
-        //  console.log(error);
-        this._parent.hideLoading();
-        this.setState({msg: error.messisTutor});
-      });
+    this.setState({ formData});
+    
   };
 
   handlerBtnEdit = ()=>{
@@ -97,11 +84,10 @@ export default class Responsibles extends Component {
   };
 
   updateResponsibles = (e) => {
+    e.preventDefault();//evitar que recargue el form
     this.setState({ msg: ""});
-   
-    e.preventDefault();
     this.setState({ isLoading: true });
-    this._parent.showLoading();
+    this._parent._parent.showLoading();
 
     const config = {
       url: c.baseUrlApi+"responsibles-update",
@@ -116,28 +102,37 @@ export default class Responsibles extends Component {
     axios(config)
       .then((response) => {
         //  console.log(response);
-        this._parent.hideLoading();
+        this._parent._parent.hideLoading();
 
         this.setState({ 
           classNameAlert: 
                         response.data.status==="success"? "alert alert-success mt-1":"alert alert-danger mt-1",
-          msg: response.data.messisTutor,
+          msg: response.data.message,
          
         });
 
         if(response.data.status==="success")
-          this.getResponsibles();
+          this._parent.getResponsibles();
 
       }).catch((error) => {
         //  console.log(error);
-        this._parent.hideLoading();
-        this.setState({ msg: error.messisTutor});
+        this._parent._parent.hideLoading();
+        this.setState({ msg: error.message});
       });
+
+      setTimeout(() => {
+        this.setState({ msg: "" });
+      }, 4000);
   };
 
 
   toUpperCase = (e) =>{
-     e.target.value = e.target.value.toUpperCase();
+    e.preventDefault();
+    let name = e.target.name;
+    let value = e.target.value.toUpperCase();
+    const { formData } = this.state;
+    formData[name] = value;
+    this.setState(formData);
   }
   
   render() {
@@ -151,29 +146,25 @@ export default class Responsibles extends Component {
       classNameAlert,
     } = this.state;
 
-   
-    
+
     return (
       <>
         <div className="modal" style={this.props.show?{"display":"block"}:{"display":"none"}}>
           <div className="container h-100">
             <div className="row d-flex justify-content-center align-items-center h-100">
-              <div className="col  col-lg-8 mb-4 mb-lg-0">
-                <div className="card mb-3" style={{"borderRadius": "1rem","border": "none"}}>
-                  <div className="row g-0">
+              <div className="col col-sm-12 col-lg-8  mb-lg-0 p-0">
+                  <div className="row g-0 m-2">
                     <div className="col-md-4 gradient-custom text-center mytext-light rounded-l">
-                      <div className="center-profile" onClick={()=>this.msgProfile()}>
+                      <div className="center-profile">
                           <label htmlFor="select-file">
                               <img src={UserDefault} alt="Avatar" className="img-fluid rounded-circle my-4 img-profile"  />
                           </label>
-                      
                         <h5>{this.state.formData.name}</h5>
                         <p>{this.state.formData.lastName}</p>
-                      
                       </div>
                     </div>
                     <div className="col-md-8 bg-color rounded-r">
-                      <form className="card-body p-4  mytext-dark">
+                      <form className="card-body p-4  mytext-dark" onSubmit={this.updateResponsibles}>
                         <div className="row-info">
                             <h5 className="">Informacion</h5>
                             <FontAwesomeIcon icon="fa-solid fa-pen-to-square" onClick={()=>this.handlerBtnEdit()} style={{"cursor": "hand","fontSize": "25px"}}/>
@@ -187,11 +178,11 @@ export default class Responsibles extends Component {
                         <div className="row pt-1">
                           <div className="col-md-6 mb-3">
                             <h6>Nombre</h6>
-                            <input type="text" className={classNameInput} name="name" value={this.state.formData.name} onChange={this.onChangehandler} required={true}  disabled={DisabledInput} onKeyUp={this.toUpperCase} />
+                            <input type="text" className={classNameInput} name="name" value={this.state.formData.name} onChange={this.onChangehandler} onBlur={this.toUpperCase} disabled={DisabledInput} required={true}  />
                           </div>
                           <div className="col-md-6 mb-3">
                             <h6>Apellido</h6>
-                            <textarea type="text" className={classNameInput} name="lastName" value={this.state.formData.lastName} onChange={this.onChangehandler} disabled={DisabledInput} 
+                            <textarea type="text" className={classNameInput} name="lastName" value={this.state.formData.lastName} onBlur={this.toUpperCase} onChange={this.onChangehandler} disabled={DisabledInput} 
                             style={{minHeight:"37px", minWidth:"100%", height:"37px", maxHeight:"300px"}}
                             />
                           </div>
@@ -199,47 +190,74 @@ export default class Responsibles extends Component {
                         <div className="row pt-1">
                           <div className="col-md-6 mb-3">
                             <h6>Parentesco</h6>
-                            <input type="text" className={classNameInput} name="relationship" value={this.state.formData.relationship} onChange={this.onChangehandler} minLength={18} maxLength={18} required={true}  disabled={DisabledInput} onKeyUp={this.toUpperCase} />
+                            <select name="relationship"  className={classNameInput} value={this.state.formData.relationship} onChange={this.onChangehandler} disabled={DisabledInput} required={true}>
+                              <option hidden={true} value="">Selecciona una opcion</option>
+                              {
+                                Object.values(relationshipJson).map((value, i,) => (
+                                  <option key={i} value={value}>{value}</option>
+                                ))
+                              }
+                            </select>
                           </div>
                           <div className="col-md-6 mb-3">
                             <h6>Sexo</h6>
-                            <select name="sex"  className={classNameInput} value={this.state.formData.sex} onChange={this.onChangehandler} disabled={DisabledInput} required={true}>
+                            <select name="sex" className={classNameInput} value={this.state.formData.sex} onChange={this.onChangehandler} disabled={DisabledInput} required={true}>
                                 <option hidden={true} value="">Select an option</option>
-                                <option value="m">Masculino </option>
-                                <option value="f">Femenino </option>
-                                <option value="i">Prefiero no decirlo</option>
+                                <option value="m">MASCULINO </option>
+                                <option value="f">FEMENINO </option>
+                                <option value="i">PREFIERO NO DECIRLO</option>
                             </select>
                           </div>
                         </div>
                         <div className="row pt-1">
                           <div className="col-md-6 mb-3">
                             <h6>Fecha de Nacimiento</h6>
-                            <input type="date" className={classNameInput} name="birthDate" value={this.state.formData.birthDate} min={"1900-01-01T08:30"} max={"2099-06-30T16:30"}  onChange={this.onChangehandler} disabled={DisabledInput}/>
+                            <input type="date" className={classNameInput} name="birthDate" value={this.state.formData.birthDate} min={"1900-01-01T08:30"} max={"2099-06-30T16:30"}  onChange={this.onChangehandler} disabled={DisabledInput} required={true}/>
                           </div>
                           <div className="col-md-6 mb-3" >
                             <h6>Es Tutor</h6>
-                            <input type="number" className={classNameInput} name="isTutor" value={this.state.formData.isTutor} onChange={this.onChangehandler} min={0} max={150} disabled={DisabledInput}/>
+                            <div className="d-flex justify-content-around">
+                              <div className="form-check">
+                                <input className="form-check-input" type="radio" name="isTutor" value="0" id="isTutor1" onChange={this.onChangehandler} 
+                                checked={this.state.formData.isTutor == "0"}
+                                disabled={DisabledInput}
+                                />
+                                <label className="form-check-label" htmlFor="isTutor1">No</label>
+                              </div>
+                              <div className="form-check">
+                                <input className="form-check-input" type="radio" name="isTutor" value="1" id="isTutor" onChange={this.onChangehandler}
+                                checked={this.state.formData.isTutor == "1"}
+                                disabled={DisabledInput}
+                                />
+                                <label className="form-check-label" htmlFor="isTutor">Si</label>
+                              </div>
+                            </div>
                           </div>
                         </div>
                         <div className="row pt-1">
                           <div className="col-md-6 mb-3">
                             <h6>Curp</h6>
-                            <input type="text" className={classNameInput} name="curp" value={this.state.formData.curp} onChange={this.onChangehandler} minLength={18} maxLength={20} required={true}  disabled={DisabledInput} onKeyUp={this.toUpperCase} />
+                            <input type="text" className={classNameInput} name="curp" value={this.state.formData.curp} onChange={this.onChangehandler} minLength={18} maxLength={20} required={true}  disabled={DisabledInput} onBlur={this.toUpperCase} />
                           </div>
                           <div className="col-md-6 mb-3">
                             <h6>Telefono</h6>
                             <input type="text" className={classNameInput} name="NPhone" value={this.state.formData.NPhone} onChange={this.onChangehandler} minLength={10} maxLength={14} disabled={DisabledInput}/>
                           </div>
                         </div>
-                        
                         <div className="row pt-1">
-                        
                           <div className="col-md-6 mb-3">
                             <h6>Entidad de Nacimiento</h6>
-                            <input type="text" className={classNameInput} name="birthEntity" value={this.state.formData.birthEntity} onChange={this.onChangehandler} required={true}  disabled={DisabledInput} onKeyUp={this.toUpperCase} />
+                            <select name="birthEntity"  className={classNameInput} value={this.state.formData.birthEntity} onChange={this.onChangehandler} disabled={DisabledInput} required={true}>
+                              <option hidden={true} value="">Selecciona una opcion</option>
+                              {
+                                Object.values(federativeEntitiesJson).map((value, i,) => (
+                                  <option key={i} value={value}>{value}</option>
+                                ))
+                              }
+                          </select>
                           </div>
                         </div>
-                        <button type="submit" className="text-center btn btn-profile w-100" onClick={this.onSubmitHandler} hidden={HideComponents}>Guardar</button>
+                        <button type="submit" className="text-center btn btn-profile w-100" hidden={HideComponents}>Guardar</button>
                         {msg && (
                             <div className={classNameAlert} role="alert">
                             {msg}
@@ -248,7 +266,7 @@ export default class Responsibles extends Component {
                       </form>
                     </div>
                   </div>
-                </div>
+              
               </div>
             </div>
           </div>

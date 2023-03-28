@@ -32,7 +32,7 @@ export default class Responsibles extends Component {
 
   }
 
-  //https://codedamn.com/news/reactjs/useeffect-in-class-component
+  // https://codedamn.com/news/reactjs/useeffect-in-class-component
   componentDidMount() {// call on loaded Component
       this.getResponsibles();
   }
@@ -42,11 +42,11 @@ export default class Responsibles extends Component {
     const idUser = this.userData.id_usuario;
 
     await axios.get(c.baseUrlApi+"responsibles-show/"+idUser).then((response) => {
-        console.log(idUser);
+        // console.log(response.data);
         this._parent.hideLoading();
         if(response.data.status==="failed"){
           this.setState({ 
-            hasResponsibles: false,
+            dataResponsibles : []
           });
         }else{
           this.setState({ 
@@ -98,12 +98,12 @@ export default class Responsibles extends Component {
                     <div key={i}  style={{"width": "14rem", "margin":"auto"}}>
                       <div className="card card-bg" style={{ "margin":"5px"}}>
                         <div className="rounded-circle overflow-hidden img-bordered">
-                          <h5 className="card-title-img">{data.nombre}</h5>
+                          <h5 className="card-title-img">{data.parentesco}</h5>
                           <img src={data.sexo==="i"?UserUndefined:data.sexo==="m"?UserMale:UserFemale} 
                           className="card-img-top img-cover" alt="Avatar"/>
                         </div>
                         <div className="card-body" style={{"padding": "10px"}}>
-                          <p className="card-text txt-color">{data.apellido}</p>
+                          <p className="card-text txt-color">{data.apellido+" "+data.nombre}</p>
                           <div className="d-flex justify-content-between">
                             <button className="btn btn-primary" 
                               onClick={()=>this.modalInfoResponsibles(data)}>Ver mas

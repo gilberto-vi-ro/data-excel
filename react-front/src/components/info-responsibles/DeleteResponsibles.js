@@ -38,8 +38,9 @@ export default class DeleteResponsibles extends Component {
 
         if(response.data.status==="success"){
           this._parent.modalDeleteResponsibles();
+          this._parent.getResponsibles();
         }
-        this._parent.getResponsibles();
+        
         
       }).catch((error) => {
         this._parent._parent.hideLoading();
