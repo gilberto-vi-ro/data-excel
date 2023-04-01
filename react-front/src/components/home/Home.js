@@ -25,30 +25,25 @@ export default class Home extends Component {
 
       <>
         <Navbar />
-        <div className="body-container2" style={{"marginTop":"80px"}}>
-          <div className="">
-            <div className="container-progressbar">
-              <div className="step active-step">
+        <div className="body-container">
+            <div className="step-progress">
+              <div className="step activated">
                 <span className="step-circle">1</span>
-                <li >Datos personal</li>
+                <span className="step-title">Datos personal</span>
               </div>
-              <div className="step active-step">
+              <div className="step activated">
                 <span className="step-circle">2</span>
-                <li >Datos escolar</li>
-                <span className="step-line"></span>
+                <span className="step-title">Datos escolar</span>
               </div>
               <div className="step">
-                <span className="step-circle ">3</span>
-                <li >Responsables</li>
-                <span className="step-line"></span>
+                <span className="step-circle">3</span>
+                <span className="step-title">Responsables</span>
               </div>
               <div className="step">
                 <span className="step-circle">4</span>
-                <li >Datos Indigena</li>
-                <span className="step-line"></span>
+                <span className="step-title">Datos Indigena</span>
               </div>
             </div>
-          </div>
         </div>
       </>
     );
