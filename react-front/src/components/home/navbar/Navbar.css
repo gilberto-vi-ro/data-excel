@@ -5,13 +5,13 @@
 .navbar{
     background-color: var(--color2);
     padding: 0px;
-    --bs-navbar-color: var(--text-color);
+    --bs-navbar-color: var(--light-color);
     --bs-navbar-hover-color: var(--dark-color);
-    --bs-navbar-active-color: var(--text-color)
+    --bs-navbar-active-color: var(--light-color)
 
 }
 .nav-item a{
-    color: var(--text-color) !important;
+    color: var(--light-color) !important;
 }
 
 .navbar-collapse{
@@ -25,7 +25,7 @@
 
 .dropdown-menu{
     margin-top: 5px;
-    background-color: var(--secondary-color);
+    background-color: var(--color1);
 }
 .dropdown-item a{
     text-decoration: none;
@@ -35,13 +35,17 @@
 }
 
 .img-logo{
-    background-color: rgb(243, 243, 243);
+    background-color: var(--light-color);
     height: 40px;
     border-radius: 5px;
 }
 
 .btn-bg{
     background-color:  var(--secondary-color);
+}
+
+.btn-bg:hover{
+    background-color:  var(--color1);
 }
 
 @media (max-width: 768px){

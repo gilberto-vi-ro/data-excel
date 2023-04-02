@@ -26,11 +26,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  background-color: var(--text-color);
-  border: 2px solid red;
+  background-color: var(--light-color);
+  border: 3px solid var(--secondary-color);
   font-weight: bold;
 }
 
@@ -47,8 +47,8 @@
   height: 3px;
   /* width: calc(100% - 30%); */
   width: 100%;
-  background-color: red;
-  top: 20px;
+  background-color: var(--secondary-color);
+  top: 50px;
   left: -50%;
   z-index: -1;
 }
@@ -62,9 +62,9 @@
 }
 
 .activated .step-circle{
-  border: 2px solid var(--color2);
+  border: 3px solid var(--color2);
   background-color: var(--color2);
-  color: var(--text-color);
+  color: var(--light-color);
 }
 
 .step.activated {
@@ -78,16 +78,20 @@
   }
   .step {
     flex-direction: row;
-    width: 200px;
-    height: 100px;
+    width: 240px;
+    height: 140px;
   }
 
   .step:before {
     height: 100%;
     width: 3px;
-    background-color: red;
     top: -50%;
-    left: 19px;
+    left: 40px;
+  }
+  .step-circle {
+    width: 80px;
+    height: 80px;
+    
   }
   .step-title {
     margin-left: 10px;

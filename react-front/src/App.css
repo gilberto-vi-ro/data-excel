@@ -1,21 +1,12 @@
 :root {
   /* ===== Colors ===== */
   
-  --color1: rgb(134,43,254);
-  --color2: rgb(176, 106, 252);
+  --color1: rgb(70,68,104, 0.9);
+  --color2: rgb(157, 36, 73);
   --dark-color: rgba(42,40,77, 0.9);
-  --primary-color: rgba(42,40,77, 0.9);
-  --secondary-color: rgba(70,68,104, 0.9);
-  --primary-color-light: rgba(152, 152, 165, 0.9);
-  --text-color: rgba(243, 243, 243,1);
-
-  /* --body-color: ##E8F5FB; */
-  /* --sidebar-color: #DBDCDE; */
-  /* --toggle-color: rgb(250, 245, 245); */
-  /* --selected-color: rgba(105, 92, 254, 0.3);
-  --active-color: rgba(42,40,77, 0.9);
-  --nav-var-color: rgba(73, 208, 208,0.98);
-  --height-nav-bar: 60px; */
+  --primary-color: rgba(232, 217, 203,0.9);
+  --secondary-color: rgba(182, 137, 92, 0.9);
+  --light-color: rgba(240, 240, 240,1);
 }
 
 

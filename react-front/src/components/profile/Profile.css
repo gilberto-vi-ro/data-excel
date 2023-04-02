@@ -16,10 +16,10 @@
     background: var(--color2);
     
     /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right bottom, var(--color2), var(--secondary-color));
+    background: -webkit-linear-gradient(to right bottom, var(--color2), var(--color1));
     
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to right bottom, var(--color2), var(--secondary-color));
+    background: linear-gradient(to right bottom, var(--color2), var(--color1));
 }
 .bg-color{
     background-color: var(--primary-color);
@@ -32,7 +32,7 @@
 }
 .fa-camera{
     position: absolute;
-    color: var(--text-color);
+    color: var(--light-color);
     margin-top: 90px;
     margin-left: -15px;
     cursor: pointer;
@@ -56,7 +56,7 @@
 }
 
 .mytext-light{
-    color: var(--text-color) !important;
+    color: var(--light-color) !important;
 }
 
 /* input::placeholder { color: white;} */
@@ -71,10 +71,10 @@
     width: 100%;
 	cursor: pointer;
     border-radius: 25px;
-    color : var(--primary-color-light) !important;
+    color : var(--color1) !important;
 }
 .input-profile.bordered{
-    border: 1px solid var(--primary-color-light) ;
+    border: 1px solid var(--color1) ;
 }
 
 .input-profile:focus,.input-profile:active{
@@ -86,7 +86,7 @@
 
  .input-profile:-webkit-autofill,   .input-profile:-webkit-autofill:hover,
  .input-profile:-webkit-autofill:focus,  .input-profile:-webkit-autofill:active {
-	-webkit-text-fill-color: var(--primary-color-light);
+	-webkit-text-fill-color: var(--color1);
 	transition: background-color 5000s ease-in-out 0s;
 }
 
@@ -98,16 +98,16 @@ hr{
     
     --bs-btn-bg: var(--color2);
     --bs-btn-border-color: var(--color2);
-    --bs-btn-hover-color: var(--text-color);
+    --bs-btn-hover-color: var(--light-color);
     --bs-btn-hover-bg: var(--color1);
     --bs-btn-hover-border-color: var(--color1);
     --bs-btn-focus-shadow-rgb: var(--secondary-color);
     --bs-btn-active-bg: var(--color1);
     --bs-btn-active-border-color: var(--color1);
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    --bs-btn-disabled-bg: var(--primary-color-light);
+    --bs-btn-disabled-bg: var(--color1);
     --bs-btn-disabled-border-color: var(--color2);
-    color: var(--text-color);
+    color: var(--light-color);
     padding: 8px;
     border-radius: 20px;
 }
