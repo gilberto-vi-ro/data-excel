@@ -1,7 +1,7 @@
 import "./Responsibles.css";
 import c from "../../const.json";
-import relationshipJson from "./relationship.json";
-import federativeEntitiesJson from "./federativeEntities.json";
+import relationshipJson from "../relationship.json";
+import federativeEntitiesJson from "../federativeEntities.json";
 
 import Navbar from "../home/navbar/Navbar.js";
 import UserDefault from "../../img/user/userDefault.png";
