@@ -83,6 +83,14 @@ export default class Responsibles extends Component {
     this.setState(formData);
   };
 
+  closeInfoResponsible = (e) => {
+    this.setState({
+      edit : !this.state.edit,
+      msg: ""
+    })
+    this._parent.modalInfoResponsibles()
+  };
+
   updateResponsibles = (e) => {
     e.preventDefault();//evitar que recargue el form
     this.setState({ msg: ""});
@@ -170,7 +178,7 @@ export default class Responsibles extends Component {
                             <FontAwesomeIcon icon="fa-solid fa-pen-to-square" onClick={()=>this.handlerBtnEdit()} style={{"cursor": "hand","fontSize": "25px"}}/>
                             <button type="button" className="btn btn-danger btn-circle"
                               style={{"marginTop":"-4px","marginRight":"-10px"}}
-                              onClick={()=>this._parent.modalInfoResponsibles()}
+                              onClick={()=>this.closeInfoResponsible()}
                               ><FontAwesomeIcon icon="fa-solid fa-xmark" />
                             </button>
                         </div>
