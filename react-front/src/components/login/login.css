@@ -3,27 +3,33 @@
 .m-auto {
     margin: auto;
 }
-
+.container-img-background{
+    position: relative; /* necesitas esto para posicionar la imagen */
+}
 .img-background {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100vh;
+    /* height: 100%; */
+    height: 100vh; /* especifica un alto para el contenedor */
+    z-index: -1; /* envía la imagen al fondo */
     object-fit: cover;
-    z-index: -1;
 }
 
 .login-container{
     padding: 10px;
-    background-color: var(--primary-color);
+    background-color: var(--color1);
     border-radius: 20px;
-    box-shadow: 2px 2px 2px 2px var(--secondary-color);
+    box-shadow: 2px 2px 2px 2px var(--primary-color);
+    z-index: 1;
 
 }
 
 .containers {
     padding: 20px 40px;
     font-weight: 600;
-    color: var(--text-color) !important;
+    color: var(--light-color) !important;
 }
 .containers .txt-msg{
     min-height: 15px;
@@ -38,49 +44,49 @@
 .signUp, .signIn{
     width:50%;
     font-size: 22px;
+    margin-left: 20px;
+    margin-right: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
     text-decoration: none;
-    color : var(--primary-color-light) !important;
+    color : var(--primary-color) !important;
 }
 .signIn:hover, .signUp:hover {
     text-decoration: none;
-    background-color: var(--secondary-color);
+    background-color: transparent;
 }
-.active{
-    
-    border-bottom: 2px solid  var(--dark-color);
-    color: var(--text-color) !important;
-    border-bottom: 3px solid  var(--color1);
+.signIn.active{
+    color: var(--light-color) !important;
+    border-bottom: 3px solid  var(--light-color);
 }
 
 .form-control{
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
 }
 
 .text-link{
     text-decoration: none;
-    color: var(--color2) !important;
+    color: var(--primary-color) !important;
 }
 
 /* input::placeholder { color: white;} */
 .input-login{
-    background-color: var(--secondary-color);
+    background-color: transparent;
     border: 0px;
 	/* margin: 5px; */
-	border-bottom: 3px solid var(--primary-color-light) ;
+	border-bottom: 1px solid var(--primary-color) ;
 	font-size: 12pt;
 	padding: 10px;
 	cursor: pointer;
-    border-radius: 25px;
-    color : var(--primary-color-light) !important;
+    border-radius: 0px;
+    color : var(--primary-color) !important;
 }
 
 .input-login:focus{
-    background-color: var(--secondary-color);
+    background-color: transparent;
     /* outline: 7px; */
-	box-shadow:1px 1px 10px   var(--secondary-color);
+	box-shadow:1px 1px 1px   var(--primary-color);
 }
 
 
@@ -88,24 +94,34 @@
  .input-login:-webkit-autofill:focus, .input-login:-webkit-autofill:active {
 	/* -webkit-box-shadow: 0 0 0 30px red inset !important; */
 	/* background-color: blue !important; */
-	-webkit-text-fill-color: var(--primary-color-light);
+	-webkit-text-fill-color: var(--primary-color);
 	transition: background-color 5000s ease-in-out 0s;
 }
 
 
 .btn-login {
     
-    --bs-btn-bg: var(--color1);
-    --bs-btn-border-color: var(--color1);
+    --bs-btn-bg: var(--color2);
+    --bs-btn-border-color: var(--color2);
     --bs-btn-hover-bg: var(--color2);
     --bs-btn-hover-border-color: var(--color2);
-    --bs-btn-focus-shadow-rgb: var(--secondary-color);
-    --bs-btn-active-bg: var(--color2);
-    --bs-btn-active-border-color: var(--color2);
+    --bs-btn-focus-shadow-rgb: var(--primary-color);
+    --bs-btn-active-bg: var(--primary-color);
+    --bs-btn-active-border-color: var(--primary-color);
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    --bs-btn-disabled-bg: var(--primary-color-light);
-    --bs-btn-disabled-border-color: var(--color1);
+    --bs-btn-disabled-bg: var(--primary-color);
+    --bs-btn-disabled-border-color: var(--color2);
    
     padding: 8px;
     border-radius: 20px;
+}
+
+.btn-login:hover {
+    border: 1px solid var(--primary-color) ;
+}
+
+@media (max-width: 768px){
+    .img-background {
+        height: calc(100vh + 60px);
+    }
 }

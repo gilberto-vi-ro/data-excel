@@ -54,7 +54,7 @@ class LoginController extends Controller
             $user = LoginModel::create($userDataArray);
 
             if (!is_null($user)) {
-                return response()->json(["status" => $this->status_code, "success" => true, "message" => "Registration completed successfully", "data" => $user]);
+                return response()->json(["status" => $this->status_code, "success" => true, "message" => "El registro ha sido exitoso", "data" => $user]);
             } else {
                 return response()->json(["status" => "failed", "success" => false, "message" => "failed to register"]);
             }
@@ -97,12 +97,12 @@ class LoginController extends Controller
                 if (!is_null($password_status)) {
                     $this->updateLastTime($email_status->id_usuario);
                     $user = $this->userDetail($request->email);
-                    return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => $user]);
+                    return response()->json(["status" => $this->status_code, "success" => true, "message" => "Has accedido exitosamente", "data" => $user]);
                 } else {
-                    return response()->json(["status" => "failed", "success" => false, "message" => "Unable to login. Incorrect password."]);
+                    return response()->json(["status" => "failed", "success" => false, "message" => "La contraseña no es correcta."]);
                 }
             } else {
-                return response()->json(["status" => "failed", "success" => false, "message" => "Unable to login. Email doesn't exist."]);
+                return response()->json(["status" => "failed", "success" => false, "message" => "El email no esta registrado."]);
             }
         }catch (\Exception $e){
             return response()->json(["status" => "failed", "success" => false, "message" => $e->getMessage()]);

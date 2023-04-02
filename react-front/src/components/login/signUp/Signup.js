@@ -42,7 +42,7 @@ export default class Signup extends Component {
   verifyPassword = ()=>{
     if (this.state.signupData.clave !== this.state.signupData.confirmar_clave){
       this.setState({ 
-        errClave: "Passwords do not match",
+        errClave: "Las contraseñas no coinciden.",
       });
       return false;
     }
@@ -106,14 +106,14 @@ export default class Signup extends Component {
   render() {
     const isLoading = this.state.isLoading;
     return (
-      <div>
+      <>
         <Form className="containers">
           <FormGroup>
-            <Label for="name">Name</Label>
+            <Label for="name">Nombre</Label>
             <Input
               type="name"
               name="nombre"
-              placeholder="Enter name"
+              placeholder="Introdusca su nombre"
               className="input-login"
               value={this.state.signupData.nombre}
               onChange={this.onChangehandler}
@@ -121,11 +121,11 @@ export default class Signup extends Component {
           </FormGroup>
           <p className="text-danger txt-msg">{this.state.errNombre}</p>
           <FormGroup>
-            <Label for="name">Last name</Label>
+            <Label for="name">Apellido</Label>
             <Input
               type="name"
               name="apellido"
-              placeholder="Enter Last name"
+              placeholder="Introdusca su apellido"
               className="input-login"
               value={this.state.signupData.apellidodo}
               onChange={this.onChangehandler}
@@ -137,7 +137,7 @@ export default class Signup extends Component {
             <Input
               type="email"
               name="email"
-              placeholder="Enter email"
+              placeholder="Introdusca su email"
               className="input-login"
               value={this.state.signupData.email}
               onChange={this.onChangehandler}
@@ -146,24 +146,24 @@ export default class Signup extends Component {
           <p className="text-danger txt-msg">{this.state.errEmail}</p>
           <div className="row mt-3">
             <FormGroup className="col-md-6">
-              <Label for="clave">Password</Label>
+              <Label for="clave">Contraseña</Label>
               <Input
                 type="password"
                 name="clave"
                 maxLength="10"
-                placeholder="Enter password"
+                placeholder="Introdusca una contraseña"
                 className="input-login"
                 value={this.state.signupData.clave}
                 onChange={this.onChangehandler}
               />
             </FormGroup>
             <FormGroup className="col-md-6">
-              <Label for="confirmar_clave">Confirm password</Label>
+              <Label for="confirmar_clave">Confirmar contraseña</Label>
               <Input
                 type="password"
                 name="confirmar_clave"
                 maxLength="10"
-                placeholder="Confirm password"
+                placeholder="Confirmar contraseña"
                 className="input-login"
                 value={this.state.signupData.confirmar_clave}
                 onChange={this.onChangehandler}
@@ -195,7 +195,7 @@ export default class Signup extends Component {
                 className="text-center btn btn-login w-100"
                 onClick={this.onSubmitHandler}
               >
-                Sign Up
+                Registrar
                 {isLoading ? (
                   <span
                     className="spinner-border spinner-border-sm ml-5"
@@ -208,11 +208,11 @@ export default class Signup extends Component {
               </Button>
             </FormGroup>
             <FormGroup className="col-md-6 text-center pt-2">
-              <Link to="/login/in/" className="text-link">I'm already member</Link>
+              <Link to="/login/in/" className="text-link">Ya me he Registrado</Link>
             </FormGroup>
           </div>
         </Form>
-      </div>
+      </>
     );
   }
 }

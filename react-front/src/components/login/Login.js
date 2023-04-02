@@ -19,22 +19,24 @@ export default class Login extends Component {
     let navLink = (
       <div className="Tab">
         <NavLink exact="true" to="/login/in" activeclassname={"signIn active"} className="signIn">
-          Sign In
+          Acceso
         </NavLink>
         <NavLink  to="/login/up" activeclassname={"signIn active"} className="signIn">
-          Sign Up
+          Resgistrarse
         </NavLink>
       </div>
     );
     
     return (
-      <div className="">
-
-        <img src={BG} alt="jpg"   className="img-background" />
+      <>
+        <div className="container-img-background">
+          <img src={BG} alt="jpg" className="img-background" />
+        </div>
         <div className="d-flex justify-content-center vh-100">
-          <div className="m-auto col col-md-6 mx-auto">
-            <div className="w-100">
+          <div className="m-auto col col-md-6 col-lg-4 mx-auto">
+            <div className="w-100 p-2">
               <div className="m-1 login-container">
+                    
                     {navLink}
                       <Routes>
                         <Route  path="/in/" element={<Signin _parent={this} />}></Route>
@@ -44,7 +46,7 @@ export default class Login extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }

@@ -99,7 +99,7 @@ export default class Signin extends Component {
       const isLoading = this.state.isLoading;
       return (
         
-          <div>
+          <>
           
             {/* <button onClick={this._parent.showLoading}>show</button> */}
             <Form className="containers">
@@ -108,7 +108,7 @@ export default class Signin extends Component {
                 <Input
                   type="email"
                   name="email"
-                  placeholder="Enter email"
+                  placeholder="Introdusca su email"
                   className="input-login"
                   value={this.state.email}
                   onChange={this.onChangehandler}
@@ -117,11 +117,11 @@ export default class Signin extends Component {
               <p className="text-danger txt-msg">{this.state.msg}</p>
               <p className="text-danger txt-msg">{this.state.errMsgEmail}</p>
               <FormGroup>
-                <Label for="password">Password</Label>
+                <Label for="password">Contraseña</Label>
                 <Input
                   type="password"
                   name="password"
-                  placeholder="Enter password"
+                  placeholder="Introdusca su contraseña"
                   className="input-login"
                   value={this.state.password}
                   onChange={this.onChangehandler}
@@ -136,7 +136,7 @@ export default class Signin extends Component {
                   className="text-center btn btn-login w-100"
                   onClick={this.onSignInHandler}
                 >
-                  Sign In
+                  Acceder
                   {isLoading ? (
                     <span
                       className="spinner-border spinner-border-sm ml-5"
@@ -149,12 +149,12 @@ export default class Signin extends Component {
                 </Button>
               </FormGroup>
               <FormGroup className="col-md-6 text-center pt-2">
-                <Link to="/modal" className="text-link">Recover password!</Link>
+                <Link to="/modal" className="text-link">Recuperar Contraseña!</Link>
               </FormGroup>
             </div>
 
             </Form>
-          </div>
+          </>
 
       );
     }
