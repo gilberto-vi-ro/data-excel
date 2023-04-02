@@ -188,7 +188,7 @@ export default class InfoIndigenous extends Component {
                               />
                             </div>
                             <div className="col-md-6 mb-3">
-                              <h6>Decendencia</h6>
+                              <h6>Te consideras</h6>
                               <select name="descent" className={classNameInput} value={this.state.formData.descent} onChange={this.onChangehandler} disabled={DisabledInput} required={true}>
                                   <option hidden={true} value="">Seleciona una opcion</option>
                                   <option value="Indigena">Indigena</option>
