@@ -3,13 +3,14 @@ import { Button } from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Navigate, Routes, Route } from "react-router-dom";
 import axios from "axios";
-import Navbar from "./navbar/Navbar.js";
+import Navbar from "../navbar/Navbar.js";
 import "./Home.css";
 
 //https://reactstrap.github.io/?path=/docs/components-navbar--props
 export default class Home extends Component {
   constructor(props) {
     super(props);
+    this._parent = this.props._parent;
     this.state = {
       redirect: false,
       data: JSON.parse(localStorage.getItem("userData")),
@@ -24,7 +25,7 @@ export default class Home extends Component {
     return (
 
       <>
-        <Navbar />
+        <Navbar _parent={this} />
         <div className="body-container">
             <div className="step-progress">
               <div className="step activated">

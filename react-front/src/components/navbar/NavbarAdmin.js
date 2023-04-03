@@ -1,6 +1,6 @@
 import "./Navbar.css";
-import Logo from "../../../img/logo/INPI.png";
-import c from "../../../const.json";
+import Logo from "../../img/logo/INPI.png";
+import c from "../../const.json";
 import React, { useState, ReactDOM, useRef, useEffect } from 'react';
 import { useLocation,Navigate,Link,useNavigate } from "react-router-dom";
 import {
@@ -37,10 +37,10 @@ function MyNavbar(args) {
           removeActive(navLinks);
           const idDropdownToggle= divNav.current.querySelector('#idDropdownToggle');
           
-          if( location.pathname.indexOf("/info-responsables") !== -1 
-          || location.pathname.indexOf("/info-escolar") !== -1 
-          || location.pathname.indexOf("/info-personal") !== -1 
-          || location.pathname.indexOf("/info-indigena") !== -1 )
+          if( location.pathname.indexOf("/admin/info-responsables") !== -1 
+          || location.pathname.indexOf("/admin/info-escolar") !== -1 
+          || location.pathname.indexOf("/admin/info-personal") !== -1 
+          || location.pathname.indexOf("/admin/info-indigena") !== -1 )
             idDropdownToggle.classList.add("active");
           else
             idDropdownToggle.classList.remove("active");
@@ -77,14 +77,17 @@ function MyNavbar(args) {
      
       <div ref={divNav}>
         <Navbar {...args} expand={"md"} fixed={"top"} >
-          <NavbarBrand href="/" className="ms-2">
+          <NavbarBrand href={""+c.baseRoute+"/admin" }className="ms-2">
             <img src={Logo} alt="png"   className="img-logo"/>
           </NavbarBrand>
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar >
             <Nav className="ms-auto" navbar>
               <NavItem>
-                  <Link to="/home" className="nav-link">INICIO</Link>
+                  <Link to="/admin/a-excel" className="nav-link">A EXCEL</Link>
+              </NavItem>
+              <NavItem>
+                  <Link to="/admin/beneficiarios" className="nav-link">BENEFICIARIOS</Link>
               </NavItem>
               {/* <NavItem> <NavLink href="##">algo</NavLink> </NavItem> */}
               <UncontrolledDropdown nav inNavbar>
@@ -92,15 +95,15 @@ function MyNavbar(args) {
                   DATOS
                 </DropdownToggle>
                 <DropdownMenu end={true}>
-                  <DropdownItem><Link to="/info-responsables">Responsables</Link></DropdownItem>
-                  <DropdownItem><Link to="/info-escolar">Escolar</Link></DropdownItem>
-                  <DropdownItem><Link to="/info-personal">Personal</Link></DropdownItem>
+                  <DropdownItem><Link to="/admin/info-responsables">Responsables</Link></DropdownItem>
+                  <DropdownItem><Link to="/admin/info-escolar">Escolar</Link></DropdownItem>
+                  <DropdownItem><Link to="/admin/info-personal">Personal</Link></DropdownItem>
                   {/* <DropdownItem divider /> */}
-                  <DropdownItem><Link to="/info-indigena">Indigena</Link></DropdownItem>
+                  <DropdownItem><Link to="/admin/info-indigena">Indigena</Link></DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
               <NavItem>
-                <Link to="/perfil" className="nav-link">PERFIL</Link>
+                <Link to="/admin/perfil" className="nav-link">PERFIL</Link>
               </NavItem>
               <button className="btn btn-secondary btn-bg text-right" onClick={()=>onLogoutHandler()}>
                     SALIR

@@ -1,6 +1,6 @@
 import "./InfoPersonal.css";
 import c from "../../const.json";
-import Navbar from "../home/navbar/Navbar.js";
+import Navbar from "../navbar/Navbar.js";
 import UserDefault from "../../img/user/userDefault.png";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -157,7 +157,7 @@ export default class InfoPersonal extends Component {
     return (
 
       <>
-        <Navbar />
+        <Navbar _parent={this} />
         <div className="body-container">
           <section className="vh-100-80px">
             <div className="container h-100">

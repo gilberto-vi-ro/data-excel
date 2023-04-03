@@ -1,6 +1,6 @@
 import "./InfoSchool.css";
 import c from "../../const.json";
-import Navbar from "../home/navbar/Navbar.js";
+import Navbar from "../navbar/Navbar.js";
 import logoSchool from "../../img/logo/logoSchool.jpg";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -148,7 +148,7 @@ export default class InfoSchool extends Component {
     return (
 
       <>
-        <Navbar />
+        <Navbar _parent={this} />
         <div className="body-container">
           <section className="vh-100-80px">
             <div className="container h-100">

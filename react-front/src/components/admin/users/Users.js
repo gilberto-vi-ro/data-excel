@@ -1,14 +1,11 @@
-import "./Responsibles.css";
-import c from "../../const.json";
 
-import Navbar from "../navbar/Navbar.js";
-import InfoResponsibles from "./InfoResponsibles.js";
-import AddResponsibles from "./AddResponsibles.js";
-import DeleteResponsibles from "./DeleteResponsibles.js";
+import c from "../../../const.json";
 
-import UserUndefined from "../../img/user/userDefault.png";
-import UserMale from "../../img/user/male.png";
-import UserFemale from "../../img/user/female.jpg";
+import InfoUser from "./InfoUser.js";
+
+import UserUndefined from "../../../img/user/userDefault.png";
+import UserMale from "../../../img/user/male.png";
+import UserFemale from "../../../img/user/female.jpg";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component, useEffect } from "react";
@@ -69,7 +66,7 @@ export default class Responsibles extends Component {
       idResponsibles: id
     });
   }
-  modalInfoResponsibles = (data=null) =>{
+  modalInfoUser = (data=null) =>{
     this.setState({ 
       activeModalInfoResponsible: !this.state.activeModalInfoResponsible,
       dataR: data,
@@ -83,12 +80,11 @@ export default class Responsibles extends Component {
     return (
 
       <>
-        <Navbar _parent={this} />
+
         <div className="body-container">
           <section className="">
             <h5 className="text-center color2">Datos de tus Responsables</h5>
             
-            <AddResponsibles _parent={this} idUser={this.userData.id_usuario} />
            
             <div className="container py-4">
                 <div className="row g-4 d-flex justify-content-center row-cols-1 row-cols-sm-2 row-cols-md-3">
@@ -106,7 +102,7 @@ export default class Responsibles extends Component {
                           <p className="card-text txt-color">{data.apellido+" "+data.nombre}</p>
                           <div className="d-flex justify-content-between">
                             <button className="btn btn-primary" 
-                              onClick={()=>this.modalInfoResponsibles(data)}>Ver mas
+                              onClick={()=>this.modalInfoUser(data)}>Ver mas
                             </button>
                             <button type="button" className="btn btn-danger btn-circle"
                               onClick={()=>this.modalDeleteResponsibles(data.id_responsable)}
@@ -125,8 +121,7 @@ export default class Responsibles extends Component {
           </section>
         </div>
        
-        <InfoResponsibles _parent={this} data={this.state.dataR} show={this.state.activeModalInfoResponsible}/>
-        <DeleteResponsibles _parent={this} />
+        <InfoUser _parent={this} data={this.state.dataR} show={this.state.activeModalInfoResponsible}/>
       </>
     );
     

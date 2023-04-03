@@ -11,8 +11,12 @@ import InfoSchool from "./components/info-school/InfoSchool.js";
 import InfoPersonal from "./components/info-personal/InfoPersonal.js";
 import InfoIndigenous from "./components/info-indigenous/InfoIndigenous";
 import Profile from "./components/profile/Profile.js";
+import Admin from "./components/admin/Admin.js";
+import ToExcel from "./components/admin/users/ToExcel.js";
+import Beneficiaries from "./components/admin/users/Beneficiaries.js";
 
-import { BrowserRouter , Routes, Router, Route, Navigate} from "react-router-dom";
+import { BrowserRouter , Routes, Route, Navigate} from "react-router-dom";
+
 
 
 
@@ -25,6 +29,7 @@ export default class App extends Component {
     this.loadingRef = React.createRef("loading");
     this.state  = {
       activeLoader: false,
+      isAdmin:false
     };
   }
 
@@ -47,6 +52,7 @@ export default class App extends Component {
   render() {
     
     const login = localStorage.getItem("isLoggedIn");
+    const isAdmin = localStorage.getItem("isAdmin");
 
     return (
       <>
@@ -57,27 +63,42 @@ export default class App extends Component {
         
         <BrowserRouter basename={c.baseRoute}>
             <Routes>
-              <Route exact path="/" element={!login?(<Navigate to={"/login/in/"} />):(<Navigate to="/home/" />) } ></Route>
+              
               <Route path="/login/" element={<Navigate to="/login/in/" />} ></Route>
               <Route path="/login//*" element={<Login  _parent={this} />}></Route>
-              {/* <Route path="/login/" element={<Login isLogged={Home} onLogout={Login} /> } />  */}
-              {/* <Route path="/home/" element={<Login isLogged={Home} onLogout={Login} /> } /> */}
-              <Route path="/home//*" element={login?(<Home />):(<Navigate to="/login/in/" />) } />
-              <Route  path="/info-responsables//*" element={
-                login?(<InfoResponsibles _parent={this} />):(<Navigate to="/login/in/" />) 
-              }></Route>
-              <Route  path="/info-escolar//*" element={
-                login?(<InfoSchool _parent={this} />):(<Navigate to="/login/in/" />) 
-              }></Route>
-              <Route  path="/info-personal//*" element={
-                login?(<InfoPersonal _parent={this} />):(<Navigate to="/login/in/" />) 
-              }></Route>
-               <Route  path="/info-indigena//*" element={
-                login?(<InfoIndigenous _parent={this} />):(<Navigate to="/login/in/" />) 
-              }></Route>
-              <Route  path="/perfil//*" element={
-                login?(<Profile _parent={this} />):(<Navigate to="/login/in/" />) 
-              }></Route>
+
+              {login?
+                (
+                  <>
+                    <Route exact path="/" element={<Navigate to={"/home"} />}></Route>
+                    <Route path="/home//*" element={<Home _parent={this} /> } />
+                    <Route  path="/info-responsables" element={<InfoResponsibles _parent={this} />}></Route>
+                    <Route  path="/info-escolar" element={<InfoSchool _parent={this} />}></Route>
+                    <Route  path="/info-personal" element={ <InfoPersonal _parent={this} /> }></Route>
+                    <Route  path="/info-indigena" element={ <InfoIndigenous _parent={this} /> }></Route>
+                    <Route  path="/perfil" element={ <Profile _parent={this} /> }></Route>
+                  </>
+                ):(
+                  <Route exact path="/" element={<Navigate to={"/login/in/"} />}></Route>
+                )
+              }
+
+              {isAdmin?
+                (
+                  <>
+                  <Route exact path="/admin" element={<Navigate to={"/admin/beneficiarios"} />}></Route>
+                  <Route  path="/admin//*"></Route>
+                  {/* <Route  path="admin/a-excel/" element={ <ToExcel _parent={this} />  }></Route>
+                  <Route  path="admin/beneficiarios/" element={ <Beneficiaries _parent={this} />  }></Route> */}
+                  <Route  path="admin/info-responsables/" element={ <InfoResponsibles _parent={this} />  }></Route>
+                  <Route  path="admin/info-escolar/" element={ <InfoSchool _parent={this} />  }></Route>
+                  <Route  path="admin/info-personal/" element={ <InfoPersonal _parent={this} />  }></Route>
+                  <Route  path="admin/info-indigena/" element={ <InfoIndigenous _parent={this} />  }></Route>
+                  <Route  path="admin/perfil/" element={ <Profile _parent={this} />  }></Route>
+                  </>
+                ):(<Route path="/admin//*" element={<Navigate to="/login/in/"/>} />)
+              }
+              <Route path="*" element={<Navigate to="/login/in/"/>}/>
             </Routes>
         </BrowserRouter>
       </>

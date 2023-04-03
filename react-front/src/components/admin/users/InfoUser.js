@@ -1,9 +1,9 @@
-import "./Responsibles.css";
-import c from "../../const.json";
-import relationshipJson from "../relationship.json";
-import federativeEntitiesJson from "../federativeEntities.json";
 
-import UserDefault from "../../img/user/userDefault.png";
+import c from "../../../const.json";
+import relationshipJson from "../../relationship.json";
+import federativeEntitiesJson from "../../federativeEntities.json";
+
+import UserDefault from "../../../img/user/userDefault.png";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component } from "react";

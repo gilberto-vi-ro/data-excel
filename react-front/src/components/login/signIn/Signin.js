@@ -57,13 +57,17 @@ export default class Signin extends Component {
         this.setState({ isLoading: false });
 
         if (response.data.status === 200) {
-            localStorage.setItem("isLoggedIn", true);
-            localStorage.setItem("userData", JSON.stringify(response.data.data));
+          if(response.data.data.tipo===1) 
+            localStorage.setItem("isAdmin", true);
+            
+          localStorage.setItem("isLoggedIn", true);
+          localStorage.setItem("userData", JSON.stringify(response.data.data));
           this.setState({
             msg: response.data.message,
             type: response.data.data.tipo,
             redirect: true,
-          });     
+          }); 
+          
         }
         if (response.data.status === "failed") {
           
