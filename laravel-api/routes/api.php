@@ -68,3 +68,14 @@ Route::controller($nc.ResponsiblesController::class)->group( function(){
     Route::put("responsibles-update", "update");
     Route::delete("responsibles-delete/{id}", "delete");
 });
+
+
+Route::controller($nc.AdminController::class)->group( function(){
+    Route::get("admin", "index");
+    Route::get("admin-getAllUsers", "getAllUsers");
+    Route::get("admin-getUser/{id}", "getUser");
+    Route::post("admin-select", "select");
+    Route::post("admin-filter", "filter");
+    Route::put("admin-updateBeneficiary", "updateBeneficiary");
+    Route::delete("admin-deleteBeneficiary/{id}", "deleteBeneficiary");
+});

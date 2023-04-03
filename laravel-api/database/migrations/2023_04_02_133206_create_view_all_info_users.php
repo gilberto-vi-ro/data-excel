@@ -17,7 +17,7 @@ class CreateViewAllInfoUsers extends Migration
         DB::statement('CREATE VIEW all_info_users AS 
             SELECT DISTINCT 
                 usuarios.id_usuario, usuarios.apellido, usuarios.nombre, usuarios.email, usuarios.img, usuarios.estado_de_solicitud,
-                usuarios.fecha_de_recepcion, usuarios.descripcion,
+                usuarios.fecha_de_recepcion, usuarios.descripcion, usuarios.ultima_vez, usuarios.created_at,
                 datos_personales.curp, datos_personales.edad, datos_personales.fecha_nac AS fecha_nacimiento, datos_personales.domicilio_origen,
                 datos_personales.sexo, datos_personales.estatura, datos_personales.peso, datos_personales.n_telefono,
                 info_escolar.escolaridad, info_escolar.nombre_escuela, info_escolar.clave_escolar, info_escolar.modalidad, info_escolar.grado,
