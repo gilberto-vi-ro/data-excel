@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component } from "react";
 import axios from "axios";
 
-export default class Responsibles extends Component {
+export default class EditBeneficiary extends Component {
   constructor(props) {
     super(props);
     this._parent = this.props._parent;
@@ -44,11 +44,11 @@ export default class Responsibles extends Component {
     setTimeout(() => {
       if(this.props.show===true)
         if (this.props.data.id_responsable !== this.state.formData.idResponsible)
-          this.getDataResponsibles();
+          this.getDataBeneficiary();
     }, 500);
   }
   
-  getDataResponsibles = (e) => {
+  getDataBeneficiary = (e) => {
     
     const { formData } = this.state;
     formData["idResponsible"] = this.props.data.id_responsable;
@@ -82,22 +82,22 @@ export default class Responsibles extends Component {
     this.setState(formData);
   };
 
-  closeInfoResponsible = (e) => {
+  closeEditBeneficiary = (e) => {
     this.setState({
       edit : !this.state.edit,
       msg: ""
     })
-    this._parent.modalInfoResponsibles()
+    this._parent.modalEditBeneficiary();
   };
 
-  updateResponsibles = (e) => {
+  updateBeneficiary = (e) => {
     e.preventDefault();//evitar que recargue el form
     this.setState({ msg: ""});
     this.setState({ isLoading: true });
     this._parent._parent.showLoading();
 
     const config = {
-      url: c.baseUrlApi+"responsibles-update",
+      url: c.baseUrlApi+"admin-updateBeneficiary",
       method: "PUT",
       headers: {
           'Access-Control-Allow-Origin': '*',
@@ -119,7 +119,7 @@ export default class Responsibles extends Component {
         });
 
         if(response.data.status==="success")
-          this._parent.getResponsibles();
+          this._parent.getBeneficiaries();
 
       }).catch((error) => {
         //  console.log(error);
@@ -171,13 +171,13 @@ export default class Responsibles extends Component {
                       </div>
                     </div>
                     <div className="col-md-8 bg-color rounded-r">
-                      <form className="card-body p-4  mytext-dark" onSubmit={this.updateResponsibles}>
+                      <form className="card-body p-4  mytext-dark" onSubmit={this.updateBeneficiary}>
                         <div className="row-info">
                             <h5 className="">Informacion</h5>
                             <FontAwesomeIcon icon="fa-solid fa-pen-to-square" onClick={()=>this.handlerBtnEdit()} style={{"cursor": "hand","fontSize": "25px"}}/>
                             <button type="button" className="btn btn-danger btn-circle"
                               style={{"marginTop":"-4px","marginRight":"-10px"}}
-                              onClick={()=>this.closeInfoResponsible()}
+                              onClick={()=>this.closeEditBeneficiary()}
                               ><FontAwesomeIcon icon="fa-solid fa-xmark" />
                             </button>
                         </div>

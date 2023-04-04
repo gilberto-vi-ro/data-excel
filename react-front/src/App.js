@@ -88,8 +88,8 @@ export default class App extends Component {
                   <>
                   <Route exact path="/admin" element={<Navigate to={"/admin/beneficiarios"} />}></Route>
                   <Route  path="/admin//*"></Route>
-                  {/* <Route  path="admin/a-excel/" element={ <ToExcel _parent={this} />  }></Route>
-                  <Route  path="admin/beneficiarios/" element={ <Beneficiaries _parent={this} />  }></Route> */}
+                  {/* <Route  path="admin/a-excel/" element={ <ToExcel _parent={this} />  }></Route> */}
+                  <Route  path="admin/beneficiarios/" element={ <Beneficiaries _parent={this} />  }></Route>
                   <Route  path="admin/info-responsables/" element={ <InfoResponsibles _parent={this} />  }></Route>
                   <Route  path="admin/info-escolar/" element={ <InfoSchool _parent={this} />  }></Route>
                   <Route  path="admin/info-personal/" element={ <InfoPersonal _parent={this} />  }></Route>
