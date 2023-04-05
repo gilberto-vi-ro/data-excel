@@ -72,7 +72,8 @@ Route::controller($nc.ResponsiblesController::class)->group( function(){
 
 Route::controller($nc.AdminController::class)->group( function(){
     Route::get("admin", "index");
-    Route::get("admin-getAllUsers", "getAllUsers");
+    Route::post("admin-getAllUsers", "getAllUsers");
+    Route::get("admin-getResponsibleBeneficiaries/{id}", "getResponsibleBeneficiaries");
     Route::get("admin-getUser/{id}", "getUser");
     Route::post("admin-select", "select");
     Route::post("admin-filter", "filter");

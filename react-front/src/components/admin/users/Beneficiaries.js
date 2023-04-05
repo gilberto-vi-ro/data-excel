@@ -4,7 +4,7 @@ import Navbar from "../../navbar/Navbar.js";
 import InfoBeneficiary from "./InfoBeneficiary.js";
 import EditBeneficiary from "./EditBeneficiary";
 import DeleteBeneficiary from "./DeleteBeneficiary";
-
+import SearchBar from './SearchBar';
 
 import UserDefault from "../../../img/user/userDefault.png";
 
@@ -19,7 +19,9 @@ export default class Beneficiaries extends Component {
     this._parent = this.props._parent;
  
     this.userData = JSON.parse(localStorage.getItem("userData"));
+    
     this.state = {
+      searchQuery: '',
       classNameAlert:"alert alert-danger mt-1",
       msg: "",
       dataBeneficiaries: [],
@@ -41,7 +43,7 @@ export default class Beneficiaries extends Component {
     this._parent.showLoading();
     const idUser = this.userData.id_usuario;
 
-    await axios.get(c.baseUrlApi+"admin-getAllUsers/").then((response) => {
+    await axios.post(c.baseUrlApi+"admin-getAllUsers/").then((response) => {
         //  console.log(response.data);
         this._parent.hideLoading();
         if(response.data.status==="failed"){
@@ -84,9 +86,23 @@ export default class Beneficiaries extends Component {
       msg: "",
     });
   }
+
+  handleSearchQueryChange = (searchQuery) => {
+    this.setState({
+      searchQuery: searchQuery
+    });
+  
+  }
   
   render() {
-   
+    const { searchQuery , dataBeneficiaries} = this.state;
+    const filterDataBeneficiaries = dataBeneficiaries.filter((item) => {
+      return (
+          item.nombre.toLowerCase().includes(searchQuery.toLowerCase())||
+          item.apellido.toLowerCase().includes(searchQuery.toLowerCase()) 
+          // item.modalidad!=null?item.modalidad.toLowerCase().includes(searchQuery.toLowerCase()):""
+      );
+    });
 
     return (
 
@@ -94,12 +110,12 @@ export default class Beneficiaries extends Component {
         <Navbar _parent={this} />
         <div className="body-container">
           <section className="">
-            <h5 className="text-center color2">Datos de tus Responsables</h5>
-            
+            <h5 className="text-center color2">Beneficiarios</h5>
+            <SearchBar _parent={this} />
             <div className="container py-4">
                 <div className="row g-4 d-flex justify-content-center row-cols-1 row-cols-sm-2 row-cols-md-3">
                 {
-                  this.state.dataBeneficiaries && this.state.dataBeneficiaries.map((data,i) =>(
+                  filterDataBeneficiaries && filterDataBeneficiaries.map((data,i) =>(
                     <div key={i}  style={{"width": "14rem", "margin":"auto"}}>
                       <div className="card card-bg" style={{ "margin":"5px"}}>
                         <div className="rounded-circle overflow-hidden img-bordered">
@@ -135,11 +151,9 @@ export default class Beneficiaries extends Component {
         </div>
        
         <EditBeneficiary _parent={this} data={this.state.dataB} show={this.state.activeModalEditBeneficiary}/>
-
+        <InfoBeneficiary _parent={this} data={this.state.dataB} show={this.state.activeModalInfoBeneficiary}/>
         <DeleteBeneficiary _parent={this} data={this.state.dataB} show={this.state.activeModalDeleteBeneficiary}/>
       </>
     );
-    
-    
   }
 }

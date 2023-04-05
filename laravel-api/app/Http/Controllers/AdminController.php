@@ -17,9 +17,9 @@ class AdminController extends Controller
         return $this->responseJson("success", "Saludos desde AdminController" );
     }
 
-    public function getAllUsers()
+    public function getAllUsers(Request $request)
     {
-        $AdminModel = AdminModel::getBeneficiaries();
+        $AdminModel = AdminModel::getBeneficiaries($request->config);
         if($AdminModel){
             return $this->responseJson("success", "Datos procesados", $AdminModel );
         }else
@@ -34,6 +34,15 @@ class AdminController extends Controller
         else 
             return response()->json(["status" => "failed", "message" => "No se encontro Los datos", "data"=> [] ]);
     }
+    public function getResponsibleBeneficiaries($idUser)
+    {
+        $AdminModel = AdminModel::getResponsibleBeneficiaries($idUser);
+        if($AdminModel){
+            return $this->responseJson("success", "Datos procesados", $AdminModel );
+        }else
+            return $this->responseJson("failed", "No se encontraron los datos");
+    }
+
     public function select(Request $request)
     {
         $request->data;

@@ -1,3 +1,8 @@
+.text-modal-title{
+  color: var(--color1);
+}
+
+
 .step-progress {
   position: relative;
   display: flex;

@@ -9,31 +9,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component } from "react";
 import axios from "axios";
 
-export default class EditBeneficiary extends Component {
+export default class InfoBeneficiary extends Component {
   constructor(props) {
     super(props);
     this._parent = this.props._parent;
-    // this.pwdRef = React.createRef("pwdRef");
-    // this.confirmPwdRef = React.createRef("confirmPwdRef");
-    this.userData = JSON.parse(localStorage.getItem("userData"));
+   
     this.state = {
-      edit: false,
       classNameAlert:"alert alert-danger mt-1",
-     
       msg: "",
-      formData: {
-        idUser: this.userData.id_usuario,
-        idResponsible: null,
-
-        relationship: "",
-        isTutor: "0",
-        lastName: "",
-        name: "",
-        curp: "",
-        sex: "",
-        NPhone: "0",
-        birthEntity: "",
-        birthDate: "",
+      infoData: {
+        idUser: null,
+        DataResponsibles: null
       },
     };
     
@@ -43,83 +29,56 @@ export default class EditBeneficiary extends Component {
   componentDidUpdate(prevProps, prevState,snapshot){
     setTimeout(() => {
       if(this.props.show===true)
-        if (this.props.data.id_responsable !== this.state.formData.idResponsible)
-          this.getDataBeneficiary();
+        if (this.props.data.id_usuario !== this.state.infoData.idUser)
+          this.getResponsiblesBeneficiary();
     }, 500);
   }
   
-  getDataBeneficiary = (e) => {
+  getResponsiblesBeneficiary = (e) => {
     
-    const { formData } = this.state;
-    formData["idResponsible"] = this.props.data.id_responsable;
+    const { infoData } = this.state;
+    infoData["idUser"] = this.props.data.id_usuario;
+    this.setState({ infoData});
 
-    formData["relationship"] = this.props.data.parentesco;
-    formData["isTutor"] = this.props.data.es_tutor;
-    formData["lastName"] = this.props.data.apellido;
-    formData["name"] = this.props.data.nombre;
-    formData["curp"] = this.props.data.curp;
-    formData["sex"] = this.props.data.sexo;
-    formData["NPhone"] = this.props.data.n_telefono;
-    formData["birthEntity"] = this.props.data.entidad_nac;
-    formData["birthDate"] = this.props.data.fecha_nac;
-
-    this.setState({ formData});
+    this.getDataResponsiblesBeneficiary();
     
   };
 
-  handlerBtnEdit = ()=>{
+
+  closeInfoBeneficiary = (e) => {
     this.setState({
-      edit : !this.state.edit,
       msg: ""
     })
-  }
-
-  onChangehandler = (e) => {
-    let name = e.target.name;
-    let value = e.target.value;
-    const { formData } = this.state;
-    formData[name] = value;
-    this.setState(formData);
+    this._parent.modalInfoBeneficiary();
   };
 
-  closeEditBeneficiary = (e) => {
-    this.setState({
-      edit : !this.state.edit,
-      msg: ""
-    })
-    this._parent.modalEditBeneficiary();
-  };
-
-  updateBeneficiary = (e) => {
-    e.preventDefault();//evitar que recargue el form
+  getDataResponsiblesBeneficiary = () => {
     this.setState({ msg: ""});
     this.setState({ isLoading: true });
     this._parent._parent.showLoading();
 
     const config = {
-      url: c.baseUrlApi+"admin-updateBeneficiary",
-      method: "PUT",
+      url: c.baseUrlApi+"admin-getResponsibleBeneficiaries/"+this.state.infoData.idUser,
+      method: "GET",
       headers: {
           'Access-Control-Allow-Origin': '*',
           'Content-Type': 'application/json',
       },
-      data: JSON.stringify(this.state.formData),
+      data: JSON.stringify(this.state.infoData),
     };
 
     axios(config)
       .then((response) => {
         //  console.log(response);
         this._parent._parent.hideLoading();
-
+        const { infoData } = this.state;
+        infoData["DataResponsibles"] = response.data.data;
         this.setState({ 
           classNameAlert: 
                         response.data.status==="success"? "alert alert-success mt-1":"alert alert-danger mt-1",
           msg: response.data.message,
-         
+          infoData
         });
-
-        if(response.data.status==="success")
-          this._parent.getBeneficiaries();
 
       }).catch((error) => {
         //  console.log(error);
@@ -132,155 +91,282 @@ export default class EditBeneficiary extends Component {
       }, 4000);
   };
 
-
-  toUpperCase = (e) =>{
-    e.preventDefault();
-    let name = e.target.name;
-    let value = e.target.value.toUpperCase();
-    const { formData } = this.state;
-    formData[name] = value;
-    this.setState(formData);
-  }
   
   render() {
-   
-    var classNameInput = this.state.edit ? 'input-profile bordered' : 'input-profile';
-    var DisabledInput = this.state.edit ? false : true;
-    var HideComponents = this.state.edit ? false : true;
-
+  
     const {
       msg,
       classNameAlert,
     } = this.state;
-
+    var ultima_vez = "";
+    var created_at = "";
+    var fecha_nacimiento = "";
+    if (this.props.show){
+      ultima_vez = this.props.data.ultima_vez==null?"":this.props.data.ultima_vez.slice(0, 16);
+      created_at = this.props.data.created_at==null?"":this.props.data.created_at.slice(0, 16);
+      fecha_nacimiento = this.props.data.fecha_nacimiento==null?"":this.props.data.fecha_nacimiento.slice(0, 16);
+    }
+    
 
     return (
-      <>
-        <div className="modal" style={this.props.show?{"display":"block"}:{"display":"none"}}>
-          <div className="container h-100">
+      this._parent.state.activeModalInfoBeneficiary&&this.props.show?(
+        <>
+          <div className="modal" style={this.props.show?{"display":"block"}:{"display":"none"}}>
             <div className="row d-flex justify-content-center align-items-center h-100">
-              <div className="col col-sm-12 col-lg-8  mb-lg-0 p-0">
-                  <div className="row g-0 m-2">
-                    <div className="col-md-4 gradient-custom text-center mytext-light rounded-l">
-                      <div className="center-profile">
-                          <label htmlFor="select-file">
-                              <img src={UserDefault} alt="Avatar" className="img-fluid rounded-circle my-4 img-profile"  />
-                          </label>
-                        <h5>{this.state.formData.name}</h5>
-                        <p>{this.state.formData.lastName}</p>
+              <div className="col col-sm-12 col-md-8 mb-lg-0">
+                <div className="col-md-12 bg-color m-2" style={{"borderRadius":"1rem"}}>
+                    <form className="card-body p-4  mytext-dark" onSubmit={this.updateBeneficiary}>
+                      <div className="row-info">
+                          <h5 className="text-modal-title">Informacion Personal</h5>
+                          
+                          <button type="button" className="btn btn-danger btn-circle"
+                            style={{"marginTop":"-4px","marginRight":"-10px"}}
+                            onClick={()=>this.closeInfoBeneficiary()}
+                            ><FontAwesomeIcon icon="fa-solid fa-xmark" />
+                          </button>
                       </div>
-                    </div>
-                    <div className="col-md-8 bg-color rounded-r">
-                      <form className="card-body p-4  mytext-dark" onSubmit={this.updateBeneficiary}>
-                        <div className="row-info">
-                            <h5 className="">Informacion</h5>
-                            <FontAwesomeIcon icon="fa-solid fa-pen-to-square" onClick={()=>this.handlerBtnEdit()} style={{"cursor": "hand","fontSize": "25px"}}/>
-                            <button type="button" className="btn btn-danger btn-circle"
-                              style={{"marginTop":"-4px","marginRight":"-10px"}}
-                              onClick={()=>this.closeEditBeneficiary()}
-                              ><FontAwesomeIcon icon="fa-solid fa-xmark" />
-                            </button>
+                      <hr className="mt-0 mb-4"/>
+                      <div className="row pt-1">
+                        <div className="col-md-4 mb-3">
+                          <h6>Nombre</h6>
+                          <input type="text" className={"input-profile"} name="name" value={this.props.data.nombre==null?"":this.props.data.nombre} disabled={true} required={true}  />
                         </div>
-                        <hr className="mt-0 mb-4"/>
-                        <div className="row pt-1">
-                          <div className="col-md-6 mb-3">
-                            <h6>Nombre</h6>
-                            <input type="text" className={classNameInput} name="name" value={this.state.formData.name} onChange={this.onChangehandler} onBlur={this.toUpperCase} disabled={DisabledInput} required={true}  />
-                          </div>
-                          <div className="col-md-6 mb-3">
-                            <h6>Apellido</h6>
-                            <textarea type="text" className={classNameInput} name="lastName" value={this.state.formData.lastName} onBlur={this.toUpperCase} onChange={this.onChangehandler} disabled={DisabledInput} 
-                            style={{minHeight:"37px", minWidth:"100%", height:"37px", maxHeight:"300px"}}
-                            />
-                          </div>
+                        <div className="col-md-4 mb-3">
+                          <h6>Apellido</h6>
+                          <textarea type="text" className={"input-profile"} name="lastName" value={this.props.data.apellido==null?"":this.props.data.apellido} disabled={true} 
+                          style={{minHeight:"37px", minWidth:"100%", height:"37px", maxHeight:"300px"}}
+                          />
                         </div>
-                        <div className="row pt-1">
-                          <div className="col-md-6 mb-3">
-                            <h6>Parentesco</h6>
-                            <select name="relationship"  className={classNameInput} value={this.state.formData.relationship} onChange={this.onChangehandler} disabled={DisabledInput} required={true}>
-                              <option hidden={true} value="">Selecciona una opcion</option>
-                              {
-                                Object.values(relationshipJson).map((value, i,) => (
-                                  <option key={i} value={value}>{value}</option>
-                                ))
-                              }
-                            </select>
-                          </div>
-                          <div className="col-md-6 mb-3">
-                            <h6>Sexo</h6>
-                            <select name="sex" className={classNameInput} value={this.state.formData.sex} onChange={this.onChangehandler} disabled={DisabledInput} required={true}>
-                                <option hidden={true} value="">Select an option</option>
-                                <option value="m">MASCULINO </option>
-                                <option value="f">FEMENINO </option>
-                                <option value="i">PREFIERO NO DECIRLO</option>
-                            </select>
-                          </div>
+                        <div className="col-md-4 mb-3">
+                          <h6>Email</h6>
+                          <input type="text" className={"input-profile"} name="name" value={this.props.data.email==null?"":this.props.data.email} disabled={true} required={true}  />
                         </div>
-                        <div className="row pt-1">
-                          <div className="col-md-6 mb-3">
-                            <h6>Fecha de Nacimiento</h6>
-                            <input type="date" className={classNameInput} name="birthDate" value={this.state.formData.birthDate} min={"1900-01-01T08:30"} max={"2099-06-30T16:30"}  onChange={this.onChangehandler} disabled={DisabledInput} required={true}/>
-                          </div>
-                          <div className="col-md-6 mb-3" >
-                            <h6>Es Tutor</h6>
-                            <div className="d-flex justify-content-around">
-                              <div className="form-check">
-                                <input className="form-check-input" type="radio" name="isTutor" value="0" id="isTutor1" onChange={this.onChangehandler} 
-                                checked={this.state.formData.isTutor == "0"}
-                                disabled={DisabledInput}
-                                />
-                                <label className="form-check-label" htmlFor="isTutor1">No</label>
+                      </div>
+                      <div className="row pt-1">
+                        <div className="col-md-4 mb-3">
+                          <h6>Estado de solicitud</h6>
+                          <input type="text" className={"input-profile"} name="name" value={this.props.data.estado_de_solicitud==null?"":this.props.data.estado_de_solicitud} disabled={true} required={true}  />
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <h6>Fecha de recepcion</h6>
+                          <input type="text" className={"input-profile"} name="name" value={this.props.data.fecha_de_recepcion==null?"":this.props.data.fecha_de_recepcion} disabled={true} required={true}  />
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <h6>descripcion</h6>
+                          <textarea type="text" className={"input-profile"} name="lastName" value={this.props.data.descripcion==null?"":this.props.data.descripcion} disabled={true} 
+                          style={{minHeight:"37px", minWidth:"100%", height:"37px", maxHeight:"300px"}}
+                          />
+                        </div>
+                      </div>
+                      <div className="row pt-1">
+                        <div className="col-md-4 mb-3">
+                          <h6>Curp</h6>
+                          <input type="text" className={"input-profile"} name="name" value={this.props.data.curp==null?"":this.props.data.curp} disabled={true} required={true}  />
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <h6>Edad</h6>
+                          <input type="text" className={"input-profile"} name="name" value={this.props.data.edad==null?"":this.props.data.edad} disabled={true} required={true}  />
+                        </div>
+                        <div className="col-md-3 mb-3">
+                          <h6>Telefono</h6>
+                          <input type="text" className={"input-profile"} name="NPhone" value={this.props.data.n_telefono==null?"":this.props.data.n_telefono}  minLength={10} maxLength={14} disabled={true}/>
+                        </div>
+                      </div>
+                      <div className="row pt-1">
+                        <div className="col-md-4 mb-3">
+                          <h6>Sexo</h6>
+                          <select name="sex" className={"input-profile"} value={this.props.data.sexo==null?"":this.props.data.sexo}  disabled={true} required={true}>
+                              <option hidden={true} value="">Select an option</option>
+                              <option value="m">MASCULINO </option>
+                              <option value="f">FEMENINO </option>
+                              <option value="i">PREFIERO NO DECIRLO</option>
+                          </select>
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <h6>Estatura</h6>
+                          <input type="text" className={"input-profile"} name="NPhone" value={this.props.data.estatura==null?"":this.props.data.estatura}   disabled={true}/>
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <h6>Peso</h6>
+                          <input type="text" className={"input-profile"} name="NPhone" value={this.props.data.peso==null?"":this.props.data.peso}   disabled={true}/>
+                        </div>
+                      </div>
+                      <div className="row pt-1">
+                        <div className="col-md-12 mb-3">
+                          <h6>Domicilio</h6>
+                          <textarea type="text" className={"input-profile"} name="lastName" value={this.props.data.domicilio_origen==null?"":this.props.data.domicilio_origen} disabled={true} 
+                          style={{minHeight:"37px", minWidth:"100%", height:"37px", maxHeight:"300px"}}
+                          />
+                        </div>
+                      </div>
+                      <div className="row pt-1">
+                        <div className="col-md-4 mb-3">
+                          <h6>Fecha de nacimiento</h6>
+                          <input type="date" className={"input-profile"} name="created_at" value={fecha_nacimiento} min={"1900-01-01T08:30"} max={"2099-06-30T16:30"}   disabled={true} required={true}/>
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <h6>Ultima vez</h6>
+                          <input type="datetime-local" className={"input-profile"} name="created_at" value={ultima_vez} min={"1900-01-01T08:30"} max={"2099-06-30T16:30"}   disabled={true} required={true}/>
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <h6>Creado</h6>
+                          <input type="datetime-local" className={"input-profile"} name="created_at" value={created_at} min={"1900-01-01T08:30"} max={"2099-06-30T16:30"}   disabled={true} required={true}/>
+                        </div>
+                      </div>
+
+                      <div className="row-info">
+                          <h5 className="text-modal-title">Informacion Escolar</h5>
+                      </div>
+                      <hr className="mt-0 mb-4"/>
+
+                      <div className="row pt-1">
+                        <div className="col-md-4 mb-3">
+                          <h6>Nombre de la escuela</h6>
+                          <textarea type="text" className={"input-profile"} name="lastName" value={this.props.data.nombre_escuela==null?"":this.props.data.nombre_escuela} disabled={true} 
+                          style={{minHeight:"37px", minWidth:"100%", height:"37px", maxHeight:"300px"}}
+                          />
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <h6>Clave escolar</h6>
+                          <input type="text" className={"input-profile"} name="name" value={this.props.data.clave_escolar==null?"":this.props.data.clave_escolar} disabled={true} required={true}  />
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <h6>Escolaridad</h6>
+                          <input type="text" className={"input-profile"} name="name" value={this.props.data.escolaridad==null?"":this.props.data.escolaridad} disabled={true} required={true}  />
+                        </div>
+                      </div>
+                      <div className="row pt-1">
+                        <div className="col-md-4 mb-3">
+                          <h6>Modalidad</h6>
+                          <input type="text" className={"input-profile"} name="name" value={this.props.data.modalidad==null?"":this.props.data.modalidad} disabled={true} required={true}  />
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <h6>Grado</h6>
+                          <input type="text" className={"input-profile"} name="name" value={this.props.data.grado==null?"":this.props.data.grado} disabled={true} required={true}  />
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <h6>Ultima calificacion</h6>
+                          <input type="text" className={"input-profile"} name="name" value={this.props.data.ultima_calificacion==null?"":this.props.data.ultima_calificacion} disabled={true} required={true}  />
+                        </div>
+                      </div>
+
+                      <div className="row-info">
+                          <h5 className="text-modal-title">Informacion Indigena</h5>
+                      </div>
+                      <hr className="mt-0 mb-4"/>
+
+                      <div className="row pt-1">
+                        <div className="col-md-4 mb-3">
+                          <h6>Se considera</h6>
+                          <input type="text" className={"input-profile"} name="name" value={this.props.data.se_considera==null?"":this.props.data.se_considera} disabled={true} required={true}  />
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <h6>Pueblo indigena</h6>
+                          <input type="text" className={"input-profile"} name="name" value={this.props.data.pueblo_indigena==null?"":this.props.data.pueblo_indigena} disabled={true} required={true}  />
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <h6>Lengua indigena</h6>
+                          <input type="text" className={"input-profile"} name="name" value={this.props.data.lengua_indigena==null?"":this.props.data.lengua_indigena} disabled={true} required={true}  />
+                        </div>
+                      </div>
+                      <div className="row pt-1">
+                        <div className="col-md-4 mb-3">
+                          <h6>Nivel que habla</h6>
+                          <input type="text" className={"input-profile"} name="name" value={this.props.data.nivel_que_habla==null?"":this.props.data.nivel_que_habla} disabled={true} required={true}  />
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <h6>Nivel que escribe</h6>
+                          <input type="text" className={"input-profile"} name="name" value={this.props.data.nivel_que_escribe==null?"":this.props.data.nivel_que_escribe} disabled={true} required={true}  />
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <h6>Nivel que pronuncia</h6>
+                          <input type="text" className={"input-profile"} name="name" value={this.props.data.nivel_que_pronuncia==null?"":this.props.data.nivel_que_pronuncia} disabled={true} required={true}  />
+                        </div>
+                      </div>
+                    
+                      <>{
+                        this.state.infoData.DataResponsibles&&this.state.infoData.DataResponsibles.map((value, i,) => (
+                          
+             
+                            <div className="" key={i} >
+                              <div className="row-info">
+                                  <h5 className="text-modal-title">Responsable {i+1}</h5>
                               </div>
-                              <div className="form-check">
-                                <input className="form-check-input" type="radio" name="isTutor" value="1" id="isTutor" onChange={this.onChangehandler}
-                                checked={this.state.formData.isTutor == "1"}
-                                disabled={DisabledInput}
-                                />
-                                <label className="form-check-label" htmlFor="isTutor">Si</label>
+                              <hr className="mt-0 mb-4"/>
+
+                              <div className="row pt-1">
+                                <div className="col-md-4 mb-3">
+                                  <h6>Parentesco del responsable</h6>
+                                  <input type="text" className={"input-profile"} name="name" value={value.responsable_parentesco} disabled={true} required={true}  />
+                                </div>
+                                <div className="col-md-4 mb-3">
+                                  <h6>Es_tutor</h6>
+                                  <select name="sex" className={"input-profile"} value={value.responsable_es_tutor}  disabled={true} required={true}>
+                                      <option hidden={true} value="">Select an option</option>
+                                      <option value="0">NO </option>
+                                      <option value="1">SI </option>
+                                  </select>
+                                </div>
+                                <div className="col-md-4 mb-3">
+                                  <h6>Nombre del responsable_</h6>
+                                  <input type="text" className={"input-profile"} name="name" value={value.responsable_nombre} disabled={true} required={true}  />
+                                </div>
+                              </div>
+                              <div className="row pt-1">
+                                <div className="col-md-4 mb-3">
+                                  <h6>Apellido del responsable</h6>
+                                  <input type="text" className={"input-profile"} name="name" value={value.responsable_apellido} disabled={true} required={true}  />
+                                </div>
+                                <div className="col-md-4 mb-3">
+                                  <h6>CURP del responsable</h6>
+                                  <input type="text" className={"input-profile"} name="name" value={value.responsable_curp} disabled={true} required={true}  />
+                                </div>
+                                <div className="col-md-4 mb-3">
+                                  <h6>Sexo del responsable</h6>
+                                  <select name="sex" className={"input-profile"} value={value.responsable_sexo}  disabled={true} required={true}>
+                                      <option hidden={true} value="">Select an option</option>
+                                      <option value="f">FEMENINO </option>
+                                      <option value="m">MASCULINO </option>
+                                      <option value="i">INDEFINIDO </option>
+                                  </select>
+                                </div>
+                              </div>
+
+                              <div className="row pt-1">
+                                <div className="col-md-4 mb-3">
+                                  <h6>Telefono del responsable</h6>
+                                  <input type="text" className={"input-profile"} name="name" value={value.responsable_n_telefono} disabled={true} required={true}  />
+                                </div>
+                                <div className="col-md-4 mb-3">
+                                  <h6>Entidad de nacimiento</h6>
+                                  <input type="text" className={"input-profile"} name="name" value={value.responsable_entidad_nacimiento} disabled={true} required={true}  />
+                                </div>
+                                <div className="col-md-4 mb-3">
+                                  <h6>Fecha de acimiento</h6>
+                                  <input type="text" className={"input-profile"} name="name" value={value.responsable_fecha_nacimiento} disabled={true} required={true}  />
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </div>
-                        <div className="row pt-1">
-                          <div className="col-md-6 mb-3">
-                            <h6>Curp</h6>
-                            <input type="text" className={classNameInput} name="curp" value={this.state.formData.curp} onChange={this.onChangehandler} minLength={18} maxLength={20} required={true}  disabled={DisabledInput} onBlur={this.toUpperCase} />
-                          </div>
-                          <div className="col-md-6 mb-3">
-                            <h6>Telefono</h6>
-                            <input type="text" className={classNameInput} name="NPhone" value={this.state.formData.NPhone} onChange={this.onChangehandler} minLength={10} maxLength={14} disabled={DisabledInput}/>
-                          </div>
-                        </div>
-                        <div className="row pt-1">
-                          <div className="col-md-6 mb-3">
-                            <h6>Entidad de Nacimiento</h6>
-                            <select name="birthEntity"  className={classNameInput} value={this.state.formData.birthEntity} onChange={this.onChangehandler} disabled={DisabledInput} required={true}>
-                              <option hidden={true} value="">Selecciona una opcion</option>
-                              {
-                                Object.values(federativeEntitiesJson).map((value, i,) => (
-                                  <option key={i} value={value}>{value}</option>
-                                ))
-                              }
-                          </select>
-                          </div>
-                        </div>
-                        <button type="submit" className="text-center btn btn-profile w-100" hidden={HideComponents}>Guardar</button>
-                        {msg && (
-                            <div className={classNameAlert} role="alert">
-                            {msg}
-                            </div> 
-                        )}
-                      </form>
-                    </div>
-                  </div>
-              
+                          
+                        ))
+                      }</>
+                     
+
+                    
+                      {msg && (
+                          <div className={classNameAlert} role="alert">
+                          {msg}
+                          </div> 
+                      )}
+                    </form>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </>
+        </>
+      
+      ):(<></>)
     );
-    
     
   }
 }
