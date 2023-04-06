@@ -23,6 +23,15 @@ class ProfileController extends Controller
         return $profile;
     }
 
+    public function step($idUser)
+    {
+        $step = Profile::getStep($idUser);
+        if($step)
+            return response()->json([ "status" => "success", "message" => "Datos procesados","data"=>$step ]);
+        else 
+            return response()->json(["status" => "failed", "message" => "No se encontro Los datos", "data"=> [] ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

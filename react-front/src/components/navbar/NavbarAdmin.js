@@ -84,6 +84,9 @@ function MyNavbar(args) {
           <Collapse isOpen={isOpen} navbar >
             <Nav className="ms-auto" navbar>
               <NavItem>
+                  <Link to="/home" className="nav-link">INICIO</Link>
+              </NavItem>
+              <NavItem>
                   <Link to="/admin/a-excel" className="nav-link">A EXCEL</Link>
               </NavItem>
               <NavItem>

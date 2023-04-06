@@ -103,6 +103,15 @@ export default class Signup extends Component {
         this.setState({ isLoading: false, status: "failed", msg: error.message});
       });
   };
+  toUpperCase = (e) =>{
+    e.preventDefault();
+    let name = e.target.name;
+    let value = e.target.value.toUpperCase();
+    const { signupData } = this.state;
+    signupData[name] = value;
+    this.setState(signupData);
+  }
+
   render() {
     const isLoading = this.state.isLoading;
     return (
@@ -111,24 +120,26 @@ export default class Signup extends Component {
           <FormGroup>
             <Label for="name">Nombre</Label>
             <Input
-              type="name"
+              type="text"
               name="nombre"
               placeholder="Introdusca su nombre"
               className="input-login"
               value={this.state.signupData.nombre}
               onChange={this.onChangehandler}
+              onKeyUp={this.toUpperCase}
             />
           </FormGroup>
           <p className="text-danger txt-msg">{this.state.errNombre}</p>
           <FormGroup>
-            <Label for="name">Apellido</Label>
+            <Label for="apellido">Apellido</Label>
             <Input
-              type="name"
+              type="text"
               name="apellido"
               placeholder="Introdusca su apellido"
               className="input-login"
-              value={this.state.signupData.apellidodo}
+              value={this.state.signupData.apellido}
               onChange={this.onChangehandler}
+              onKeyUp={this.toUpperCase}
             />
           </FormGroup>
           <p className="text-danger txt-msg">{this.state.errApellido}</p>

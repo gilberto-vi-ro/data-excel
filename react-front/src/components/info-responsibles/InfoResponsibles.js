@@ -185,11 +185,11 @@ export default class Responsibles extends Component {
                         <div className="row pt-1">
                           <div className="col-md-6 mb-3">
                             <h6>Nombre</h6>
-                            <input type="text" className={classNameInput} name="name" value={this.state.formData.name} onChange={this.onChangehandler} onBlur={this.toUpperCase} disabled={DisabledInput} required={true}  />
+                            <input type="text" className={classNameInput} name="name" value={this.state.formData.name} onChange={this.onChangehandler} onKeyUp={this.toUpperCase} disabled={DisabledInput} required={true}  />
                           </div>
                           <div className="col-md-6 mb-3">
                             <h6>Apellido</h6>
-                            <textarea type="text" className={classNameInput} name="lastName" value={this.state.formData.lastName} onBlur={this.toUpperCase} onChange={this.onChangehandler} disabled={DisabledInput} 
+                            <textarea type="text" className={classNameInput} name="lastName" value={this.state.formData.lastName} onKeyUp={this.toUpperCase} onChange={this.onChangehandler} disabled={DisabledInput} 
                             style={{minHeight:"37px", minWidth:"100%", height:"37px", maxHeight:"300px"}}
                             />
                           </div>
@@ -244,7 +244,7 @@ export default class Responsibles extends Component {
                         <div className="row pt-1">
                           <div className="col-md-6 mb-3">
                             <h6>Curp</h6>
-                            <input type="text" className={classNameInput} name="curp" value={this.state.formData.curp} onChange={this.onChangehandler} minLength={18} maxLength={20} required={true}  disabled={DisabledInput} onBlur={this.toUpperCase} />
+                            <input type="text" className={classNameInput} name="curp" value={this.state.formData.curp} onChange={this.onChangehandler} minLength={18} maxLength={20} required={true}  disabled={DisabledInput} onKeyUp={this.toUpperCase} />
                           </div>
                           <div className="col-md-6 mb-3">
                             <h6>Telefono</h6>

@@ -136,7 +136,12 @@ export default class InfoPersonal extends Component {
   }
 
   toUpperCase = (e) =>{
-     e.target.value = e.target.value.toUpperCase();
+    e.preventDefault();
+    let name = e.target.name;
+    let value = e.target.value.toUpperCase();
+    const { formData } = this.state;
+    formData[name] = value;
+    this.setState(formData);
   }
   
   render() {
@@ -196,9 +201,9 @@ export default class InfoPersonal extends Component {
                               <h6>Sexo</h6>
                               <select name="sex"  className={classNameInput} value={this.state.formData.sex} onChange={this.onChangehandler} disabled={DisabledInput} required={true}>
                                   <option hidden={true} value="">Select an option</option>
-                                  <option value="m">Masculino </option>
-                                  <option value="f">Femenino </option>
-                                  <option value="i">Prefiero no decirlo</option>
+                                  <option value="m">MASCULINO</option>
+                                  <option value="f">FEMENINO</option>
+                                  <option value="i">PREFIERO NO DECIRLO</option>
                               </select>
                             </div>
                           </div>
@@ -215,7 +220,7 @@ export default class InfoPersonal extends Component {
                           <div className="row pt-1">
                             <div className="col-md-6 mb-3">
                               <h6>Domicilio</h6>
-                              <textarea type="text" className={classNameInput} name="domicile" value={this.state.formData.domicile} onChange={this.onChangehandler} disabled={DisabledInput} 
+                              <textarea type="text" className={classNameInput} name="domicile" value={this.state.formData.domicile} onChange={this.onChangehandler} onKeyUp={this.toUpperCase} disabled={DisabledInput} 
                               style={{minHeight:"37px", minWidth:"100%", height:"37px", maxHeight:"300px"}}
                               />
                             </div>

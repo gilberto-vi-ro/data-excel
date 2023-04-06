@@ -128,11 +128,13 @@ export default class InfoIndigenous extends Component {
       });
   };
 
-  toUpperCase = () =>{
-        const { formData } = this.state;
-        formData["indigenousTown"] = this.state.formData.indigenousTown.toUpperCase();
-        formData["indigenousLanguage"] = this.state.formData.indigenousLanguage.toUpperCase();
-        this.setState({ formData });
+  toUpperCase = (e) =>{
+    e.preventDefault();
+    let name = e.target.name;
+    let value = e.target.value.toUpperCase();
+    const { formData } = this.state;
+    formData[name] = value;
+    this.setState(formData);
   }
   
   render() {
@@ -184,16 +186,16 @@ export default class InfoIndigenous extends Component {
                               onChange={this.onChangehandler}
                               disabled={DisabledInput} 
                               style={{minHeight:"37px", minWidth:"100%", height:"37px", maxHeight:"300px"}}
-                              onBlur={this.toUpperCase}
+                              onKeyUp={this.toUpperCase}
                               />
                             </div>
                             <div className="col-md-6 mb-3">
                               <h6>Te consideras</h6>
                               <select name="descent" className={classNameInput} value={this.state.formData.descent} onChange={this.onChangehandler} disabled={DisabledInput} required={true}>
                                   <option hidden={true} value="">Seleciona una opcion</option>
-                                  <option value="Indigena">Indigena</option>
-                                  <option value="Afromexicano">Afromexicano</option>
-                                  <option value="Otro">Otro</option>
+                                  <option value="INDIGENA">INDIGENA</option>
+                                  <option value="AFROMEXICANO">AFROMEXICANO</option>
+                                  <option value="OTRO">OTRO</option>
                               </select>
                             </div>
                           </div>
@@ -206,7 +208,7 @@ export default class InfoIndigenous extends Component {
                               onChange={this.onChangehandler} 
                               minLength={3} maxLength={20} required={true}  
                               disabled={DisabledInput} 
-                              onBlur={this.toUpperCase} />
+                              onKeyUp={this.toUpperCase} />
                             </div>
                             <div className="col-md-6 mb-3">
                               <h6>Nivel que habla</h6>

@@ -150,11 +150,11 @@ export default class Responsibles extends Component {
                       <div className="row pt-1">
                         <div className="col-md-6 mb-3">
                           <h6>Nombre</h6>
-                          <input type="text" className="input-profile bordered" name="name" value={this.state.formData.name} onChange={this.onChangehandler} onBlur={this.toUpperCase} required={true}  />
+                          <input type="text" className="input-profile bordered" name="name" value={this.state.formData.name} onChange={this.onChangehandler} onKeyUp={this.toUpperCase} required={true}  />
                         </div>
                         <div className="col-md-6 mb-3">
                           <h6>Apellido</h6>
-                          <textarea type="text" className="input-profile bordered" name="lastName" value={this.state.formData.lastName} onBlur={this.toUpperCase} onChange={this.onChangehandler} 
+                          <textarea type="text" className="input-profile bordered" name="lastName" value={this.state.formData.lastName} onKeyUp={this.toUpperCase} onChange={this.onChangehandler} 
                           style={{minHeight:"37px", minWidth:"100%", height:"37px", maxHeight:"300px"}}
                           />
                         </div>
@@ -207,7 +207,7 @@ export default class Responsibles extends Component {
                       <div className="row pt-1">
                         <div className="col-md-6 mb-3">
                           <h6>Curp</h6>
-                          <input type="text" className="input-profile bordered" name="curp" value={this.state.formData.curp} onChange={this.onChangehandler} minLength={18} maxLength={20} required={true}  onBlur={this.toUpperCase} />
+                          <input type="text" className="input-profile bordered" name="curp" value={this.state.formData.curp} onChange={this.onChangehandler} minLength={18} maxLength={20} required={true}  onKeyUp={this.toUpperCase} />
                         </div>
                         <div className="col-md-6 mb-3">
                           <h6>Telefono</h6>

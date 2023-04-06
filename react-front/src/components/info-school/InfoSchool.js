@@ -128,7 +128,12 @@ export default class InfoSchool extends Component {
   };
 
   toUpperCase = (e) =>{
-     e.target.value = e.target.value.toUpperCase();
+    e.preventDefault();
+    let name = e.target.name;
+    let value = e.target.value.toUpperCase();
+    const { formData } = this.state;
+    formData[name] = value;
+    this.setState(formData);
   }
   
   render() {
@@ -181,7 +186,7 @@ export default class InfoSchool extends Component {
                           <div className="row pt-1">
                             <div className="col-md-6 mb-3">
                               <h6>Nombre de la Escuela</h6>
-                              <textarea type="text" className={classNameInput} name="schoolName" value={this.state.formData.schoolName} onChange={this.onChangehandler} disabled={DisabledInput} 
+                              <textarea type="text" className={classNameInput} name="schoolName" value={this.state.formData.schoolName} onChange={this.onChangehandler} onKeyUp={this.toUpperCase} disabled={DisabledInput} 
                               style={{minHeight:"37px", minWidth:"100%", height:"37px", maxHeight:"300px"}}
                               />
                             </div>
@@ -189,12 +194,12 @@ export default class InfoSchool extends Component {
                               <h6>Escolaridad</h6>
                               <select name="scholarship" className={classNameInput} value={this.state.formData.scholarship} onChange={this.onChangehandler} disabled={DisabledInput} required={true}>
                                   <option hidden={true} value="">Seleciona una opcion</option>
-                                  <option value="Bimestral">Bimestral</option>
-                                  <option value="Trimestral">Trimestral</option>
-                                  <option value="Cuatrimestral">Cuatrimestral</option>
-                                  <option value="Semestral">Semestral</option>
-                                  <option value="Anual">Anual</option>
-                                  <option value="Otro">Otro</option>
+                                  <option value="BIMESTRAL">BIMESTRAL</option>
+                                  <option value="TRIMESTRAL">TRIMESTRAL</option>
+                                  <option value="CUATRIMESTRAL">CUATRIMESTRAL</option>
+                                  <option value="SEMESTRAL">SEMESTRAL</option>
+                                  <option value="ANUAL">ANUAL</option>
+                                  <option value="OTRO">OTRO</option>
                               </select>
                             </div>
                           </div>
@@ -208,12 +213,12 @@ export default class InfoSchool extends Component {
                               <h6>Modalidad</h6>
                               <select name="modality" className={classNameInput} value={this.state.formData.modality} onChange={this.onChangehandler} disabled={DisabledInput} required={true}>
                                   <option hidden={true} value="">Seleciona una opcion</option>
-                                  <option value="Preescolar">Preescolar </option>
-                                  <option value="Primaria">Primaria </option>
-                                  <option value="Secundaria">Secundaria</option>
-                                  <option value="Bachillerato">Bachillerato </option>
-                                  <option value="Superior">Superior </option>
-                                  <option value="Otro">Otro</option>
+                                  <option value="PREESCOLAR">PREESCOLAR</option>
+                                  <option value="PRIMARIA">PRIMARIA</option>
+                                  <option value="SECUNDARIA">SECUNDARIA</option>
+                                  <option value="BACHILLERATO">BACHILLERATO </option>
+                                  <option value="SUPERIOR">SUPERIOR</option>
+                                  <option value="OTRO">OTRO</option>
                               </select>
                             </div>
                           </div>

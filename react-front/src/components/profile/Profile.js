@@ -134,6 +134,14 @@ export default class Perfil extends Component {
       });
   }
 
+  toUpperCase = (e) =>{
+    e.preventDefault();
+    let name = e.target.name;
+    let value = e.target.value.toUpperCase();
+    const { userData } = this.state;
+    userData[name] = value;
+    this.setState(userData);
+  }
   
   render() {
     const user = this.state.data;
@@ -176,11 +184,11 @@ export default class Perfil extends Component {
                           <div className="row pt-1" hidden={HideComponents}>
                             <div className="col-md-6 mb-3">
                               <h6>Nombre</h6>
-                              <input className={classNameInput} name="name" value={this.state.userData.name} onChange={this.onChangehandler} disabled={DisabledInput}/>
+                              <input className={classNameInput} name="name" value={this.state.userData.name} onChange={this.onChangehandler} onKeyUp={this.toUpperCase} disabled={DisabledInput}/>
                             </div>
                             <div className="col-md-6 mb-3" >
                               <h6>Apellido</h6>
-                              <input className={classNameInput} name="lastName" value={this.state.userData.lastName} onChange={this.onChangehandler} disabled={DisabledInput}/>
+                              <input className={classNameInput} name="lastName" value={this.state.userData.lastName} onChange={this.onChangehandler}  onKeyUp={this.toUpperCase} disabled={DisabledInput}/>
                             </div>
                           </div>
                           <div className="row pt-1">
