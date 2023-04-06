@@ -21,7 +21,7 @@ export default class DeleteMasive extends Component {
     this._parent._parent.showLoading();
   
     const config = {
-      url: c.baseUrlApi+"admin-deleteMasive/",
+      url: c.baseUrlApi+"admin-deleteMasive",
       method: "DELETE",
       headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json', },
       data: JSON.stringify({data:this.props.data}),

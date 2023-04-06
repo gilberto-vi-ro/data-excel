@@ -43,7 +43,7 @@ export default class Beneficiaries extends Component {
     this._parent.showLoading();
     const idUser = this.userData.id_usuario;
 
-    await axios.post(c.baseUrlApi+"admin-getAllUsers/").then((response) => {
+    await axios.post(c.baseUrlApi+"admin-getAllUsers").then((response) => {
         //  console.log(response.data);
         this._parent.hideLoading();
         if(response.data.status==="failed"){
