@@ -75,6 +75,24 @@ class AdminController extends Controller
         }
        
     }
+    public function deleteMasive(Request $request)
+    {
+        try{
+            $id = null;
+            $beneficiary = 0;
+            foreach( $request->data as $val)
+            {
+                $beneficiary = AdminModel::deleteBeneficiary($val["id_usuario"]);
+            }
+         
+            if($beneficiary )
+                return $this->responseJson("success", "Datos eliminados", $beneficiary );
+            
+            return $this->responseJson("failed", "Ocurrio un error al eliminar" );
+        }catch(Exception $e){
+            return $this->responseJson("failed", $e->getMessage() );
+        }
+    }
     public function deleteBeneficiary($id)
     {
         try{

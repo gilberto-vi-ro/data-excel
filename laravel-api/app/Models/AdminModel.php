@@ -25,41 +25,53 @@ class AdminModel extends Model
 
     public static function getBeneficiaries($config=null){
        try{
+          
             $all_info_users = [];
 
                 if(empty($config) || is_null($config) ){
                     $all_info_users = DB::table('all_info_users')
                     ->select('*')
-                    ->distinct()
-                    ->where('responsable_es_tutor', '1')
+                    ->distinct("id_usuario")
+                    ->where(function ($query) {
+                        $query->where('responsable_es_tutor', '=',  '1')
+                              ->orWhere('responsable_es_tutor', null);
+                    })
                     ->orWhere('responsable_es_tutor', null)
                     ->get();
                 }else{
                     
-                    $config["where1"]["operator"]=="like"?$config["where1"]["value"]="%".$config["where1"]["value"]."%":"";
-                    $config["where2"]["operator"]=="like"?$config["where2"]["value"]="%".$config["where1"]["value"]."%":"";
+                    if($config["select"]==[""] || $config["select"]==[null])
+                        $config["select"]=["*"];
+                    $config["select"] = array_filter($config["select"], function($value) {
+                            return ($value != "#" && $value != "" && $value != null);
+                    });
 
-                    if($config["distinct"]===true){
+                    if($config["where1"]["operator"] == "like" || $config["where1"]["operator"] == "not like")
+                        $config["where1"]["value"]="%".$config["where1"]["value"]."%";
+                    if($config["where2"]["operator"] == "like" || $config["where2"]["operator"] == "not like")
+                        $config["where2"]["value"]="%".$config["where2"]["value"]."%";
+
+                    if($config["distinct"]===true ){
+                      
                         $all_info_users =  DB::table('all_info_users')
                         ->select($config["select"])
-                        ->where(function ($query) {
-                            $query->where('responsable_es_tutor', '=',  '1')
-                                  ->orWhere('responsable_es_tutor', null);
-                        })
-                        ->where($config["where1"]["column"], $config["where1"]["operator"],$config["where1"]["value"])
-                        ->where($config["where2"]["column"], $config["where2"]["operator"],$config["where2"]["value"])
+                        ->groupBy($config["select"][0]=="*"?"id_usuario":$config["select"][0])
+                        ->where($config["where1"]["column"], $config["where1"]["operator"],  $config["where1"]["value"])
+                        ->where($config["where2"]["column"], $config["where2"]["operator"],  $config["where2"]["value"])
+                        ->orderBy($config["orderBy"], 'asc')
                         ->get();
                     }else{
                         $all_info_users =  DB::table('all_info_users')
                         ->select($config["select"])
                         ->where($config["where1"]["column"], $config["where1"]["operator"],$config["where1"]["value"])
                         ->where($config["where2"]["column"], $config["where2"]["operator"],$config["where2"]["value"])
+                        ->orderBy($config["orderBy"], 'asc')
                         ->get();
                     }
                 }
             return $all_info_users;
         }catch(Exception $e){
-             return $e->getMessage() ;
+             return [] ;
         }
     }
 

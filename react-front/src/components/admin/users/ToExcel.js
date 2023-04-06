@@ -2,14 +2,13 @@
 import c from "../../../const.json";
 import Navbar from "../../navbar/Navbar.js";
 
-import DeleteBeneficiary from "./DeleteBeneficiary";
-import SearchBar from './SearchBar';
+import DeleteMasive from "./DeleteMasive.js";
 
-import UserDefault from "../../../img/user/userDefault.png";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component, useEffect } from "react";
 import axios from "axios";
+import ToExcelFilter from "./ToExcelFilter";
 
 
 export default class Beneficiaries extends Component {
@@ -24,18 +23,11 @@ export default class Beneficiaries extends Component {
       classNameAlert:"alert alert-danger mt-1",
       msg: "",
       dataBeneficiaries: [],
+      dataKeysBeneficiaries: [],
       dataB: [],
       idBeneficiaries: null,
-      activeModalDeleteBeneficiary : false,
-
-      configFilter : {
-        config:{
-          select:["*"],
-          distinct:true,
-          where1:{column:"",operator:"",value:""},
-          where2:{column:"",operator:"",value:""}
-        }
-      }
+      activeModalDeleteMasive : false,
+      childconfigFilter: null,
      
     };
 
@@ -48,8 +40,9 @@ export default class Beneficiaries extends Component {
   
   getBeneficiaries = async (e) => {
     setTimeout(() => {
+    
       this._parent.showLoading();
-        axios.post(c.baseUrlApi+"admin-getAllUsers/",this.state.configFilter).then((response) => {
+        axios.post(c.baseUrlApi+"admin-getAllUsers/",this.state.childconfigFilter).then((response) => {
           // console.log(response.data.data);
           this._parent.hideLoading();
           if(response.data.status==="failed"){
@@ -59,6 +52,7 @@ export default class Beneficiaries extends Component {
           }else{
             this.setState({ 
               dataBeneficiaries : response.data.data,
+              dataKeysBeneficiaries: response.data.data[0]
             })
           }
         }).catch((error) => {
@@ -69,101 +63,45 @@ export default class Beneficiaries extends Component {
     }, 100);
   };
 
+  handleChildStateChange = (childState=null) =>{
+    this.setState({ childconfigFilter: childState });
+  }
 
-  modalDeleteBeneficiary = (data=null) =>{
+  modalDeleteMasive = (data=null) =>{
     this.setState({ 
-      activeModalDeleteBeneficiary: !this.state.activeModalDeleteBeneficiary,
-      dataB: data,
+      activeModalDeleteMasive: !this.state.activeModalDeleteMasive,
       msg: ""
     });
   }
   
-  onChangehandler = (e) => {
-    let name = e.target.name;
-    let value = e.target.value;
-    
-    const { configFilter } = this.state;
-    if (name.indexOf("where") !== -1){
-      let where = e.target.dataset.val;
-      configFilter["config"][name][where] = value;
-    }else if(e.target.type=="checkbox"){
-      value = e.target.checked;
-      configFilter["config"][name] = value;
-    }
-    else if(name=="select"){
-      configFilter["config"][name] = value.split(',');
-    }
-    else{
-      configFilter["config"][name] = value;
-    }
-    this.setState(configFilter);
-  };
-
+  
 
   render() {
-   
-    const { arrayValue } = this.props;
     return (
       
       <>
         <Navbar _parent={this} />
         <div className="body-container">
           <section className="">
-            <h5 className="text-center color2">Beneficiarios</h5>
-            <label htmlFor="distinct" className="text-center">Distinct</label>
-            <input id="distinct" type="checkbox" name="distinct" onChange={this.onChangehandler} checked={this.state.configFilter.config.distinct} onClick={this.getBeneficiaries}/>
-            <div className='d-flex justify-content-center m-1 p-1'>
-              <select name="where1" data-val="column" className={"bordered"} value={this.state.configFilter.config.where1.column} onChange={this.onChangehandler} >
-                <option value="">Default</option>
-                <option value="apellido">apellido</option>
-                <option value="nombre">nombre</option>
-              </select>
-              <select name="where1" data-val="operator" className={"bordered"} value={this.state.configFilter.config.where1.operator} onChange={this.onChangehandler} >
-                <option value="">Default</option>
-                <option value="=">=</option>
-                <option value="!=">!=</option>
-                <option value="like">like</option>
-                <option value="<">{"<"}</option>
-                <option value=">">{">"}</option>
-                <option value=">=">{">="}</option>
-                <option value="<=">{"<="}</option>
-              </select>
-              <input type="text" name="where1" data-val="value" className="bordered" value={this.state.configFilter.config.where1.value} onChange={this.onChangehandler} />
-              <button className='btn btn-success btn-sm' onClick={this.getBeneficiaries}>Buscar</button>
-
-              <select name="where2" data-val="column" className={"bordered"} value={this.state.configFilter.config.where2.column} onChange={this.onChangehandler} >
-                <option value="">Default</option>
-                <option value="apellido">apellido</option>
-                <option value="nombre">nombre</option>
-              </select>
-              <select name="where2" data-val="operator" className={"bordered"} value={this.state.configFilter.config.where2.operator} onChange={this.onChangehandler} >
-                <option value="">Default</option>
-                <option value="=">=</option>
-                <option value="!=">!=</option>
-                <option value="like">like</option>
-                <option value="<">{"<"}</option>
-                <option value=">">{">"}</option>
-                <option value=">=">{">="}</option>
-                <option value="<=">{"<="}</option>
-              </select>
-              <input type="text" name="where2" data-val="value" className="bordered" value={this.state.configFilter.config.where2.value} onChange={this.onChangehandler} />
-              <button className='btn btn-success btn-sm' onClick={this.getBeneficiaries}>Buscar</button>
-            </div>
             
+            <div className='d-flex justify-content-center m-1'>
+              <h5 className="color2 me-2">Beneficiarios</h5>
+              <button type="button" className="btn btn-danger btn-circle"
+                onClick={()=>this.modalDeleteMasive()}
+                style={{"marginTop":"-2px"}}
+                ><FontAwesomeIcon icon="fa-solid fa-trash-can" />
+              </button>
+            </div>
             <div className="container py-4">
+                <ToExcelFilter _parent={this} onStateChange={this.handleChildStateChange} />
                 <div className="table-responsive">
-                    <div className='d-flex justify-content-center m-1'>
-                        <textarea type="text" className={"bordered"} name="select" value={this.state.configFilter.config.select.join(",")}
-                        style={{minHeight:"37px", minWidth:"100%", height:"37px", maxHeight:"300px"}}
-                        onChange={this.onChangehandler}
-                        />
-                    </div>
+                    
                     <table className="table table-striped table-bordered table-hover">
                       <thead style={{"backgroundColor":"var(--color2)","color":"var(--primary-color)"}}>
                         <tr>
                           <th>#</th>
                           <>{
-                            this.state.dataBeneficiaries[0] &&  Object.keys(this.state.dataBeneficiaries[0]).map((key,i) =>(
+                            this.state.dataKeysBeneficiaries &&  Object.keys(this.state.dataKeysBeneficiaries).map((key,i) =>(
                               <th key={key}>{key}</th>
                             ))
                           }</>
@@ -188,6 +126,7 @@ export default class Beneficiaries extends Component {
           </section>
         </div>
        
+        <DeleteMasive _parent={this} data={this.state.dataBeneficiaries} show={this.state.activeModalDeleteMasive}/>
       </>
     );
   }
