@@ -25,18 +25,39 @@ class AdminModel extends Model
 
     public static function getBeneficiaries($config=null){
        try{
-         return DB::table('all_info_users')
-                ->select('*')
-                ->distinct()
-                ->where('responsable_es_tutor', '1')
-                ->orWhere('responsable_es_tutor', null)
-                ->get();
+            $all_info_users = [];
 
-                //  ->select('campo1', DB::raw('COUNT(*) as total'))
-                // ->where('responsable_es_tutor', '1')
-                // ->orWhere('responsable_es_tutor', null)
-                // ->groupBy('id_usuario')
-                // ->get();
+                if(empty($config) || is_null($config) ){
+                    $all_info_users = DB::table('all_info_users')
+                    ->select('*')
+                    ->distinct()
+                    ->where('responsable_es_tutor', '1')
+                    ->orWhere('responsable_es_tutor', null)
+                    ->get();
+                }else{
+                    
+                    $config["where1"]["operator"]=="like"?$config["where1"]["value"]="%".$config["where1"]["value"]."%":"";
+                    $config["where2"]["operator"]=="like"?$config["where2"]["value"]="%".$config["where1"]["value"]."%":"";
+
+                    if($config["distinct"]===true){
+                        $all_info_users =  DB::table('all_info_users')
+                        ->select($config["select"])
+                        ->where(function ($query) {
+                            $query->where('responsable_es_tutor', '=',  '1')
+                                  ->orWhere('responsable_es_tutor', null);
+                        })
+                        ->where($config["where1"]["column"], $config["where1"]["operator"],$config["where1"]["value"])
+                        ->where($config["where2"]["column"], $config["where2"]["operator"],$config["where2"]["value"])
+                        ->get();
+                    }else{
+                        $all_info_users =  DB::table('all_info_users')
+                        ->select($config["select"])
+                        ->where($config["where1"]["column"], $config["where1"]["operator"],$config["where1"]["value"])
+                        ->where($config["where2"]["column"], $config["where2"]["operator"],$config["where2"]["value"])
+                        ->get();
+                    }
+                }
+            return $all_info_users;
         }catch(Exception $e){
              return $e->getMessage() ;
         }
