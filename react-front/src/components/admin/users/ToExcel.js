@@ -4,7 +4,6 @@ import Navbar from "../../navbar/Navbar.js";
 
 import DeleteMasive from "./DeleteMasive.js";
 
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component, useEffect } from "react";
 import axios from "axios";
@@ -95,8 +94,7 @@ export default class Beneficiaries extends Component {
             <div className="container py-4">
                 <ToExcelFilter _parent={this} onStateChange={this.handleChildStateChange} />
                 <div className="table-responsive">
-                    
-                    <table className="table table-striped table-bordered table-hover">
+                    <table id="myTable" className="table table-striped table-bordered table-hover">
                       <thead style={{"backgroundColor":"var(--color2)","color":"var(--primary-color)"}}>
                         <tr>
                           <th>#</th>

@@ -1,6 +1,6 @@
 
 import c from "../../../const.json";
-import Navbar from "../../navbar/Navbar.js";
+import ReactDataExport from "../ExcelExport.js";
 
 import React, { Component } from "react";
 import axios from "axios";
@@ -67,7 +67,11 @@ export default class ToExcelFilter extends Component {
       <>
         <div className="table-responsive">
           <div className='d-flex justify-content-center m-1'>
-              <button className='btn btn-success btn-sm'>A excel</button>
+              
+              <ReactDataExport  
+               dataBeneficiaries={this._parent.state.dataBeneficiaries}
+               dataKeysBeneficiaries={this._parent.state.dataKeysBeneficiaries}
+              />
               <select name="orderBy" className={"bordered ms-2"} value={this.state.configFilter.config.orderBy} onChange={this.filter}  style={{"width":"100px"}}>
                   
                   {this._parent.state.dataKeysBeneficiaries &&  Object.keys(this._parent.state.dataKeysBeneficiaries).map((key,i) =>(
