@@ -1,5 +1,5 @@
 
-import c from "../../../const.json";
+import c from "../../../constGlobal.ts";
 import relationshipJson from "../../relationship.json";
 import federativeEntitiesJson from "../../federativeEntities.json";
 

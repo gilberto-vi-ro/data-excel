@@ -1,6 +1,6 @@
 import "./Navbar.css";
 import Logo from "../../img/logo/INPI.png";
-import c from "../../const.json";
+import c from "../../constGlobal.ts";
 import React, { useState, ReactDOM, useRef, useEffect } from 'react';
 import { useLocation,Navigate,Link,useNavigate } from "react-router-dom";
 import {

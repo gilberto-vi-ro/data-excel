@@ -1,5 +1,5 @@
 import "./InfoIndigenous.css";
-import c from "../../const.json";
+import c from "../../constGlobal.ts";
 import Navbar from "../navbar/Navbar.js";
 import logoIndigenous from "../../img/logo/logoIndigenous.jpg";
 

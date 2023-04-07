@@ -1,5 +1,5 @@
 import axios from "axios";
-import c from "../const.json";
+import c from "../constGlobal.ts";
 
 class FileUploadService {
 

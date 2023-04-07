@@ -1,5 +1,5 @@
 import "./Responsibles.css";
-import c from "../../const.json";
+import c from "../../constGlobal.ts";
 
 import Navbar from "../navbar/Navbar.js";
 import InfoResponsibles from "./InfoResponsibles.js";

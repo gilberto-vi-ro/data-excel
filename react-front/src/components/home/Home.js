@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import c from "../../const.json";
+import c from "../../constGlobal.ts";
 
 import axios from "axios";
 import Navbar from "../navbar/Navbar.js";

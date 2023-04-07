@@ -1,4 +1,4 @@
-import c from "../../../const.json";
+import c from "../../../constGlobal.ts";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component } from "react";

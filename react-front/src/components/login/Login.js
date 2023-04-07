@@ -1,6 +1,6 @@
 
 import React, { Component } from "react";
-import c from "../../const.json";
+import c from "../../constGlobal.ts";
 import BG from "../../img/bg/bg3.jpg";
 import "./login.css";
 import Signup from "./signUp/Signup.js";

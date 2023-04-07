@@ -2,7 +2,7 @@ import React, { Component, useRef } from "react";
 import "./App.css";
 import "./components/font-awesome/FontAwesome.js";
 
-import c from "./const.json";
+import c from "./constGlobal.ts";
 import Login from "./components/login/Login.js";
 import Loader from "./components/loader/Loader.js";
 import Home from "./components/home/Home.js";
@@ -16,9 +16,6 @@ import ToExcel from "./components/admin/users/ToExcel.js";
 import Beneficiaries from "./components/admin/users/Beneficiaries.js";
 
 import { BrowserRouter , Routes, Route, Navigate} from "react-router-dom";
-
-
-
 
 // https://sweetalert2.github.io/
 

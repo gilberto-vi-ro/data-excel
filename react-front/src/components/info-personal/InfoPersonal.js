@@ -1,5 +1,5 @@
 import "./InfoPersonal.css";
-import c from "../../const.json";
+import c from "../../constGlobal.ts";
 import Navbar from "../navbar/Navbar.js";
 import UserDefault from "../../img/user/userDefault.png";
 

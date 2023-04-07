@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import c from "../../../const.json";
+import c from "../../../constGlobal.ts";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import axios from "axios";
 import { Link } from "react-router-dom";

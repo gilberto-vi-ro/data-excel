@@ -1,5 +1,5 @@
 import "./InfoSchool.css";
-import c from "../../const.json";
+import c from "../../constGlobal.ts";
 import Navbar from "../navbar/Navbar.js";
 import logoSchool from "../../img/logo/logoSchool.jpg";
 

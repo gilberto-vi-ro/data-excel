@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import UploadService from "../fileUploadService";
-import c from "../../const.json";
+import c from "../../constGlobal.ts";
 import UserDefault from "../../img/user/userDefault.png";
 
 

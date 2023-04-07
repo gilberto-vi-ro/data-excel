@@ -1,5 +1,5 @@
 
-import c from "../../../const.json";
+import c from "../../../constGlobal.ts";
 import ReactDataExport from "../ExcelExport.js";
 
 import React, { Component } from "react";

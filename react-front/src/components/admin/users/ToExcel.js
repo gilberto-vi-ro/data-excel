@@ -1,5 +1,5 @@
 
-import c from "../../../const.json";
+import c from "../../../constGlobal.ts";
 import Navbar from "../../navbar/Navbar.js";
 
 import DeleteMasive from "./DeleteMasive.js";
