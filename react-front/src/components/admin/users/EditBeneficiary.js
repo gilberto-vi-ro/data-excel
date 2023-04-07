@@ -191,7 +191,7 @@ export default class EditBeneficiary extends Component {
         <div className="modal" style={this.props.show?{"display":"block"}:{"display":"none"}}>
             <div className="container h-100">
               <div className="row d-flex justify-content-center align-items-center h-100">
-                <div className="col  col-lg-8 mb-4 mb-lg-0">
+                <div className="col col-lg-8 mb-4 mb-lg-0">
                   <div className="card mb-3" style={{"borderRadius": "1rem","border": "none"}}>
                     <div className="row g-0">
                       <div className="col-md-4 gradient-custom text-center mytext-light rounded-l">
