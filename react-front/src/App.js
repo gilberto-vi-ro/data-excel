@@ -25,15 +25,9 @@ export default class App extends Component {
     super();
     this.loadingRef = React.createRef("loading");
     this.state  = {
-      loading: true,
+      loading: false,
       isAdmin:false
     };
-  }
-
-  componentDidMount() {
-    setTimeout(() => {
-      this.hideLoading();
-    }, 500);
   }
 
   baseUrlApi = (route="") => {
