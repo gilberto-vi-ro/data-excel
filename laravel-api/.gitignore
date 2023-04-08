@@ -4,6 +4,8 @@
 /public/img/user/
 /storage/*.key
 /vendor
+vendor.zip
+vendor.rar
 .env
 .env.backup
 .phpunit.result.cache
