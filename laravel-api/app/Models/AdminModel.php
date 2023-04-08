@@ -24,8 +24,8 @@ class AdminModel extends Model
     }
 
     public static function getBeneficiaries($config=null){
+      
        try{
-          
             $all_info_users = [];
 
                 if(empty($config) || is_null($config) ){
@@ -42,9 +42,10 @@ class AdminModel extends Model
                     
                     if($config["select"]==[""] || $config["select"]==[null])
                         $config["select"]=["*"];
-                    $config["select"] = array_filter($config["select"], function($value) {
+                    $array_filter = array_filter($config["select"], function($value) {
                             return ($value != "#" && $value != "" && $value != null);
                     });
+                    $config["select"] = array_values($array_filter);
 
                     if($config["where1"]["operator"] == "like" || $config["where1"]["operator"] == "not like")
                         $config["where1"]["value"]="%".$config["where1"]["value"]."%";
@@ -69,6 +70,7 @@ class AdminModel extends Model
                         ->get();
                     }
                 }
+
             return $all_info_users;
         }catch(Exception $e){
              return [] ;

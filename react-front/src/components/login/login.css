@@ -122,7 +122,20 @@
 }
 
 @media (max-width: 768px){
+    .containers {
+        padding: 20px 10px;
+    }
     .img-background {
         height: calc(100vh + 60px);
+    }
+
+    .Tab{
+        justify-content: space-around;
+    }
+    .signUp, .signIn{
+        width: auto;
+        margin-left: 5px;
+        margin-right: 5px;
+       
     }
 }

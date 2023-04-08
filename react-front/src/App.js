@@ -25,9 +25,15 @@ export default class App extends Component {
     super();
     this.loadingRef = React.createRef("loading");
     this.state  = {
-      activeLoader: false,
+      loading: true,
       isAdmin:false
     };
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.hideLoading();
+    }, 500);
   }
 
   baseUrlApi = (route="") => {
@@ -37,13 +43,13 @@ export default class App extends Component {
   showLoading = () => {
     //  console.log(this.loadingRef)
     // this.loadingRef.current.style.display = 'block';
-    this.setState({activeLoader: true});
+    this.setState({loading: true});
   }
 
   hideLoading = () => {
     // console.log(this.loadingRef)
     // this.loadingRef.current.style = {"display": 'none'};
-    this.setState({activeLoader: false});
+    this.setState({loading: false});
   }
 
   render() {
@@ -56,7 +62,7 @@ export default class App extends Component {
         {/* <button onClick={this.showLoading}>show</button>
         <button onClick={() => this.hideLoading() }>hide</button> */}
         {/* <div ref = { this.loadingRef } className="loading"></div> */}
-        <Loader show={this.state.activeLoader} />
+        <Loader show={this.state.loading} />
         
         <BrowserRouter basename={c.baseRoute}>
             <Routes>

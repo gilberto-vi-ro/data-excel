@@ -83,7 +83,11 @@ function MyNavbar(args) {
               <NavbarBrand href={""+c.baseRoute+"/home"} className="ms-2">
                 <img src={Logo} alt="png"   className="img-logo"/>
               </NavbarBrand>
-              <NavbarToggler onClick={toggle} />
+              <NavbarToggler onClick={toggle} className="btn-toggler">
+                  <span className="bar"></span>
+                  <span className="bar"></span>
+                  <span className="bar"></span>
+              </NavbarToggler> 
               <Collapse isOpen={isOpen} navbar >
                 <Nav className="ms-auto" navbar>
                   <NavItem>

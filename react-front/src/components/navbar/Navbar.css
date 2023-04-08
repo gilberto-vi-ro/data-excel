@@ -51,10 +51,30 @@
 .btn-bg:hover{
     background-color:  var(--color1);
 }
+.btn-toggler{
+    display: flex;
+    width: 2.5em;
+    height: 2em;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* background-color: var(--color1); */
+    border: solid 1px var(--light-color);
+}
+.bar {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--light-color);
+    border-radius: 3px;
+}
+
 
 @media (max-width: 768px){
     .navbar-collapse{
-        background-color: var(--secondary-color);
+        background-color: var(--color1);
         padding-right: 5px;
     }
 }

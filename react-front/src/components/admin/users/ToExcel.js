@@ -42,7 +42,7 @@ export default class Beneficiaries extends Component {
     
       this._parent.showLoading();
         axios.post(c.baseUrlApi+"admin-getAllUsers",this.state.childconfigFilter).then((response) => {
-          // console.log(response.data.data);
+          //  console.log(response.data.data);
           this._parent.hideLoading();
           if(response.data.status==="failed"){
             this.setState({ 
