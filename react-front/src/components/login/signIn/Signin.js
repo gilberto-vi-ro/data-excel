@@ -153,7 +153,7 @@ export default class Signin extends Component {
                 </Button>
               </FormGroup>
               <FormGroup className="col-md-6 text-center pt-2">
-                <Link to="/modal" className="text-link">Recuperar Contraseña!</Link>
+                {/* <Link to="/modal" className="text-link">Recuperar Contraseña!</Link> */}
               </FormGroup>
             </div>
 

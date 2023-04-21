@@ -206,7 +206,7 @@ export default class Signup extends Component {
                 className="text-center btn btn-login w-100"
                 onClick={this.onSubmitHandler}
               >
-                Registrar
+                Registrarse
                 {isLoading ? (
                   <span
                     className="spinner-border spinner-border-sm ml-5"
