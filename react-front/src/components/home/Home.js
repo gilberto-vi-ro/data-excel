@@ -50,30 +50,37 @@ export default class Home extends Component {
   
   render() {
     const user = this.state.data;
+    const isAdmin = localStorage.getItem("isAdmin");
     
     return (
 
       <>
         <Navbar _parent={this} />
         <div className="body-container">
-            <div className="step-progress">
-              <div className={this.state.dataStep.datos_personales?"step activated":"step"}>
-                <span className="step-circle">1</span>
-                <span className="step-title">Datos personal</span>
-              </div>
-              <div className={this.state.dataStep.info_escolar?"step activated":"step"}>
-                <span className="step-circle">2</span>
-                <span className="step-title">Datos escolar</span>
-              </div>
-              <div className={this.state.dataStep.responsables?"step activated":"step"}>
-                <span className="step-circle">3</span>
-                <span className="step-title">Responsables</span>
-              </div>
-              <div className={this.state.dataStep.info_indigena?"step activated":"step"}>
-                <span className="step-circle">4</span>
-                <span className="step-title">Datos Indigena</span>
-              </div>
+        {isAdmin?(
+          <div style={{display:"flex",flexWrap:"wrap", alignContent:"center",justifyContent:"center", height:"calc(100vh - 80px)"}}>
+            <span className="step-title text-center"><h3>Bienvenido como Administrador</h3></span>
+          </div>
+        ):(
+          <div className="step-progress">
+            <div className={this.state.dataStep.datos_personales?"step activated":"step"}>
+              <span className="step-circle">1</span>
+              <span className="step-title">Datos personal</span>
             </div>
+            <div className={this.state.dataStep.info_escolar?"step activated":"step"}>
+              <span className="step-circle">2</span>
+              <span className="step-title">Datos escolar</span>
+            </div>
+            <div className={this.state.dataStep.responsables?"step activated":"step"}>
+              <span className="step-circle">3</span>
+              <span className="step-title">Responsables</span>
+            </div>
+            <div className={this.state.dataStep.info_indigena?"step activated":"step"}>
+              <span className="step-circle">4</span>
+              <span className="step-title">Datos Indigena</span>
+            </div>
+          </div>
+        )}
         </div>
       </>
     );

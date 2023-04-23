@@ -35,15 +35,15 @@ function MyNavbar(args) {
         if (divNav.current!== null) {
           const navLinks = divNav.current.querySelectorAll('.nav-item');
           removeActive(navLinks);
-          const idDropdownToggle= divNav.current.querySelector('#idDropdownToggle');
+          // const idDropdownToggle= divNav.current.querySelector('#idDropdownToggle');
           
-          if( location.pathname.indexOf("/admin/info-responsables") !== -1 
-          || location.pathname.indexOf("/admin/info-escolar") !== -1 
-          || location.pathname.indexOf("/admin/info-personal") !== -1 
-          || location.pathname.indexOf("/admin/info-indigena") !== -1 )
-            idDropdownToggle.classList.add("active");
-          else
-            idDropdownToggle.classList.remove("active");
+          // if( location.pathname.indexOf("/admin/info-responsables") !== -1 
+          // || location.pathname.indexOf("/admin/info-escolar") !== -1 
+          // || location.pathname.indexOf("/admin/info-personal") !== -1 
+          // || location.pathname.indexOf("/admin/info-indigena") !== -1 )
+          //   idDropdownToggle.classList.add("active");
+          // else
+          //   idDropdownToggle.classList.remove("active");
 
           let href = null;
           navLinks.forEach((link) => {
@@ -80,7 +80,11 @@ function MyNavbar(args) {
           <NavbarBrand href={""+c.baseRoute+"/admin" }className="ms-2">
             <img src={Logo} alt="png"   className="img-logo"/>
           </NavbarBrand>
-          <NavbarToggler onClick={toggle} />
+          <NavbarToggler onClick={toggle} className="btn-toggler">
+              <span className="bar"></span>
+              <span className="bar"></span>
+              <span className="bar"></span>
+          </NavbarToggler> 
           <Collapse isOpen={isOpen} navbar >
             <Nav className="ms-auto" navbar>
               <NavItem>
@@ -93,7 +97,7 @@ function MyNavbar(args) {
                   <Link to="/admin/beneficiarios" className="nav-link">BENEFICIARIOS</Link>
               </NavItem>
               {/* <NavItem> <NavLink href="##">algo</NavLink> </NavItem> */}
-              <UncontrolledDropdown nav inNavbar>
+              {/* <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle id="idDropdownToggle" nav caret >
                   DATOS
                 </DropdownToggle>
@@ -101,10 +105,10 @@ function MyNavbar(args) {
                   <DropdownItem><Link to="/admin/info-responsables">Responsables</Link></DropdownItem>
                   <DropdownItem><Link to="/admin/info-escolar">Escolar</Link></DropdownItem>
                   <DropdownItem><Link to="/admin/info-personal">Personal</Link></DropdownItem>
-                  {/* <DropdownItem divider /> */}
+                  { <DropdownItem divider /> }
                   <DropdownItem><Link to="/admin/info-indigena">Indigena</Link></DropdownItem>
                 </DropdownMenu>
-              </UncontrolledDropdown>
+              </UncontrolledDropdown> */}
               <NavItem>
                 <Link to="/admin/perfil" className="nav-link">PERFIL</Link>
               </NavItem>
