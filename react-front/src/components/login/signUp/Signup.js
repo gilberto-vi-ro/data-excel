@@ -39,6 +39,18 @@ export default class Signup extends Component {
     });
   }
 
+  clearForm = ()=>{
+    const { signupData } = this.state;
+    signupData["apellido"] = "";
+    signupData["nombre"] = "";
+    signupData["email"] = "";
+    signupData["clave"] = "";
+    signupData["confirmar_clave"] = "";
+    this.setState(signupData);
+    
+  }
+  
+
   verifyPassword = ()=>{
     if (this.state.signupData.clave !== this.state.signupData.confirmar_clave){
       this.setState({ 
@@ -70,6 +82,7 @@ export default class Signup extends Component {
         this.setState({ isLoading: false });
         if (response.data.status === 200) {
           this.clearMsgs();
+          this.clearForm();
           this.setState({
             msg: response.data.message,
           });
@@ -122,7 +135,7 @@ export default class Signup extends Component {
             <Input
               type="text"
               name="nombre"
-              placeholder="Introdusca su nombre"
+              placeholder="Juan"
               className="input-login"
               value={this.state.signupData.nombre}
               onChange={this.onChangehandler}
@@ -135,7 +148,7 @@ export default class Signup extends Component {
             <Input
               type="text"
               name="apellido"
-              placeholder="Introdusca su apellido"
+              placeholder="Gómez López"
               className="input-login"
               value={this.state.signupData.apellido}
               onChange={this.onChangehandler}
@@ -148,7 +161,7 @@ export default class Signup extends Component {
             <Input
               type="email"
               name="email"
-              placeholder="Introdusca su email"
+              placeholder="juan@gmail.com"
               className="input-login"
               value={this.state.signupData.email}
               onChange={this.onChangehandler}
@@ -162,7 +175,7 @@ export default class Signup extends Component {
                 type="password"
                 name="clave"
                 maxLength="10"
-                placeholder="Introdusca una contraseña"
+                placeholder="Juan2023"
                 className="input-login"
                 value={this.state.signupData.clave}
                 onChange={this.onChangehandler}
@@ -174,7 +187,7 @@ export default class Signup extends Component {
                 type="password"
                 name="confirmar_clave"
                 maxLength="10"
-                placeholder="Confirmar contraseña"
+                placeholder="Juan2023"
                 className="input-login"
                 value={this.state.signupData.confirmar_clave}
                 onChange={this.onChangehandler}

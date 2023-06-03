@@ -112,7 +112,7 @@ export default class Signin extends Component {
                 <Input
                   type="email"
                   name="email"
-                  placeholder="Introdusca su email"
+                  placeholder="alguien@gmail.com"
                   className="input-login"
                   value={this.state.email}
                   onChange={this.onChangehandler}
@@ -125,7 +125,7 @@ export default class Signin extends Component {
                 <Input
                   type="password"
                   name="password"
-                  placeholder="Introdusca su contraseña"
+                  placeholder="Alguien2023"
                   className="input-login"
                   value={this.state.password}
                   onChange={this.onChangehandler}
